@@ -4,5 +4,11 @@
     <Compile Update="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmPrograms.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

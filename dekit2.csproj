@@ -8,8 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageIcon>dev_23828.ico</PackageIcon>
     <ApplicationIcon>Resources\dev_23828.ico</ApplicationIcon>
-	<AssemblyTitle>Minh Nguyen DevKit2</AssemblyTitle>
-	<Product>Minh Nguyen DevKit2</Product>
+	<AssemblyTitle>DevKit2</AssemblyTitle>
+	<Product>DevKit2</Product>
+	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
+	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
   <ItemGroup>

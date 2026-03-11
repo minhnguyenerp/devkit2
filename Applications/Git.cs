@@ -132,6 +132,7 @@ namespace dekit2.Applications
 
         public override bool Start(string version)
         {
+            MessageBox.Show("Start");
             return false;
         }
 
@@ -142,6 +143,26 @@ namespace dekit2.Applications
 
         public override bool Uninstall(string version)
         {
+            string extractPath = Path.Combine(appPath, version);
+            if (Directory.Exists(extractPath))
+            {
+                Directory.Delete(extractPath, true);
+                if (Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                {
+                    JsonArray installedVersions = (JsonArray?)Config["InstalledVersions"] ?? new JsonArray();
+                    JsonArray arr = new JsonArray();
+                    foreach (var one in installedVersions)
+                    {
+                        if (one != null && one.ToString() != version)
+                        {
+                            arr.Add(one.ToString());
+                        }
+                    }
+                    Config["InstalledVersions"] = arr;
+                    base.SaveConfig(Config, appPath);
+                }
+                return true;
+            }
             return false;
         }
     }

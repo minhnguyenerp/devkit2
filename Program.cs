@@ -25,7 +25,7 @@ namespace dekit2
             }
             else
             {
-                MessageBox.Show("Minh Nguyen DevKit2 is already running. Only one instance at a time is allowed.", "Minh Nguyen DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("DevKit2 is already running. Only one instance at a time is allowed.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
