@@ -80,21 +80,23 @@ namespace dekit2.Applications
             return false;
         }
 
-        public override string GetPaths(string version)
+        public override ValueName[] GetEnvironments(string version)
         {
-            return Path.Combine(appPath, version, "go", "bin");
+            return new ValueName[] {
+                new ValueName("PATH", Path.Combine(appPath, version, "go", "bin")),
+                new ValueName("GOPATH", Path.Combine(appPath, version, "go", "gopath")),
+                new ValueName("GOCACHE", Path.Combine(appPath, version, "go", "gocache")),
+                new ValueName("GOTELEMETRYDIR", Path.Combine(appPath, version, "go", "gotelemetry")),
+            };
         }
 
-        public override bool Start(string version, string envPath)
+        public override bool Start(string version, ValueName[] environments)
         {
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
-            string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
-            psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;
-            psi.EnvironmentVariables["GOPATH"] = Path.Combine(appPath, version, "go", "gopath");
-            psi.EnvironmentVariables["GOCACHE"] = Path.Combine(appPath, version, "go", "gocache");
-            psi.EnvironmentVariables["GOTELEMETRYDIR"] = Path.Combine(appPath, version, "go", "gotelemetry");
+            LoadEnvironments(ref psi, environments);
+
             try
             {
                 if (Process.Start(psi) != null)

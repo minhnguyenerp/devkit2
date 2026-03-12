@@ -1,4 +1,5 @@
 ﻿using dekit2.Applications;
+using dekit2.Common;
 using dekit2.Properties;
 using System.Reflection;
 using System.Text;
@@ -65,7 +66,7 @@ namespace dekit2
                 ((ComboBox)datagridview.EditingControl).DroppedDown = true;
             }
 
-            StringBuilder envPath = new StringBuilder();
+            List<ValueName> environments = new List<ValueName>();
             foreach(DataGridViewRow row in datagridview.Rows)
             {
                 if (row.Tag != null && row.Tag is IApplication)
@@ -75,19 +76,7 @@ namespace dekit2
                     bool isEnv = (bool)(row.Cells[colEnv.Index].Value ?? false);
                     if (!string.IsNullOrEmpty(version) && isEnv)
                     {
-                        var path = app.GetPaths(version);
-                        if (!string.IsNullOrEmpty(path))
-                        {
-                            if (envPath.Length > 0)
-                            {
-                                envPath.Append(";");
-                                envPath.Append(path);
-                            }
-                            else
-                            {
-                                envPath.Append(path);
-                            }
-                        }
+                        environments.AddRange(app.GetEnvironments(version));
                     }
                 }
             }
@@ -101,7 +90,7 @@ namespace dekit2
                     string version = row.Cells[colSelect.Index]?.Value?.ToString() ?? "";
                     if (!string.IsNullOrEmpty(version))
                     {
-                        app.Start(version, envPath.ToString());
+                        app.Start(version, environments.ToArray());
                     }
                     else
                     {

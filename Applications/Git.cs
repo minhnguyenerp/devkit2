@@ -87,18 +87,20 @@ namespace dekit2.Applications
             return false;
         }
 
-        public override string GetPaths(string version)
+        public override ValueName[] GetEnvironments(string version)
         {
-            return Path.Combine(appPath, version, "bin");
+            return new ValueName[] {
+                new ValueName("PATH", Path.Combine(appPath, version, "bin")),
+            };
         }
 
-        public override bool Start(string version, string envPath)
+        public override bool Start(string version, ValueName[] environments)
         {
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
-            string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
-            psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;
+            LoadEnvironments(ref psi, environments);
+
             try
             {
                 if (Process.Start(psi) != null)

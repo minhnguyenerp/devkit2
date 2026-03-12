@@ -1,12 +1,7 @@
 ﻿using dekit2.Common;
-using SharpCompress.Archives;
 using SharpCompress.Common;
 using SharpCompress.Readers;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO.Compression;
-using System.Text;
 using System.Text.Json.Nodes;
 
 namespace dekit2.Applications
@@ -96,21 +91,23 @@ namespace dekit2.Applications
             return false;
         }
 
-        public override string GetPaths(string version)
+        public override ValueName[] GetEnvironments(string version)
         {
-            return Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin") + ";" +
-                Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin");
+            return new ValueName[] {
+                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin")),
+                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin")),
+                new ValueName("RUSTFLAGS", "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu")),
+                new ValueName("CARGO_HOME", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo")),
+            };
         }
 
-        public override bool Start(string version, string envPath)
+        public override bool Start(string version, ValueName[] environments)
         {
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
-            string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
-            psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;
-            psi.EnvironmentVariables["RUSTFLAGS"] = "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu");
-            psi.EnvironmentVariables["CARGO_HOME"] = Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo");
+            LoadEnvironments(ref psi, environments);
+
             try
             {
                 if (Process.Start(psi) != null)

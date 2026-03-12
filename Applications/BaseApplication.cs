@@ -1,4 +1,5 @@
 ﻿using dekit2.Common;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
@@ -106,11 +107,11 @@ namespace dekit2.Applications
 
         public virtual bool Install(string version) { return false; }
 
-        public virtual bool Start(string version, string envPath) { return false; }
+        public virtual bool Start(string version, ValueName[] environments) { return false; }
 
         public virtual bool Stop(string version) { return false; }
 
-        public virtual string GetPaths(string version) { return string.Empty; }
+        public virtual ValueName[] GetEnvironments(string version) { return Array.Empty<ValueName>(); }
 
         public virtual bool Uninstall(string version)
         {
@@ -191,6 +192,35 @@ namespace dekit2.Applications
             catch
             {
                 return false;
+            }
+        }
+
+        protected void LoadEnvironments(ref ProcessStartInfo processStartInfo, ValueName[] environments)
+        {
+            Dictionary<string, string> distinc = new Dictionary<string, string>();
+            foreach (var env in environments)
+            {
+                if (distinc.ContainsKey(env.Value))
+                {
+                    distinc[env.Value] = env.Name + ";" + distinc[env.Value];
+                }
+                else
+                {
+                    distinc[env.Value] = env.Name;
+                }
+            }
+
+            foreach (var one in distinc)
+            {
+                string? currentValue = Environment.GetEnvironmentVariable(one.Key);
+                if (currentValue != null && currentValue.Length > 0)
+                {
+                    processStartInfo.EnvironmentVariables[one.Key] = one.Value + ";" + currentValue;
+                }
+                else
+                {
+                    processStartInfo.EnvironmentVariables[one.Key] = one.Value;
+                }
             }
         }
     }
