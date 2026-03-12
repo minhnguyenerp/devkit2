@@ -1,16 +1,17 @@
 ﻿using dekit2.Common;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace dekit2.Applications
 {
-    internal sealed class Git : BaseApplication
+    internal sealed class Go : BaseApplication
     {
-        public override string Name => "Git";
+        public override string Name => "Go";
 
-        public Git()
+        public Go()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "git");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "go");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -34,7 +35,7 @@ namespace dekit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.53.0", "2.53.0"),
+                    new ValueName("1.26.1", "1.26.1"),
                 };
             }
         }
@@ -45,9 +46,9 @@ namespace dekit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.53.0":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0-64-bit.7z.exe");
+                case "1.26.1":
+                    url = "https://go.dev/dl/go1.26.1.windows-amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "go1.26.1.windows-amd64.zip");
                     break;
             }
 
@@ -63,20 +64,12 @@ namespace dekit2.Applications
 
                 string extractPath = Path.Combine(appPath, version);
                 Directory.CreateDirectory(extractPath);
+                ZipFile.ExtractToDirectory(file, extractPath, true);
+                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gopath"));
+                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gocache"));
+                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gotelemetry"));
 
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = file,
-                    Arguments = $"-y -o\"{extractPath}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-                try
-                {
-                    Process.Start(psi).WaitForExit();
-                } catch { return false; }
-
-                if(!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {
                     ((JsonArray)Config["InstalledVersions"]).Add(version);
                 }
@@ -89,7 +82,7 @@ namespace dekit2.Applications
 
         public override string GetPaths(string version)
         {
-            return Path.Combine(appPath, version, "bin");
+            return Path.Combine(appPath, version, "go", "bin");
         }
 
         public override bool Start(string version, string envPath)
@@ -99,6 +92,9 @@ namespace dekit2.Applications
             psi.UseShellExecute = false;
             string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
             psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;
+            psi.EnvironmentVariables["GOPATH"] = Path.Combine(appPath, version, "go", "gopath");
+            psi.EnvironmentVariables["GOCACHE"] = Path.Combine(appPath, version, "go", "gocache");
+            psi.EnvironmentVariables["GOTELEMETRYDIR"] = Path.Combine(appPath, version, "go", "gotelemetry");
             try
             {
                 if (Process.Start(psi) != null)

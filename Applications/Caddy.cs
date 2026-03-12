@@ -1,16 +1,17 @@
 ﻿using dekit2.Common;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace dekit2.Applications
 {
-    internal sealed class Git : BaseApplication
+    internal sealed class Caddy : BaseApplication
     {
-        public override string Name => "Git";
+        public override string Name => "Caddy";
 
-        public Git()
+        public Caddy()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "git");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "caddy");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -34,7 +35,7 @@ namespace dekit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.53.0", "2.53.0"),
+                    new ValueName("2.11.2", "2.11.2"),
                 };
             }
         }
@@ -45,9 +46,9 @@ namespace dekit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.53.0":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0-64-bit.7z.exe");
+                case "2.11.2":
+                    url = "https://github.com/caddyserver/caddy/releases/download/v2.11.2/caddy_2.11.2_windows_amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "caddy_2.11.2_windows_amd64.zip");
                     break;
             }
 
@@ -63,20 +64,9 @@ namespace dekit2.Applications
 
                 string extractPath = Path.Combine(appPath, version);
                 Directory.CreateDirectory(extractPath);
+                ZipFile.ExtractToDirectory(file, extractPath, true);
 
-                ProcessStartInfo psi = new ProcessStartInfo
-                {
-                    FileName = file,
-                    Arguments = $"-y -o\"{extractPath}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-                try
-                {
-                    Process.Start(psi).WaitForExit();
-                } catch { return false; }
-
-                if(!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {
                     ((JsonArray)Config["InstalledVersions"]).Add(version);
                 }
@@ -89,13 +79,13 @@ namespace dekit2.Applications
 
         public override string GetPaths(string version)
         {
-            return Path.Combine(appPath, version, "bin");
+            return Path.Combine(appPath, version);
         }
 
         public override bool Start(string version, string envPath)
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
+            psi.FileName = Path.Combine(appPath, version, "caddy.exe");
             psi.UseShellExecute = false;
             string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
             psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;

@@ -1,16 +1,23 @@
 ﻿using dekit2.Common;
+using SharpCompress.Archives;
+using SharpCompress.Common;
+using SharpCompress.Readers;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace dekit2.Applications
 {
-    internal sealed class Git : BaseApplication
+    internal sealed class Rust : BaseApplication
     {
-        public override string Name => "Git";
+        public override string Name => "Rust";
 
-        public Git()
+        public Rust()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "git");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rust");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -34,7 +41,7 @@ namespace dekit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.53.0", "2.53.0"),
+                    new ValueName("1.94.0", "1.94.0"),
                 };
             }
         }
@@ -45,9 +52,9 @@ namespace dekit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.53.0":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0-64-bit.7z.exe");
+                case "1.94.0":
+                    url = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-gnu.tar.xz";
+                    file = Path.Combine(Path.GetTempPath(), "rust-1.94.0-x86_64-pc-windows-gnu.tar.xz");
                     break;
             }
 
@@ -63,20 +70,22 @@ namespace dekit2.Applications
 
                 string extractPath = Path.Combine(appPath, version);
                 Directory.CreateDirectory(extractPath);
+                using var stream = File.OpenRead(file);
+                using var reader = ReaderFactory.OpenReader(stream);
 
-                ProcessStartInfo psi = new ProcessStartInfo
+                while (reader.MoveToNextEntry())
                 {
-                    FileName = file,
-                    Arguments = $"-y -o\"{extractPath}\"",
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-                try
-                {
-                    Process.Start(psi).WaitForExit();
-                } catch { return false; }
+                    if (!reader.Entry.IsDirectory)
+                    {
+                        reader.WriteEntryToDirectory(extractPath, new ExtractionOptions
+                        {
+                            ExtractFullPath = true,
+                            Overwrite = true
+                        });
+                    }
+                }
 
-                if(!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {
                     ((JsonArray)Config["InstalledVersions"]).Add(version);
                 }
@@ -89,7 +98,8 @@ namespace dekit2.Applications
 
         public override string GetPaths(string version)
         {
-            return Path.Combine(appPath, version, "bin");
+            return Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin") + ";" +
+                Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin");
         }
 
         public override bool Start(string version, string envPath)
@@ -99,6 +109,8 @@ namespace dekit2.Applications
             psi.UseShellExecute = false;
             string currentPath = Environment.GetEnvironmentVariable("PATH") ?? "";
             psi.EnvironmentVariables["PATH"] = envPath + ";" + currentPath;
+            psi.EnvironmentVariables["RUSTFLAGS"] = "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu");
+            psi.EnvironmentVariables["CARGO_HOME"] = Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo");
             try
             {
                 if (Process.Start(psi) != null)
