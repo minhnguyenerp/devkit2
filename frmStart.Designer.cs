@@ -31,6 +31,7 @@
             dataGridViewPrograms = new DataGridView();
             colNo = new DataGridViewTextBoxColumn();
             colProgram = new DataGridViewTextBoxColumn();
+            colWorkingDirectory = new DataGridViewTextBoxColumn();
             colSelect = new DataGridViewComboBoxColumn();
             colEnv = new DataGridViewCheckBoxColumn();
             colStart = new DataGridViewButtonColumn();
@@ -40,11 +41,11 @@
             // dataGridViewPrograms
             // 
             dataGridViewPrograms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colSelect, colEnv, colStart });
+            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colWorkingDirectory, colSelect, colEnv, colStart });
             dataGridViewPrograms.Dock = DockStyle.Fill;
             dataGridViewPrograms.Location = new Point(0, 0);
             dataGridViewPrograms.Name = "dataGridViewPrograms";
-            dataGridViewPrograms.Size = new Size(800, 450);
+            dataGridViewPrograms.Size = new Size(869, 450);
             dataGridViewPrograms.TabIndex = 3;
             dataGridViewPrograms.CellClick += dataGridViewPrograms_CellClick;
             dataGridViewPrograms.CurrentCellDirtyStateChanged += dataGridViewPrograms_CurrentCellDirtyStateChanged;
@@ -62,7 +63,14 @@
             colProgram.HeaderText = "Program";
             colProgram.Name = "colProgram";
             colProgram.ReadOnly = true;
-            colProgram.Width = 350;
+            colProgram.Width = 120;
+            // 
+            // colWorkingDirectory
+            // 
+            colWorkingDirectory.HeaderText = "Working Directory";
+            colWorkingDirectory.Name = "colWorkingDirectory";
+            colWorkingDirectory.ReadOnly = true;
+            colWorkingDirectory.Width = 350;
             // 
             // colSelect
             // 
@@ -89,7 +97,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(869, 450);
             Controls.Add(dataGridViewPrograms);
             Name = "frmStart";
             Text = "frmStart";
@@ -103,6 +111,7 @@
         private DataGridView dataGridViewPrograms;
         private DataGridViewTextBoxColumn colNo;
         private DataGridViewTextBoxColumn colProgram;
+        private DataGridViewTextBoxColumn colWorkingDirectory;
         private DataGridViewComboBoxColumn colSelect;
         private DataGridViewCheckBoxColumn colEnv;
         private DataGridViewButtonColumn colStart;

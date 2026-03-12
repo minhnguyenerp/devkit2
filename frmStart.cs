@@ -1,8 +1,7 @@
 ﻿using dekit2.Applications;
 using dekit2.Properties;
-using Microsoft.VisualBasic;
-using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Text;
 
 namespace dekit2
 {
@@ -66,6 +65,33 @@ namespace dekit2
                 ((ComboBox)datagridview.EditingControl).DroppedDown = true;
             }
 
+            StringBuilder envPath = new StringBuilder();
+            foreach(DataGridViewRow row in datagridview.Rows)
+            {
+                if (row.Tag != null && row.Tag is IApplication)
+                {
+                    var app = (IApplication)row.Tag;
+                    var version = row.Cells[colSelect.Index].Value?.ToString() ?? "";
+                    bool isEnv = (bool)(row.Cells[colEnv.Index].Value ?? false);
+                    if (!string.IsNullOrEmpty(version) && isEnv)
+                    {
+                        var path = app.GetPaths(version);
+                        if (!string.IsNullOrEmpty(path))
+                        {
+                            if (envPath.Length > 0)
+                            {
+                                envPath.Append(";");
+                                envPath.Append(path);
+                            }
+                            else
+                            {
+                                envPath.Append(path);
+                            }
+                        }
+                    }
+                }
+            }
+
             if (e.ColumnIndex == colStart.Index)
             {
                 var row = datagridview.Rows[e.RowIndex];
@@ -75,7 +101,11 @@ namespace dekit2
                     string version = row.Cells[colSelect.Index]?.Value?.ToString() ?? "";
                     if (!string.IsNullOrEmpty(version))
                     {
-                        app.Start(version);
+                        app.Start(version, envPath.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select a version to start", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

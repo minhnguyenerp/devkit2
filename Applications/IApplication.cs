@@ -12,7 +12,8 @@ namespace dekit2.Applications
         bool IsRunning(string version);
         bool Install(string version);
         bool Uninstall(string version);
-        bool Start(string version);
+        string GetPaths(string version);
+        bool Start(string version, string envPath);
         bool Stop(string version);
     }
 }

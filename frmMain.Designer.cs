@@ -47,7 +47,7 @@
             tabControlContainer.Multiline = true;
             tabControlContainer.Name = "tabControlContainer";
             tabControlContainer.SelectedIndex = 0;
-            tabControlContainer.Size = new Size(843, 497);
+            tabControlContainer.Size = new Size(896, 497);
             tabControlContainer.TabIndex = 0;
             // 
             // tabPageStart
@@ -55,7 +55,7 @@
             tabPageStart.Location = new Point(4, 4);
             tabPageStart.Name = "tabPageStart";
             tabPageStart.Padding = new Padding(3);
-            tabPageStart.Size = new Size(835, 463);
+            tabPageStart.Size = new Size(888, 463);
             tabPageStart.TabIndex = 0;
             tabPageStart.Text = "Start";
             tabPageStart.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(843, 497);
+            ClientSize = new Size(896, 497);
             Controls.Add(tabControlContainer);
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
