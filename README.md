@@ -4,6 +4,6 @@
 
 Unlike traditional development setups, **DevKit2 installs nothing into your system**. It runs entirely in its own environment, keeping your operating system clean, stable, and free from dependency conflicts.
 
-With DevKit2, you can start coding immediately without worrying about system pollution, broken PATH variables, or conflicting runtimes. Simply download, extract, and start building.
+With **DevKit2**, you can start coding immediately without worrying about system pollution, broken PATH variables, or conflicting runtimes. Simply download, extract, and start building.
 
 **Fast. Portable. Clean.**
