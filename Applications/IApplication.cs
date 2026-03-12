@@ -1,6 +1,6 @@
-﻿using dekit2.Common;
+﻿using devkit2.Common;
 
-namespace dekit2.Applications
+namespace devkit2.Applications
 {
     public interface IApplication
     {

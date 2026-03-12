@@ -1,8 +1,8 @@
-﻿using dekit2.Applications;
-using dekit2.Properties;
+﻿using devkit2.Applications;
+using devkit2.Properties;
 using System.Reflection;
 
-namespace dekit2
+namespace devkit2
 {
     public partial class frmPrograms : Form
     {

@@ -1,11 +1,11 @@
-﻿using dekit2.Common;
+﻿using devkit2.Common;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace dekit2.Applications
+namespace devkit2.Applications
 {
     public abstract class BaseApplication : IApplication
     {

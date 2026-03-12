@@ -1,10 +1,9 @@
-﻿using dekit2.Common;
+﻿using devkit2.Common;
 using System.Diagnostics;
 using System.IO.Compression;
-using System.Net;
 using System.Text.Json.Nodes;
 
-namespace dekit2.Applications
+namespace devkit2.Applications
 {
     internal sealed class SumatraPDF : BaseApplication
     {

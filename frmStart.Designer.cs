@@ -1,4 +1,4 @@
-﻿namespace dekit2
+﻿namespace devkit2
 {
     partial class frmStart
     {

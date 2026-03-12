@@ -1,4 +1,4 @@
-﻿namespace dekit2.Common
+﻿namespace devkit2.Common
 {
     public class ValueName
     {
