@@ -1,17 +1,17 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    //https://getcomposer.org/download/2.9.5/composer.phar
-    internal sealed class Composer : BaseApplication
+    internal sealed class Python : BaseApplication
     {
-        public override string Name => "Composer";
+        public override string Name => "Python";
 
-        public Composer()
+        public Python()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "composer");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "python");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -35,7 +35,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.9.5", "2.9.5"),
+                    new ValueName("3.14.3", "3.14.3"),
                 };
             }
         }
@@ -46,9 +46,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.9.5":
-                    url = "https://getcomposer.org/download/2.9.5/composer.phar";
-                    file = Path.Combine(appPath, version, "composer.phar");
+                case "3.14.3":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.3-embed-amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "python-3.14.3-embed-amd64.zip");
                     break;
             }
 
@@ -56,15 +56,15 @@ namespace devkit2.Applications
             {
                 if (!File.Exists(file))
                 {
-                    Directory.CreateDirectory(Path.Combine(appPath, version));
                     if (!base.Download(url, file))
                     {
                         return false;
                     }
-                    File.WriteAllText(Path.Combine(appPath, version, "composer.bat"),
-@"@echo off
-php.exe ""%~dp0composer.phar"" %*");
                 }
+
+                string extractPath = Path.Combine(appPath, version);
+                Directory.CreateDirectory(extractPath);
+                ZipFile.ExtractToDirectory(file, extractPath, true);
 
                 if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {
@@ -80,7 +80,8 @@ php.exe ""%~dp0composer.phar"" %*");
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version)),
+                new ValueName("PATH", Path.Combine(appPath, version, $"python-{version}-embed-amd64")),
+                new ValueName("PATH", Path.Combine(appPath, version, $"python-{version}-embed-amd64", "Scripts")),
             };
         }
 

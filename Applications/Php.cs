@@ -1,17 +1,17 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    //https://getcomposer.org/download/2.9.5/composer.phar
-    internal sealed class Composer : BaseApplication
+    internal sealed class Php : BaseApplication
     {
-        public override string Name => "Composer";
+        public override string Name => "PHP";
 
-        public Composer()
+        public Php()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "composer");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "php");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -35,7 +35,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.9.5", "2.9.5"),
+                    new ValueName("8.5.4", "8.5.4"),
                 };
             }
         }
@@ -46,9 +46,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.9.5":
-                    url = "https://getcomposer.org/download/2.9.5/composer.phar";
-                    file = Path.Combine(appPath, version, "composer.phar");
+                case "8.5.4":
+                    url = "https://downloads.php.net/~windows/releases/archives/php-8.5.4-Win32-vs17-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "php-8.5.4-Win32-vs17-x64.zip");
                     break;
             }
 
@@ -56,15 +56,15 @@ namespace devkit2.Applications
             {
                 if (!File.Exists(file))
                 {
-                    Directory.CreateDirectory(Path.Combine(appPath, version));
                     if (!base.Download(url, file))
                     {
                         return false;
                     }
-                    File.WriteAllText(Path.Combine(appPath, version, "composer.bat"),
-@"@echo off
-php.exe ""%~dp0composer.phar"" %*");
                 }
+
+                string extractPath = Path.Combine(appPath, version);
+                Directory.CreateDirectory(extractPath);
+                ZipFile.ExtractToDirectory(file, extractPath, true);
 
                 if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {
