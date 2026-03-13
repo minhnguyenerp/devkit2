@@ -1,4 +1,7 @@
+using devkit2.Applications;
 using devkit2.Properties;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace devkit2
 {
@@ -97,6 +100,26 @@ namespace devkit2
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            var apps = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(t => typeof(IApplication).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+                .Select(t => (IApplication)Activator.CreateInstance(t));
+
+            foreach (var app in apps)
+            {
+                if (app != null && app.Valid)
+                {
+                    Sysconf.Instance.AddApplication(app);
+                }
+            }
+
+            var projects = new frmMyProjects();
+            projects.TopLevel = false;
+            projects.FormBorderStyle = FormBorderStyle.None;
+            tabPageMyProjects.Controls.Add(projects);
+            projects.Show();
+            projects.Dock = DockStyle.Fill;
+
             var programs = new frmPrograms();
             programs.TopLevel = false;
             programs.FormBorderStyle = FormBorderStyle.None;
@@ -107,9 +130,32 @@ namespace devkit2
             var start = new frmStart();
             start.TopLevel = false;
             start.FormBorderStyle = FormBorderStyle.None;
-            tabPageStart.Controls.Add(start);
+            tabPageManualLaunch.Controls.Add(start);
             start.Show();
             start.Dock = DockStyle.Fill;
+        }
+
+        private void tabControlContainer_Selected(object sender, TabControlEventArgs e)
+        {
+            TabPage? page = e.TabPage;
+            if (page != null)
+            {
+                if (page.Controls.Count > 0)
+                {
+                    Form? form = null;
+                    foreach (var control in page.Controls)
+                    {
+                        if(control is Form)
+                        {
+                            form = (Form)control;
+                        }
+                    }
+                    if(form != null)
+                    {
+                        form.Refresh();
+                    }
+                }
+            }
         }
     }
 }

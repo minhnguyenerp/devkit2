@@ -1,6 +1,5 @@
 ﻿using devkit2.Applications;
 using devkit2.Properties;
-using System.Reflection;
 
 namespace devkit2
 {
@@ -14,10 +13,7 @@ namespace devkit2
 
         private void frmPrograms_Load(object sender, EventArgs e)
         {
-            var apps = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => typeof(IApplication).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Select(t => (IApplication)Activator.CreateInstance(t));
+            var apps = Sysconf.Instance.Applications;
             int rowIndex = -1;
             int i = 1;
             foreach (var app in apps)

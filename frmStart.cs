@@ -1,7 +1,6 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
-using System.Reflection;
 
 namespace devkit2
 {
@@ -15,22 +14,45 @@ namespace devkit2
 
         private void frmStart_Load(object sender, EventArgs e)
         {
-            var apps = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => typeof(IApplication).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Select(t => (IApplication)Activator.CreateInstance(t));
-            int rowIndex = -1;
-            int i = 1;
+            LoadApplications();
+        }
+
+        public override void Refresh()
+        {
+            LoadApplications();
+            base.Refresh();
+        }
+
+        private void LoadApplications()
+        {
+            var apps = Sysconf.Instance.Applications;
+            int newRowIndex = -1;
             foreach (var app in apps)
             {
-                if (app != null && app.Valid && app.InstalledVersions.Length > 0)
+                DataGridViewRow? existed = null;
+                foreach (DataGridViewRow row in dataGridViewPrograms.Rows)
                 {
-                    rowIndex = dataGridViewPrograms.Rows.Add();
-                    var row = dataGridViewPrograms.Rows[rowIndex];
-                    row.Cells[colNo.Index].Value = (i++).ToString();
-                    row.Cells[colStart.Index].Value = "Run";
-                    row.Tag = app;
-                    RowRefresh(row);
+                    if(row.Tag != null && row.Tag == app)
+                    {
+                        existed = row;
+                        break;
+                    }
+                }
+                if (existed != null)
+                {
+                    if (app.InstalledVersions.Length <= 0) { dataGridViewPrograms.Rows.Remove(existed); }
+                }
+                else
+                {
+                    if(app != null && app.Valid && app.InstalledVersions.Length > 0)
+                    {
+                        newRowIndex = dataGridViewPrograms.Rows.Add();
+                        var newRow = dataGridViewPrograms.Rows[newRowIndex];
+                        newRow.Cells[colNo.Index].Value = (dataGridViewPrograms.Rows.Count-1).ToString();
+                        newRow.Cells[colStart.Index].Value = "Run";
+                        newRow.Tag = app;
+                        RowRefresh(newRow);
+                    }
                 }
             }
         }

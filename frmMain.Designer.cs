@@ -29,7 +29,8 @@
         private void InitializeComponent()
         {
             tabControlContainer = new TabControl();
-            tabPageStart = new TabPage();
+            tabPageMyProjects = new TabPage();
+            tabPageManualLaunch = new TabPage();
             tabPagePrograms = new TabPage();
             tabPageDocument = new TabPage();
             tabControlContainer.SuspendLayout();
@@ -38,7 +39,8 @@
             // tabControlContainer
             // 
             tabControlContainer.Alignment = TabAlignment.Bottom;
-            tabControlContainer.Controls.Add(tabPageStart);
+            tabControlContainer.Controls.Add(tabPageMyProjects);
+            tabControlContainer.Controls.Add(tabPageManualLaunch);
             tabControlContainer.Controls.Add(tabPagePrograms);
             tabControlContainer.Controls.Add(tabPageDocument);
             tabControlContainer.Dock = DockStyle.Fill;
@@ -49,23 +51,33 @@
             tabControlContainer.SelectedIndex = 0;
             tabControlContainer.Size = new Size(896, 497);
             tabControlContainer.TabIndex = 0;
+            tabControlContainer.Selected += tabControlContainer_Selected;
             // 
-            // tabPageStart
+            // tabPageMyProjects
             // 
-            tabPageStart.Location = new Point(4, 4);
-            tabPageStart.Name = "tabPageStart";
-            tabPageStart.Padding = new Padding(3);
-            tabPageStart.Size = new Size(888, 463);
-            tabPageStart.TabIndex = 0;
-            tabPageStart.Text = "Start";
-            tabPageStart.UseVisualStyleBackColor = true;
+            tabPageMyProjects.Location = new Point(4, 4);
+            tabPageMyProjects.Name = "tabPageMyProjects";
+            tabPageMyProjects.Size = new Size(888, 463);
+            tabPageMyProjects.TabIndex = 3;
+            tabPageMyProjects.Text = "My Projects";
+            tabPageMyProjects.UseVisualStyleBackColor = true;
+            // 
+            // tabPageManualLaunch
+            // 
+            tabPageManualLaunch.Location = new Point(4, 4);
+            tabPageManualLaunch.Name = "tabPageManualLaunch";
+            tabPageManualLaunch.Padding = new Padding(3);
+            tabPageManualLaunch.Size = new Size(888, 463);
+            tabPageManualLaunch.TabIndex = 0;
+            tabPageManualLaunch.Text = "Manual Launch";
+            tabPageManualLaunch.UseVisualStyleBackColor = true;
             // 
             // tabPagePrograms
             // 
             tabPagePrograms.Location = new Point(4, 4);
             tabPagePrograms.Name = "tabPagePrograms";
             tabPagePrograms.Padding = new Padding(3);
-            tabPagePrograms.Size = new Size(835, 463);
+            tabPagePrograms.Size = new Size(888, 463);
             tabPagePrograms.TabIndex = 1;
             tabPagePrograms.Text = "Programs";
             tabPagePrograms.UseVisualStyleBackColor = true;
@@ -74,7 +86,7 @@
             // 
             tabPageDocument.Location = new Point(4, 4);
             tabPageDocument.Name = "tabPageDocument";
-            tabPageDocument.Size = new Size(835, 463);
+            tabPageDocument.Size = new Size(888, 463);
             tabPageDocument.TabIndex = 2;
             tabPageDocument.Text = "Document";
             tabPageDocument.UseVisualStyleBackColor = true;
@@ -96,8 +108,9 @@
         #endregion
 
         private TabControl tabControlContainer;
-        private TabPage tabPageStart;
+        private TabPage tabPageManualLaunch;
         private TabPage tabPagePrograms;
         private TabPage tabPageDocument;
+        private TabPage tabPageMyProjects;
     }
 }

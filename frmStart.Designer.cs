@@ -40,6 +40,7 @@
             // 
             // dataGridViewPrograms
             // 
+            dataGridViewPrograms.BorderStyle = BorderStyle.None;
             dataGridViewPrograms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colWorkingDirectory, colSelect, colEnv, colStart });
             dataGridViewPrograms.Dock = DockStyle.Fill;
