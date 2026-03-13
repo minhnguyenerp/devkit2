@@ -1,4 +1,5 @@
 ﻿using devkit2.Common;
+using devkit2.Properties;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json.Nodes;
@@ -123,7 +124,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "go", "bin", "go.exe"));
+                            _icon = Resources.golang_gopher_src_logo_icon_168155;
                         }
                         catch { }
                     }

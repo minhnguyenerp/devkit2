@@ -9,6 +9,11 @@ namespace devkit2
         {
             InitializeComponent();
             Icon = Resources.dev_23828;
+            dataGridViewPrograms.AllowUserToAddRows = false;
+            dataGridViewPrograms.RowHeadersVisible = false;
+            dataGridViewPrograms.AllowUserToResizeRows = false;
+            dataGridViewPrograms.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewPrograms.MultiSelect = false;
         }
 
         private void frmPrograms_Load(object sender, EventArgs e)

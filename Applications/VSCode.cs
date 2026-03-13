@@ -88,7 +88,9 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments)
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "Code.exe");
+            psi.FileName = Path.Combine(appPath, version, @"Code.exe");
+            psi.ArgumentList.Add(@"C:\Development\projects\my-frontend");
+            psi.WorkingDirectory = @"C:\Development\projects\my-frontend";
             psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments);
 

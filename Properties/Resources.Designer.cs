@@ -69,5 +69,15 @@ namespace devkit2.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon golang_gopher_src_logo_icon_168155 {
+            get {
+                object obj = ResourceManager.GetObject("golang_gopher_src_logo_icon_168155", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

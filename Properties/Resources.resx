@@ -121,4 +121,7 @@
   <data name="dev_23828" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dev_23828.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="golang_gopher_src_logo_icon_168155" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\golang_gopher_src_logo_icon_168155.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

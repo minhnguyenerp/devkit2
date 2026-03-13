@@ -46,6 +46,7 @@
             listView1.Size = new Size(814, 458);
             listView1.TabIndex = 0;
             listView1.UseCompatibleStateImageBehavior = false;
+            listView1.ItemActivate += listView1_ItemActivate;
             // 
             // tableLayoutPanel1
             // 
@@ -90,6 +91,7 @@
             Controls.Add(tableLayoutPanel1);
             Name = "frmMyProjects";
             Text = "frmMyProject";
+            Load += frmMyProjects_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             toolStrip1.ResumeLayout(false);
