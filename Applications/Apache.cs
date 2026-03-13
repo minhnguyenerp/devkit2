@@ -140,7 +140,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments)
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "httpd.exe");
+            psi.FileName = Path.Combine(appPath, version, "Apache24", "bin", "httpd.exe");
             psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments);
 
@@ -158,6 +158,28 @@ namespace devkit2.Applications
         public override bool Stop(string version)
         {
             return false;
+        }
+
+        public override Icon Icon
+        {
+            get
+            {
+                if (_icon == null)
+                {
+                    if (InstalledVersions.Length > 0)
+                    {
+                        try
+                        {
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "Apache24", "bin", "httpd.exe"));
+                        } catch { }
+                    }
+                }
+                if (_icon == null)
+                {
+                    _icon = base.Icon;
+                }
+                return _icon;
+            }
         }
     }
 }

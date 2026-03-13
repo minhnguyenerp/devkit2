@@ -1,4 +1,5 @@
 ﻿using devkit2.Common;
+using devkit2.Properties;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -221,6 +222,17 @@ namespace devkit2.Applications
                 {
                     processStartInfo.EnvironmentVariables[one.Key] = one.Value;
                 }
+            }
+        }
+
+        protected Icon? _icon = null;
+        public virtual Icon Icon
+        {
+            get
+            {
+                if (_icon == null)
+                    _icon = Resources.dev_23828;
+                return _icon;
             }
         }
     }

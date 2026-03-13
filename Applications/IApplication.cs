@@ -15,5 +15,6 @@ namespace devkit2.Applications
         ValueName[] GetEnvironments(string version);
         bool Start(string version, ValueName[] environments);
         bool Stop(string version);
+        Icon Icon { get; }
     }
 }

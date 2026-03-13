@@ -106,5 +106,30 @@ namespace devkit2.Applications
         {
             return false;
         }
+
+        public override Icon Icon
+        {
+            get
+            {
+                if (_icon == null)
+                {
+                    if (InstalledVersions.Length > 0)
+                    {
+                        try
+                        {
+                            _icon = Icon.ExtractAssociatedIcon(
+                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "php.exe")
+                            );
+                        }
+                        catch { }
+                    }
+                }
+                if (_icon == null)
+                {
+                    _icon = base.Icon;
+                }
+                return _icon;
+            }
+        }
     }
 }

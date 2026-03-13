@@ -80,6 +80,7 @@
             toolStripButtonNewProject.Name = "toolStripButtonNewProject";
             toolStripButtonNewProject.Size = new Size(32, 32);
             toolStripButtonNewProject.Text = "New Project";
+            toolStripButtonNewProject.Click += toolStripButtonNewProject_Click;
             // 
             // frmMyProjects
             // 

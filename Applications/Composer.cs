@@ -106,5 +106,28 @@ php.exe ""%~dp0composer.phar"" %*");
         {
             return false;
         }
+
+        public override Icon Icon
+        {
+            get
+            {
+                if (_icon == null)
+                {
+                    if (InstalledVersions.Length > 0)
+                    {
+                        try
+                        {
+                            _icon = Icon.ExtractAssociatedIcon(Environment.SystemDirectory + @"\cmd.exe");
+                        }
+                        catch { }
+                    }
+                }
+                if (_icon == null)
+                {
+                    _icon = base.Icon;
+                }
+                return _icon;
+            }
+        }
     }
 }
