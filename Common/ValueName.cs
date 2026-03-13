@@ -4,6 +4,7 @@
     {
         public string Value { get; set; }
         public string Name { get; set; }
+        public object? Tag { get; set; }
 
         public ValueName(string value, string name)
         {

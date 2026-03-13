@@ -25,9 +25,8 @@ namespace devkit2
 
         private void LoadApplications()
         {
-            var apps = Sysconf.Instance.Applications;
             int newRowIndex = -1;
-            foreach (var app in apps)
+            foreach (var app in Sysconf.Instance.Applications)
             {
                 DataGridViewRow? existed = null;
                 foreach (DataGridViewRow row in dataGridViewPrograms.Rows)
