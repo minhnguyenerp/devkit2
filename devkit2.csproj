@@ -14,6 +14,11 @@
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
   </PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<DebugSymbols>false</DebugSymbols>
+	</PropertyGroup>
+
   <ItemGroup>
     <Content Include="Resources\dev_23828.ico" />
   </ItemGroup>
@@ -44,4 +49,13 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Installer\" />
+  </ItemGroup>
+    <Target Name="BuildInstaller" AfterTargets="PostBuildEvent" Condition="'$(Configuration)'=='Release'">
+	    <Exec Command="$(SolutionDir)Installer\nsis-3.11\makensis.exe $(ProjectDir)Installer\Setup.nsi" />
+    </Target>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="if $(Configuration) == Release (&#xD;&#xA;powershell -Command &quot;Remove-Item '$(TargetDir)*' -Recurse -Force&quot;&#xD;&#xA;)" />
+    </Target>
 </Project>
