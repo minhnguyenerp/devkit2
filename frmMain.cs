@@ -46,19 +46,17 @@ namespace devkit2
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                HideToTray();
+                //HideToTray();
             }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-#if !DEBUG
-            if (!reallyExit)
+            /*if (!reallyExit)
             {
                 e.Cancel = true;
                 HideToTray();
-            }
-#endif
+            }*/
         }
 
         private void HideToTray()
