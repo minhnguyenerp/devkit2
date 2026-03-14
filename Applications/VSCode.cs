@@ -89,9 +89,15 @@ namespace devkit2.Applications
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, @"Code.exe");
-            psi.ArgumentList.Add(@"C:\Development\projects\my-frontend");
-            psi.WorkingDirectory = @"C:\Development\projects\my-frontend";
-            psi.UseShellExecute = false;
+            if (profile != null)
+            {
+                string workingDir = profile["WorkingDirectory"]?.ToString() ?? string.Empty;
+                if(!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+                {
+                    psi.WorkingDirectory = workingDir;
+                    psi.ArgumentList.Add(workingDir);
+                }
+            }
             LoadEnvironments(ref psi, environments);
 
             try
@@ -101,7 +107,11 @@ namespace devkit2.Applications
                     return true;
                 }
             }
-            catch { return false; }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             return false;
         }
 

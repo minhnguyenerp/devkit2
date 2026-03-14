@@ -17,5 +17,6 @@ namespace devkit2.Applications
         bool Start(string version, ValueName[] environments, JsonObject? profile = null);
         bool Stop(string version);
         Icon Icon { get; }
+        JsonObject? ProfileEdit(JsonObject? init = null);
     }
 }

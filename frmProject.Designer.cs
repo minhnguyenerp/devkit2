@@ -44,15 +44,10 @@
             tableLayoutPanel3 = new TableLayoutPanel();
             btnOK = new Button();
             btnCancel = new Button();
-            label4 = new Label();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            txtProjectLocation = new TextBox();
-            btnBrowse = new Button();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -67,8 +62,6 @@
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
             tableLayoutPanel1.Controls.Add(dataGridView1, 1, 2);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 4);
-            tableLayoutPanel1.Controls.Add(label4, 0, 3);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 3);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(4);
@@ -77,7 +70,7 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 2F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(747, 411);
             tableLayoutPanel1.TabIndex = 0;
@@ -122,7 +115,7 @@
             label3.Location = new Point(4, 70);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(119, 256);
+            label3.Size = new Size(119, 289);
             label3.TabIndex = 1;
             label3.Text = "Environments";
             label3.TextAlign = ContentAlignment.MiddleRight;
@@ -130,9 +123,9 @@
             // tableLayoutPanel2
             // 
             tableLayoutPanel2.ColumnCount = 3;
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65.5677643F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34.43224F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.Controls.Add(comboBoxProgram, 0, 0);
             tableLayoutPanel2.Controls.Add(comboBoxVersion, 1, 0);
             tableLayoutPanel2.Controls.Add(btnProfile, 2, 0);
@@ -152,7 +145,7 @@
             comboBoxProgram.FormattingEnabled = true;
             comboBoxProgram.Location = new Point(3, 3);
             comboBoxProgram.Name = "comboBoxProgram";
-            comboBoxProgram.Size = new Size(367, 29);
+            comboBoxProgram.Size = new Size(180, 29);
             comboBoxProgram.TabIndex = 3;
             comboBoxProgram.SelectedIndexChanged += comboBoxProgram_SelectedIndexChanged;
             // 
@@ -161,20 +154,21 @@
             comboBoxVersion.Dock = DockStyle.Fill;
             comboBoxVersion.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxVersion.FormattingEnabled = true;
-            comboBoxVersion.Location = new Point(376, 3);
+            comboBoxVersion.Location = new Point(189, 3);
             comboBoxVersion.Name = "comboBoxVersion";
-            comboBoxVersion.Size = new Size(190, 29);
+            comboBoxVersion.Size = new Size(118, 29);
             comboBoxVersion.TabIndex = 3;
             // 
             // btnProfile
             // 
             btnProfile.Dock = DockStyle.Fill;
-            btnProfile.Location = new Point(572, 3);
+            btnProfile.Location = new Point(313, 3);
             btnProfile.Name = "btnProfile";
-            btnProfile.Size = new Size(45, 29);
+            btnProfile.Size = new Size(304, 29);
             btnProfile.TabIndex = 4;
             btnProfile.Text = "...";
             btnProfile.UseVisualStyleBackColor = true;
+            btnProfile.Click += btnProfile_Click;
             // 
             // dataGridView1
             // 
@@ -184,9 +178,10 @@
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(130, 73);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(614, 250);
+            dataGridView1.Size = new Size(614, 283);
             dataGridView1.TabIndex = 6;
             dataGridView1.CellClick += dataGridView1_CellClick;
+            dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             // 
             // colProgram
@@ -206,6 +201,7 @@
             // 
             colProfile.HeaderText = "Profile";
             colProfile.Name = "colProfile";
+            colProfile.ReadOnly = true;
             colProfile.Width = 220;
             // 
             // tableLayoutPanel3
@@ -246,57 +242,6 @@
             btnCancel.UseVisualStyleBackColor = true;
             btnCancel.Click += btnCancel_Click;
             // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Dock = DockStyle.Fill;
-            label4.Location = new Point(4, 326);
-            label4.Margin = new Padding(4, 0, 4, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(119, 35);
-            label4.TabIndex = 1;
-            label4.Text = "Location";
-            label4.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.ColumnCount = 2;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
-            tableLayoutPanel4.Controls.Add(txtProjectLocation, 0, 0);
-            tableLayoutPanel4.Controls.Add(btnBrowse, 1, 0);
-            tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(127, 326);
-            tableLayoutPanel4.Margin = new Padding(0);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 1;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel4.Size = new Size(620, 35);
-            tableLayoutPanel4.TabIndex = 7;
-            // 
-            // txtProjectLocation
-            // 
-            txtProjectLocation.BackColor = Color.White;
-            txtProjectLocation.Dock = DockStyle.Fill;
-            txtProjectLocation.Location = new Point(4, 4);
-            txtProjectLocation.Margin = new Padding(4);
-            txtProjectLocation.Name = "txtProjectLocation";
-            txtProjectLocation.ReadOnly = true;
-            txtProjectLocation.Size = new Size(552, 29);
-            txtProjectLocation.TabIndex = 0;
-            // 
-            // btnBrowse
-            // 
-            btnBrowse.Dock = DockStyle.Fill;
-            btnBrowse.Location = new Point(563, 3);
-            btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(54, 29);
-            btnBrowse.TabIndex = 1;
-            btnBrowse.Text = "...";
-            btnBrowse.UseVisualStyleBackColor = true;
-            btnBrowse.Click += btnBrowse_Click;
-            // 
             // frmProject
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -314,8 +259,6 @@
             tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel4.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -333,13 +276,9 @@
         private Button btnOK;
         private Button btnCancel;
         private DataGridView dataGridView1;
-        private Label label4;
-        private TableLayoutPanel tableLayoutPanel4;
-        private TextBox txtProjectLocation;
-        private Button btnBrowse;
+        private Button btnProfile;
         private DataGridViewTextBoxColumn colProgram;
         private DataGridViewComboBoxColumn colVersion;
         private DataGridViewTextBoxColumn colProfile;
-        private Button btnProfile;
     }
 }

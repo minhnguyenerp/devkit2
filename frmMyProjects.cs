@@ -185,12 +185,14 @@ namespace devkit2
                 {
                     IApplication? primaryApplication = null;
                     string primaryVersion = string.Empty;
+                    JsonObject? primaryProfile = null;
                     foreach (var app in Sysconf.Instance.Applications)
                     {
                         if (app.Name == proj["Program"]?.ToString())
                         {
                             primaryApplication = app;
                             primaryVersion = proj["Version"]?.ToString() ?? string.Empty;
+                            primaryProfile = proj["Profile"] as JsonObject;
                             break;
                         }
                     }
@@ -219,7 +221,7 @@ namespace devkit2
                                 }
                             }
                         }
-                        primaryApplication.Start(primaryVersion, listEnv.ToArray());
+                        primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile);
                     }
                 }
             }

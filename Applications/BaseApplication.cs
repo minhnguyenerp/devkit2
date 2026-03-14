@@ -235,5 +235,12 @@ namespace devkit2.Applications
                 return _icon;
             }
         }
+
+        public virtual JsonObject? ProfileEdit(JsonObject? init = null)
+        {
+            BaseApplicationProfile dlgProfile = new BaseApplicationProfile() { Profile = init };
+            dlgProfile.ShowDialog();
+            return dlgProfile.Profile;
+        }
     }
 }

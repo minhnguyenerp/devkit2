@@ -3,6 +3,7 @@ using devkit2.Common;
 using devkit2.Properties;
 using System.ComponentModel;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace devkit2
 {
@@ -44,7 +45,7 @@ namespace devkit2
                 }
             }
 
-            if(Project != null)
+            if (Project != null)
             {
                 if (Project["ProjectName"] != null)
                 {
@@ -52,7 +53,7 @@ namespace devkit2
                 }
                 if (Project["Program"] != null)
                 {
-                    foreach(var item in comboBoxProgram.Items)
+                    foreach (var item in comboBoxProgram.Items)
                     {
                         if (Project["Program"]?.ToString() == item.ToString())
                         {
@@ -72,15 +73,16 @@ namespace devkit2
                         }
                     }
                 }
-                if (Project["ProjectDirectory"] != null)
+                if (Project["Profile"] != null)
                 {
-                    txtProjectLocation.Text = Project["ProjectDirectory"]?.ToString();
+                    btnProfile.Tag = Project["Profile"] as JsonObject;
+                    btnProfile.Text = Regex.Replace(Project["Profile"]?.ToString() ?? "...", @"\r\n?|\n", "");
                 }
                 if (Project["Environments"] != null && Project["Environments"] is JsonArray)
                 {
-                    foreach(var env in Project["Environments"] as JsonArray)
+                    foreach (var env in Project["Environments"] as JsonArray)
                     {
-                        foreach(DataGridViewRow row in dataGridView1.Rows)
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
                         {
                             var app = row.Tag as IApplication;
                             if (app != null && env != null && app.Name == env["Program"]?.ToString())
@@ -89,6 +91,11 @@ namespace devkit2
                                 if (cell != null)
                                 {
                                     cell.Value = env["Version"]?.ToString();
+                                }
+                                if (env["Profile"] != null)
+                                {
+                                    row.Cells[colProfile.Index].Tag = env["Profile"];
+                                    row.Cells[colProfile.Index].Value = env["Profile"]?.ToString();
                                 }
                                 break;
                             }
@@ -155,11 +162,12 @@ namespace devkit2
                     {
                         ["Program"] = (row.Tag as IApplication)?.Name ?? string.Empty,
                         ["Version"] = cell,
+                        ["Profile"] = (row.Cells[colProfile.Index].Tag as JsonObject)?.DeepClone(),
                     });
                 }
             }
             Project["Environments"] = jsonArray;
-            Project["ProjectDirectory"] = txtProjectLocation.Text.Trim();
+            Project["Profile"] = btnProfile.Tag as JsonObject;
 
             DialogResult = DialogResult.OK;
             Close();
@@ -180,6 +188,17 @@ namespace devkit2
             }
         }
 
+        private void btnProfile_Click(object sender, EventArgs e)
+        {
+            var app = (comboBoxProgram.SelectedItem as ValueName)?.Tag as IApplication;
+            if (app != null)
+            {
+                JsonObject? result = app.ProfileEdit(btnProfile.Tag as JsonObject);
+                btnProfile.Tag = result;
+                btnProfile.Text = Regex.Replace(result?.ToString() ?? "...", @"\r\n?|\n", "");
+            }
+        }
+
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             bool validClick = (e.RowIndex != -1 && e.ColumnIndex != -1); //Make sure the clicked row/column is valid.
@@ -194,16 +213,33 @@ namespace devkit2
             }
         }
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
-            {
-                dialog.Description = "Select a Folder";
-                dialog.UseDescriptionForTitle = true;
+            bool validClick = (e.RowIndex != -1 && e.ColumnIndex != -1); //Make sure the clicked row/column is valid.
+            var datagridview = sender as DataGridView;
+            if (datagridview == null) { return; }
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+            // Check to make sure the cell clicked is the cell containing the combobox 
+            if (validClick && e.ColumnIndex == colProfile.Index)
+            {
+                var row = datagridview.Rows[e.RowIndex];
+                var app = row?.Tag as IApplication;
+                if (app != null)
                 {
-                    txtProjectLocation.Text = dialog.SelectedPath;
+                    DataGridViewCell? cell = row?.Cells[colProfile.Index];
+                    if (cell != null)
+                    {
+                        JsonObject? result = app.ProfileEdit(cell.Tag as JsonObject);
+                        cell.Tag = result;
+                        if(result != null)
+                        {
+                            cell.Value = result.ToString();
+                        }
+                        else
+                        {
+                            cell.Value = string.Empty;
+                        }
+                    }
                 }
             }
         }
