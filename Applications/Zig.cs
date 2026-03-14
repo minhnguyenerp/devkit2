@@ -118,7 +118,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"zig-x86_64-windows-{InstalledVersions[InstalledVersions.Length - 1].Value}", "zig.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, $"zig-x86_64-windows-{InstalledVersions[0].Value}", "zig.exe")
                             );
                         }
                         catch { }

@@ -118,7 +118,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "SumatraPDF-3.5.2-64.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, "SumatraPDF-3.5.2-64.exe")
                             );
                         }
                         catch { }

@@ -45,7 +45,7 @@ namespace devkit2
                 comboCell.DataSource = app?.AvailableVersions;
                 comboCell.DisplayMember = "Name";
                 comboCell.ValueMember = "Value";
-                var selected = app?.InstalledVersions?.LastOrDefault()?.Value;
+                var selected = app?.InstalledVersions?.FirstOrDefault()?.Value;
                 var actionCell = row.Cells[colAction.Index];
                 if (selected != null)
                 {

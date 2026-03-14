@@ -49,6 +49,7 @@
             dataGridViewPrograms.Size = new Size(869, 450);
             dataGridViewPrograms.TabIndex = 3;
             dataGridViewPrograms.CellClick += dataGridViewPrograms_CellClick;
+            dataGridViewPrograms.CellDoubleClick += dataGridViewPrograms_CellDoubleClick;
             dataGridViewPrograms.CurrentCellDirtyStateChanged += dataGridViewPrograms_CurrentCellDirtyStateChanged;
             // 
             // colNo

@@ -135,7 +135,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"rust-{InstalledVersions[InstalledVersions.Length - 1].Value}-x86_64-pc-windows-gnu", "rustc", "bin", "rustc.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, $"rust-{InstalledVersions[0].Value}-x86_64-pc-windows-gnu", "rustc", "bin", "rustc.exe")
                             );
                         }
                         catch { }

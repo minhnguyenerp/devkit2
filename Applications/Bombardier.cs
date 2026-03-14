@@ -117,7 +117,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "bombardier-windows-amd64.exe"));
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "bombardier-windows-amd64.exe"));
                         }
                         catch { }
                     }

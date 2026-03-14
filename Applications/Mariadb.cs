@@ -117,7 +117,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"mariadb-{InstalledVersions[InstalledVersions.Length - 1].Value}-winx64", "bin", "mariadb.exe"));
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"mariadb-{InstalledVersions[0].Value}-winx64", "bin", "mariadb.exe"));
                         }
                         catch { }
                     }

@@ -114,13 +114,12 @@ namespace devkit2
                 IApplication? app = selected.Tag as IApplication;
                 if (app != null)
                 {
-                    int nIdx = -1;
                     foreach (var one in app.InstalledVersions)
                     {
-                        nIdx = comboBoxVersion.Items.Add(one);
+                        comboBoxVersion.Items.Add(one);
                     }
-                    if (nIdx > -1)
-                        comboBoxVersion.SelectedIndex = nIdx;
+                    if (comboBoxVersion.Items.Count > 0)
+                        comboBoxVersion.SelectedIndex = 0;
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
+using System.Text.Json.Nodes;
 
 namespace devkit2
 {
@@ -36,7 +37,7 @@ namespace devkit2
                 DataGridViewRow? existed = null;
                 foreach (DataGridViewRow row in dataGridViewPrograms.Rows)
                 {
-                    if(row.Tag != null && row.Tag == app)
+                    if (row.Tag != null && row.Tag == app)
                     {
                         existed = row;
                         break;
@@ -48,11 +49,11 @@ namespace devkit2
                 }
                 else
                 {
-                    if(app != null && app.Valid && app.InstalledVersions.Length > 0)
+                    if (app != null && app.Valid && app.InstalledVersions.Length > 0)
                     {
                         newRowIndex = dataGridViewPrograms.Rows.Add();
                         var newRow = dataGridViewPrograms.Rows[newRowIndex];
-                        newRow.Cells[colNo.Index].Value = (dataGridViewPrograms.Rows.Count-1).ToString();
+                        newRow.Cells[colNo.Index].Value = (dataGridViewPrograms.Rows.Count).ToString();
                         newRow.Cells[colStart.Index].Value = "Run";
                         newRow.Tag = app;
                         RowRefresh(newRow);
@@ -72,7 +73,7 @@ namespace devkit2
                 comboCell.DataSource = app?.AvailableVersions;
                 comboCell.DisplayMember = "Name";
                 comboCell.ValueMember = "Value";
-                var selected = app?.InstalledVersions?.LastOrDefault()?.Value;
+                var selected = app?.InstalledVersions?.FirstOrDefault()?.Value;
                 //__internalTrigger = true;
                 comboCell.Value = selected;
             }
@@ -92,7 +93,7 @@ namespace devkit2
             }
 
             List<ValueName> environments = new List<ValueName>();
-            foreach(DataGridViewRow row in datagridview.Rows)
+            foreach (DataGridViewRow row in datagridview.Rows)
             {
                 if (row.Tag != null && row.Tag is IApplication)
                 {
@@ -115,7 +116,7 @@ namespace devkit2
                     string version = row.Cells[colSelect.Index]?.Value?.ToString() ?? "";
                     if (!string.IsNullOrEmpty(version))
                     {
-                        app.Start(version, environments.ToArray());
+                        app.Start(version, environments.ToArray(), row.Cells[colProfile.Index]?.Tag as JsonObject);
                     }
                     else
                     {
@@ -131,6 +132,37 @@ namespace devkit2
             if (datagridview != null && datagridview.IsCurrentCellDirty)
             {
                 datagridview.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            }
+        }
+
+        private void dataGridViewPrograms_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            bool validClick = (e.RowIndex != -1 && e.ColumnIndex != -1); //Make sure the clicked row/column is valid.
+            var datagridview = sender as DataGridView;
+            if (datagridview == null) { return; }
+
+            // Check to make sure the cell clicked is the cell containing the combobox 
+            if (validClick && e.ColumnIndex == colProfile.Index)
+            {
+                var row = datagridview.Rows[e.RowIndex];
+                var app = row?.Tag as IApplication;
+                if (app != null)
+                {
+                    DataGridViewCell? cell = row?.Cells[colProfile.Index];
+                    if (cell != null)
+                    {
+                        JsonObject? result = app.ProfileEdit(cell.Tag as JsonObject);
+                        cell.Tag = result;
+                        if (result != null)
+                        {
+                            cell.Value = result.ToString();
+                        }
+                        else
+                        {
+                            cell.Value = string.Empty;
+                        }
+                    }
+                }
             }
         }
     }

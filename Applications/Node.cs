@@ -118,7 +118,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"node-v{InstalledVersions[InstalledVersions.Length - 1].Value}-win-x64", "node.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, $"node-v{InstalledVersions[0].Value}-win-x64", "node.exe")
                             );
                         }
                         catch { }

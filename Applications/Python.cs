@@ -119,7 +119,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"python-{InstalledVersions[InstalledVersions.Length - 1].Value}-embed-amd64", "python.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, $"python-{InstalledVersions[0].Value}-embed-amd64", "python.exe")
                             );
                         }
                         catch { }

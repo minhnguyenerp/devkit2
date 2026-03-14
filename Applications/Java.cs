@@ -117,7 +117,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, $"jdk-{InstalledVersions[InstalledVersions.Length - 1].Value}", "bin", "java.exe"));
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"jdk-{InstalledVersions[0].Value}", "bin", "java.exe"));
                         }
                         catch { }
                     }

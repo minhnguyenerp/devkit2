@@ -15,7 +15,7 @@ namespace devkit2.Applications
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JsonObject? Profile { get; set; } = null;
 
-        private void btnBrowse_Click(object sender, EventArgs e)
+        private void btnWorkingDirectoryBrowse_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog dialog = new FolderBrowserDialog())
             {
@@ -33,6 +33,7 @@ namespace devkit2.Applications
         {
             if (Profile == null) { Profile = new JsonObject(); }
             Profile["WorkingDirectory"] = txtWorkingDirectory.Text;
+            Profile["StartupFile"] = txtStartupFile.Text;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -52,9 +53,25 @@ namespace devkit2.Applications
 
         private void BaseApplicationProfile_Load(object sender, EventArgs e)
         {
-            if(Profile != null)
+            if (Profile != null)
             {
                 txtWorkingDirectory.Text = Profile["WorkingDirectory"]?.ToString();
+                txtStartupFile.Text = Profile["StartupFile"]?.ToString();
+            }
+        }
+
+        private void btnStartupFileBrowse_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialog = new OpenFileDialog())
+            {
+                dialog.Title = "Select a File";
+                dialog.Filter = "All files (*.*)|*.*";
+                dialog.Multiselect = false;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtStartupFile.Text = dialog.FileName;
+                }
             }
         }
     }

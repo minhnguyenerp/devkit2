@@ -118,7 +118,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "WinMerge", "WinMergeU.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, "WinMerge", "WinMergeU.exe")
                             );
                         }
                         catch { }

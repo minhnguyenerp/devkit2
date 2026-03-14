@@ -118,7 +118,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "php.exe")
+                                Path.Combine(appPath, InstalledVersions[0].Value, "php.exe")
                             );
                         }
                         catch { }

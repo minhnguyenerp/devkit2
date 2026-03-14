@@ -170,7 +170,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[InstalledVersions.Length - 1].Value, "Apache24", "bin", "httpd.exe"));
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Apache24", "bin", "httpd.exe"));
                         } catch { }
                     }
                 }
