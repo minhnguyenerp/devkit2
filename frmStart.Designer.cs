@@ -31,8 +31,8 @@
             dataGridViewPrograms = new DataGridView();
             colNo = new DataGridViewTextBoxColumn();
             colProgram = new DataGridViewTextBoxColumn();
-            colWorkingDirectory = new DataGridViewTextBoxColumn();
             colSelect = new DataGridViewComboBoxColumn();
+            colProfile = new DataGridViewTextBoxColumn();
             colEnv = new DataGridViewCheckBoxColumn();
             colStart = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrograms).BeginInit();
@@ -42,7 +42,7 @@
             // 
             dataGridViewPrograms.BorderStyle = BorderStyle.None;
             dataGridViewPrograms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colWorkingDirectory, colSelect, colEnv, colStart });
+            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colSelect, colProfile, colEnv, colStart });
             dataGridViewPrograms.Dock = DockStyle.Fill;
             dataGridViewPrograms.Location = new Point(0, 0);
             dataGridViewPrograms.Name = "dataGridViewPrograms";
@@ -66,18 +66,18 @@
             colProgram.ReadOnly = true;
             colProgram.Width = 120;
             // 
-            // colWorkingDirectory
-            // 
-            colWorkingDirectory.HeaderText = "Working Directory";
-            colWorkingDirectory.Name = "colWorkingDirectory";
-            colWorkingDirectory.ReadOnly = true;
-            colWorkingDirectory.Width = 350;
-            // 
             // colSelect
             // 
             colSelect.HeaderText = "Select";
             colSelect.Name = "colSelect";
             colSelect.Width = 120;
+            // 
+            // colProfile
+            // 
+            colProfile.HeaderText = "Profile";
+            colProfile.Name = "colProfile";
+            colProfile.ReadOnly = true;
+            colProfile.Width = 350;
             // 
             // colEnv
             // 
@@ -112,8 +112,8 @@
         private DataGridView dataGridViewPrograms;
         private DataGridViewTextBoxColumn colNo;
         private DataGridViewTextBoxColumn colProgram;
-        private DataGridViewTextBoxColumn colWorkingDirectory;
         private DataGridViewComboBoxColumn colSelect;
+        private DataGridViewTextBoxColumn colProfile;
         private DataGridViewCheckBoxColumn colEnv;
         private DataGridViewButtonColumn colStart;
     }

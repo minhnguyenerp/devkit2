@@ -108,7 +108,7 @@ namespace devkit2.Applications
 
         public virtual bool Install(string version) { return false; }
 
-        public virtual bool Start(string version, ValueName[] environments) { return false; }
+        public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null) { return false; }
 
         public virtual bool Stop(string version) { return false; }
 

@@ -11,6 +11,7 @@ namespace devkit2
         private ImageList imgList = new ImageList();
         private JsonArray projects = new JsonArray();
         private string strConfigFile = string.Empty;
+        private ContextMenuStrip listViewMenu;
 
         public frmMyProjects()
         {
@@ -47,6 +48,66 @@ namespace devkit2
             {
                 projects = new JsonArray();
             }
+
+            listViewMenu = new ContextMenuStrip();
+            listViewMenu.Items.Add("Run", null, listView1_Run_Click);
+            listViewMenu.Items.Add(new ToolStripSeparator());
+            listViewMenu.Items.Add("Edit", null, listView1_Edit_Click);
+            listViewMenu.Items.Add("Delete", null, listView1_Delete_Click);
+            listView1.ContextMenuStrip = listViewMenu;
+        }
+
+        private void listView1_Run_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) { return; }
+            RunSelectedProject();
+        }
+
+        private void listView1_Edit_Click(object sender, EventArgs e)
+        {
+            EditSelectedProject();
+        }
+
+        private void DeleteSelectedProject()
+        {
+            if (listView1.SelectedItems.Count == 0)
+                return;
+
+            ListViewItem item = listView1.SelectedItems[0];
+
+            if (item != null)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to delete this project?",
+                    "DevKit2",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    foreach (var project in projects)
+                    {
+                        if (project != null)
+                        {
+
+                            if (item.Tag != null &&
+                                !string.IsNullOrEmpty(item.Tag.ToString()) &&
+                                item.Tag.ToString() == project["GUID"]?.ToString())
+                            {
+                                projects.Remove(project);
+                                break;
+                            }
+                        }
+                    }
+                    listView1.Items.Remove(item);
+                    SaveProjects();
+                }
+            }
+        }
+
+        private void listView1_Delete_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedProject();
         }
 
         private void SaveProjects()
@@ -105,9 +166,8 @@ namespace devkit2
             LoadProjects();
         }
 
-        private void listView1_ItemActivate(object sender, EventArgs e)
+        private void RunSelectedProject()
         {
-            if (listView1.SelectedItems.Count <= 0) { return; }
             var item = listView1.SelectedItems[0];
             string guid = item.Tag?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(guid))
@@ -127,7 +187,7 @@ namespace devkit2
                     string primaryVersion = string.Empty;
                     foreach (var app in Sysconf.Instance.Applications)
                     {
-                        if(app.Name == proj["Program"]?.ToString())
+                        if (app.Name == proj["Program"]?.ToString())
                         {
                             primaryApplication = app;
                             primaryVersion = proj["Version"]?.ToString() ?? string.Empty;
@@ -139,7 +199,7 @@ namespace devkit2
                         List<ValueName> listEnv = new List<ValueName>();
                         if (proj["Environments"] != null)
                         {
-                            foreach(var env in proj["Environments"] as JsonArray)
+                            foreach (var env in proj["Environments"] as JsonArray)
                             {
                                 if (env != null && env["Program"] != null && env["Version"] != null)
                                 {
@@ -152,7 +212,7 @@ namespace devkit2
                                             break;
                                         }
                                     }
-                                    if(subapp != null)
+                                    if (subapp != null)
                                     {
                                         listEnv.AddRange(subapp.GetEnvironments(env["Version"]?.ToString() ?? string.Empty));
                                     }
@@ -163,6 +223,61 @@ namespace devkit2
                     }
                 }
             }
+        }
+
+        private void listView1_ItemActivate(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) { return; }
+            RunSelectedProject();
+        }
+
+        private void EditSelectedProject()
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem item = listView1.SelectedItems[0];
+                string? guid = item.Tag as string;
+                if (!string.IsNullOrEmpty(guid))
+                {
+                    JsonObject? projFound = null;
+                    foreach (var proj in projects)
+                    {
+                        if (guid == proj?["GUID"]?.ToString())
+                        {
+                            projFound = proj as JsonObject;
+                            break;
+                        }
+                    }
+
+                    if (projFound != null)
+                    {
+                        frmProject project = new frmProject() { Project = projFound };
+                        if (project.ShowDialog() == DialogResult.OK)
+                        {
+                            SaveProjects();
+                            LoadProjects();
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Can not update project!", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please select a project!", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+        }
+
+        private void toolStripButtonEditProject_Click(object sender, EventArgs e)
+        {
+            EditSelectedProject();
+        }
+
+        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        {
+            DeleteSelectedProject();
         }
     }
 }

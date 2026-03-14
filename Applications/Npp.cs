@@ -84,7 +84,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, "notepad++.exe");

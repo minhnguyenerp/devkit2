@@ -36,9 +36,11 @@
             tableLayoutPanel2 = new TableLayoutPanel();
             comboBoxProgram = new ComboBox();
             comboBoxVersion = new ComboBox();
+            btnProfile = new Button();
             dataGridView1 = new DataGridView();
             colProgram = new DataGridViewTextBoxColumn();
             colVersion = new DataGridViewComboBoxColumn();
+            colProfile = new DataGridViewTextBoxColumn();
             tableLayoutPanel3 = new TableLayoutPanel();
             btnOK = new Button();
             btnCancel = new Button();
@@ -127,18 +129,19 @@
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnCount = 3;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65.5677643F));
-            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34.4322357F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 34.43224F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50F));
             tableLayoutPanel2.Controls.Add(comboBoxProgram, 0, 0);
             tableLayoutPanel2.Controls.Add(comboBoxVersion, 1, 0);
+            tableLayoutPanel2.Controls.Add(btnProfile, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(127, 35);
             tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
             tableLayoutPanel2.Size = new Size(620, 35);
             tableLayoutPanel2.TabIndex = 4;
             // 
@@ -149,7 +152,7 @@
             comboBoxProgram.FormattingEnabled = true;
             comboBoxProgram.Location = new Point(3, 3);
             comboBoxProgram.Name = "comboBoxProgram";
-            comboBoxProgram.Size = new Size(400, 29);
+            comboBoxProgram.Size = new Size(367, 29);
             comboBoxProgram.TabIndex = 3;
             comboBoxProgram.SelectedIndexChanged += comboBoxProgram_SelectedIndexChanged;
             // 
@@ -158,16 +161,26 @@
             comboBoxVersion.Dock = DockStyle.Fill;
             comboBoxVersion.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxVersion.FormattingEnabled = true;
-            comboBoxVersion.Location = new Point(409, 3);
+            comboBoxVersion.Location = new Point(376, 3);
             comboBoxVersion.Name = "comboBoxVersion";
-            comboBoxVersion.Size = new Size(208, 29);
+            comboBoxVersion.Size = new Size(190, 29);
             comboBoxVersion.TabIndex = 3;
+            // 
+            // btnProfile
+            // 
+            btnProfile.Dock = DockStyle.Fill;
+            btnProfile.Location = new Point(572, 3);
+            btnProfile.Name = "btnProfile";
+            btnProfile.Size = new Size(45, 29);
+            btnProfile.TabIndex = 4;
+            btnProfile.Text = "...";
+            btnProfile.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colProgram, colVersion });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colProgram, colVersion, colProfile });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(130, 73);
             dataGridView1.Name = "dataGridView1";
@@ -181,13 +194,19 @@
             colProgram.HeaderText = "Program";
             colProgram.Name = "colProgram";
             colProgram.ReadOnly = true;
-            colProgram.Width = 300;
+            colProgram.Width = 200;
             // 
             // colVersion
             // 
             colVersion.HeaderText = "Version";
             colVersion.Name = "colVersion";
-            colVersion.Width = 150;
+            colVersion.Width = 130;
+            // 
+            // colProfile
+            // 
+            colProfile.HeaderText = "Profile";
+            colProfile.Name = "colProfile";
+            colProfile.Width = 220;
             // 
             // tableLayoutPanel3
             // 
@@ -314,11 +333,13 @@
         private Button btnOK;
         private Button btnCancel;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn colProgram;
-        private DataGridViewComboBoxColumn colVersion;
         private Label label4;
         private TableLayoutPanel tableLayoutPanel4;
         private TextBox txtProjectLocation;
         private Button btnBrowse;
+        private DataGridViewTextBoxColumn colProgram;
+        private DataGridViewComboBoxColumn colVersion;
+        private DataGridViewTextBoxColumn colProfile;
+        private Button btnProfile;
     }
 }

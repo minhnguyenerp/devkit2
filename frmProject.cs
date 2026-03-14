@@ -43,6 +43,59 @@ namespace devkit2
                     newRow.Tag = app;
                 }
             }
+
+            if(Project != null)
+            {
+                if (Project["ProjectName"] != null)
+                {
+                    txtProjectName.Text = Project["ProjectName"]?.ToString();
+                }
+                if (Project["Program"] != null)
+                {
+                    foreach(var item in comboBoxProgram.Items)
+                    {
+                        if (Project["Program"]?.ToString() == item.ToString())
+                        {
+                            comboBoxProgram.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+                if (Project["Version"] != null)
+                {
+                    foreach (var item in comboBoxVersion.Items)
+                    {
+                        if (Project["Version"]?.ToString() == item.ToString())
+                        {
+                            comboBoxVersion.SelectedItem = item;
+                            break;
+                        }
+                    }
+                }
+                if (Project["ProjectDirectory"] != null)
+                {
+                    txtProjectLocation.Text = Project["ProjectDirectory"]?.ToString();
+                }
+                if (Project["Environments"] != null && Project["Environments"] is JsonArray)
+                {
+                    foreach(var env in Project["Environments"] as JsonArray)
+                    {
+                        foreach(DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            var app = row.Tag as IApplication;
+                            if (app != null && env != null && app.Name == env["Program"]?.ToString())
+                            {
+                                var cell = row.Cells[colVersion.Index];
+                                if (cell != null)
+                                {
+                                    cell.Value = env["Version"]?.ToString();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void comboBoxProgram_SelectedIndexChanged(object sender, EventArgs e)

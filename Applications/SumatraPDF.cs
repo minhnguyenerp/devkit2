@@ -84,7 +84,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, "SumatraPDF-3.5.2-64.exe");

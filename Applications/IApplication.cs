@@ -1,4 +1,5 @@
 ﻿using devkit2.Common;
+using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
@@ -13,7 +14,7 @@ namespace devkit2.Applications
         bool Install(string version);
         bool Uninstall(string version);
         ValueName[] GetEnvironments(string version);
-        bool Start(string version, ValueName[] environments);
+        bool Start(string version, ValueName[] environments, JsonObject? profile = null);
         bool Stop(string version);
         Icon Icon { get; }
     }

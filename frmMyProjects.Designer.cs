@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMyProjects));
             listView1 = new ListView();
             tableLayoutPanel1 = new TableLayoutPanel();
             toolStrip1 = new ToolStrip();
             toolStripButtonNewProject = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripButtonEditProject = new ToolStripButton();
+            toolStripButtonDelete = new ToolStripButton();
             tableLayoutPanel1.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -66,7 +68,7 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(28, 28);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProject });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProject, toolStripSeparator1, toolStripButtonEditProject, toolStripButtonDelete });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(820, 35);
@@ -76,12 +78,39 @@
             // toolStripButtonNewProject
             // 
             toolStripButtonNewProject.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonNewProject.Image = (Image)resources.GetObject("toolStripButtonNewProject.Image");
+            toolStripButtonNewProject.Image = Properties.Resources.new_project;
             toolStripButtonNewProject.ImageTransparentColor = Color.Magenta;
             toolStripButtonNewProject.Name = "toolStripButtonNewProject";
             toolStripButtonNewProject.Size = new Size(32, 32);
             toolStripButtonNewProject.Text = "New Project";
             toolStripButtonNewProject.Click += toolStripButtonNewProject_Click;
+            // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 35);
+            // 
+            // toolStripButtonEditProject
+            // 
+            toolStripButtonEditProject.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonEditProject.Image = Properties.Resources.edit;
+            toolStripButtonEditProject.ImageTransparentColor = Color.Magenta;
+            toolStripButtonEditProject.Name = "toolStripButtonEditProject";
+            toolStripButtonEditProject.Size = new Size(32, 32);
+            toolStripButtonEditProject.Text = "Edit Project";
+            toolStripButtonEditProject.Click += toolStripButtonEditProject_Click;
+            // 
+            // toolStripButtonDelete
+            // 
+            toolStripButtonDelete.Alignment = ToolStripItemAlignment.Right;
+            toolStripButtonDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonDelete.Image = Properties.Resources.trash;
+            toolStripButtonDelete.ImageTransparentColor = Color.Magenta;
+            toolStripButtonDelete.Name = "toolStripButtonDelete";
+            toolStripButtonDelete.Size = new Size(32, 32);
+            toolStripButtonDelete.Text = "toolStripButtonDelete";
+            toolStripButtonDelete.ToolTipText = "Delete Project";
+            toolStripButtonDelete.Click += toolStripButtonDelete_Click;
             // 
             // frmMyProjects
             // 
@@ -105,5 +134,8 @@
         private TableLayoutPanel tableLayoutPanel1;
         private ToolStrip toolStrip1;
         private ToolStripButton toolStripButtonNewProject;
+        private ToolStripButton toolStripButtonEditProject;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripButton toolStripButtonDelete;
     }
 }
