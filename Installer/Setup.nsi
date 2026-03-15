@@ -24,7 +24,7 @@ Var InstallSizeKB
 
 !define DOTNET_EXE      "windowsdesktop-runtime-10.0.5-win-x64.exe"
 
-!define INSTALL_DIR     "$PROGRAMFILES\Minh Research\${APP_NAME}"
+!define INSTALL_DIR     "$PROGRAMFILES64\Minh Research\${APP_NAME}"
 
 !define SRC_DIR         "..\bin\Release\net10.0-windows"
 
