@@ -22,9 +22,9 @@ Var InstallSizeKB
 !define APP_URL         "https://github.com/minhnguyenerp/devkit2/"
 !define APP_EXE         "devkit2.exe"
 
-!define DOTNET_EXE      "windowsdesktop-runtime-10.0.3-win-x64.exe"
+!define DOTNET_EXE      "windowsdesktop-runtime-10.0.5-win-x64.exe"
 
-!define INSTALL_DIR     "$LOCALAPPDATA\Programs\Minh Research\${APP_NAME}"
+!define INSTALL_DIR     "$PROGRAMFILES\Minh Research\${APP_NAME}"
 
 !define SRC_DIR         "..\bin\Release\net10.0-windows"
 
@@ -90,6 +90,7 @@ Section "Main Application" SecMain
   ${EndIf}
 
   SetRegView 64
+  SetShellVarContext all
 
   ; prerequisites
   Call EnsureDotNetDesktopRuntime
@@ -155,14 +156,14 @@ Function LaunchApp
   Exec '"$INSTDIR\${APP_EXE}"'
 FunctionEnd
 
-; ---- .NET Desktop Runtime 10.0.3 presence check
+; ---- .NET Desktop Runtime 10.0.5 presence check
 Function DotNetIsMissing
   Push $0
   StrCpy $0 0
 
-  ${If} ${FileExists} "$PROGRAMFILES64\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.3\*.*"
+  ${If} ${FileExists} "$PROGRAMFILES64\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.5\*.*"
     StrCpy $0 0
-  ${ElseIf} ${FileExists} "$PROGRAMFILES\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.3\*.*"
+  ${ElseIf} ${FileExists} "$PROGRAMFILES\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.5\*.*"
     StrCpy $0 0
   ${Else}
     StrCpy $0 1
@@ -177,7 +178,7 @@ Function EnsureDotNetDesktopRuntime
   Pop $0
 
   ${If} $0 == 1
-    DetailPrint "Installing .NET Desktop Runtime 10.0.3 (silent)..."
+    DetailPrint "Installing .NET Desktop Runtime 10.0.5 (silent)..."
 
     SetOutPath "$TEMP"
     File "/oname=$TEMP\${DOTNET_EXE}" "${DOTNET_EXE}"
