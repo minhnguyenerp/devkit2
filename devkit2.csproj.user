@@ -7,6 +7,9 @@
     <Compile Update="Applications\BaseApplicationProfile.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Applications\MariadbProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
