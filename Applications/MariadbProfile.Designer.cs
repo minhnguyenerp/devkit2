@@ -28,120 +28,264 @@ namespace devkit2.Applications
         /// </summary>
         private void InitializeComponent()
         {
-            this.lblDataDir = new System.Windows.Forms.Label();
-            this.txtDataDir = new System.Windows.Forms.TextBox();
-            this.btnWorkingDirectoryBrowse = new System.Windows.Forms.Button();
-            this.lblPort = new System.Windows.Forms.Label();
-            this.txtPort = new System.Windows.Forms.TextBox();
-            this.btnOK = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnClear = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-            // 
-            // lblDataDir
-            // 
-            this.lblDataDir.AutoSize = true;
-            this.lblDataDir.Location = new System.Drawing.Point(12, 15);
-            this.lblDataDir.Name = "lblDataDir";
-            this.lblDataDir.Size = new System.Drawing.Size(57, 15);
-            this.lblDataDir.TabIndex = 0;
-            this.lblDataDir.Text = "Data Dir:";
-            // 
-            // txtDataDir
-            // 
-            this.txtDataDir.Location = new System.Drawing.Point(75, 12);
-            this.txtDataDir.Name = "txtDataDir";
-            this.txtDataDir.Size = new System.Drawing.Size(280, 23);
-            this.txtDataDir.TabIndex = 1;
-            // 
-            // btnWorkingDirectoryBrowse
-            // 
-            this.btnWorkingDirectoryBrowse.Location = new System.Drawing.Point(361, 11);
-            this.btnWorkingDirectoryBrowse.Name = "btnWorkingDirectoryBrowse";
-            this.btnWorkingDirectoryBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnWorkingDirectoryBrowse.TabIndex = 2;
-            this.btnWorkingDirectoryBrowse.Text = "Browse";
-            this.btnWorkingDirectoryBrowse.UseVisualStyleBackColor = true;
-            this.btnWorkingDirectoryBrowse.Click += new System.EventHandler(this.btnWorkingDirectoryBrowse_Click);
+            lblPort = new Label();
+            txtPort = new TextBox();
+            btnOK = new Button();
+            btnCancel = new Button();
+            btnClear = new Button();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel2 = new TableLayoutPanel();
+            txtDataDirectory = new TextBox();
+            btnBrowseDataDirectory = new Button();
+            label1 = new Label();
+            label4 = new Label();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            txtWorkingDirectory = new TextBox();
+            btnBrowseWorkingDirectory = new Button();
+            tableLayoutPanel3 = new TableLayoutPanel();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
+            tableLayoutPanel3.SuspendLayout();
+            SuspendLayout();
             // 
             // lblPort
             // 
-            this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(12, 50);
-            this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(33, 15);
-            this.lblPort.TabIndex = 3;
-            this.lblPort.Text = "Port:";
+            lblPort.AutoSize = true;
+            lblPort.Dock = DockStyle.Fill;
+            lblPort.Location = new Point(3, 78);
+            lblPort.Name = "lblPort";
+            lblPort.Size = new Size(145, 39);
+            lblPort.TabIndex = 3;
+            lblPort.Text = "Port";
+            lblPort.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPort
             // 
-            this.txtPort.Location = new System.Drawing.Point(75, 47);
-            this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(100, 23);
-            this.txtPort.TabIndex = 4;
+            txtPort.Dock = DockStyle.Fill;
+            txtPort.Location = new Point(154, 81);
+            txtPort.Name = "txtPort";
+            txtPort.Size = new Size(491, 29);
+            txtPort.TabIndex = 4;
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(280, 82);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 5;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
-            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+            btnOK.Dock = DockStyle.Fill;
+            btnOK.Location = new Point(3, 3);
+            btnOK.Name = "btnOK";
+            btnOK.Size = new Size(103, 38);
+            btnOK.TabIndex = 5;
+            btnOK.Text = "OK";
+            btnOK.UseVisualStyleBackColor = true;
+            btnOK.Click += btnOK_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(361, 82);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 6;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Dock = DockStyle.Fill;
+            btnCancel.Location = new Point(221, 3);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(104, 38);
+            btnCancel.TabIndex = 6;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(199, 82);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 7;
-            this.btnClear.Text = "Clear";
-            this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            btnClear.Dock = DockStyle.Fill;
+            btnClear.Location = new Point(112, 3);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(103, 38);
+            btnClear.TabIndex = 7;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 151F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
+            tableLayoutPanel1.Controls.Add(label1, 0, 1);
+            tableLayoutPanel1.Controls.Add(label4, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 0);
+            tableLayoutPanel1.Controls.Add(txtPort, 1, 2);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 4);
+            tableLayoutPanel1.Controls.Add(lblPort, 0, 2);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Margin = new Padding(4);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 5;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
+            tableLayoutPanel1.Size = new Size(648, 173);
+            tableLayoutPanel1.TabIndex = 8;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 77F));
+            tableLayoutPanel2.Controls.Add(txtDataDirectory, 0, 0);
+            tableLayoutPanel2.Controls.Add(btnBrowseDataDirectory, 1, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(151, 39);
+            tableLayoutPanel2.Margin = new Padding(0);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel2.Size = new Size(497, 39);
+            tableLayoutPanel2.TabIndex = 12;
+            // 
+            // txtDataDirectory
+            // 
+            txtDataDirectory.BackColor = Color.White;
+            txtDataDirectory.Dock = DockStyle.Fill;
+            txtDataDirectory.Location = new Point(5, 6);
+            txtDataDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtDataDirectory.Name = "txtDataDirectory";
+            txtDataDirectory.ReadOnly = true;
+            txtDataDirectory.Size = new Size(410, 29);
+            txtDataDirectory.TabIndex = 0;
+            // 
+            // btnBrowseDataDirectory
+            // 
+            btnBrowseDataDirectory.Dock = DockStyle.Fill;
+            btnBrowseDataDirectory.Location = new Point(424, 4);
+            btnBrowseDataDirectory.Margin = new Padding(4);
+            btnBrowseDataDirectory.Name = "btnBrowseDataDirectory";
+            btnBrowseDataDirectory.Size = new Size(69, 31);
+            btnBrowseDataDirectory.TabIndex = 1;
+            btnBrowseDataDirectory.Text = "...";
+            btnBrowseDataDirectory.UseVisualStyleBackColor = true;
+            btnBrowseDataDirectory.Click += btnBrowseDataDirectory_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Dock = DockStyle.Fill;
+            label1.Location = new Point(5, 39);
+            label1.Margin = new Padding(5, 0, 5, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(141, 39);
+            label1.TabIndex = 11;
+            label1.Text = "Data Directory";
+            label1.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Dock = DockStyle.Fill;
+            label4.Location = new Point(5, 0);
+            label4.Margin = new Padding(5, 0, 5, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(141, 39);
+            label4.TabIndex = 8;
+            label4.Text = "Working Directory";
+            label4.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 2;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 77F));
+            tableLayoutPanel4.Controls.Add(txtWorkingDirectory, 0, 0);
+            tableLayoutPanel4.Controls.Add(btnBrowseWorkingDirectory, 1, 0);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(151, 0);
+            tableLayoutPanel4.Margin = new Padding(0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel4.Size = new Size(497, 39);
+            tableLayoutPanel4.TabIndex = 9;
+            // 
+            // txtWorkingDirectory
+            // 
+            txtWorkingDirectory.BackColor = Color.White;
+            txtWorkingDirectory.Dock = DockStyle.Fill;
+            txtWorkingDirectory.Location = new Point(5, 6);
+            txtWorkingDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtWorkingDirectory.Name = "txtWorkingDirectory";
+            txtWorkingDirectory.ReadOnly = true;
+            txtWorkingDirectory.Size = new Size(410, 29);
+            txtWorkingDirectory.TabIndex = 0;
+            // 
+            // btnBrowseWorkingDirectory
+            // 
+            btnBrowseWorkingDirectory.Dock = DockStyle.Fill;
+            btnBrowseWorkingDirectory.Location = new Point(424, 4);
+            btnBrowseWorkingDirectory.Margin = new Padding(4);
+            btnBrowseWorkingDirectory.Name = "btnBrowseWorkingDirectory";
+            btnBrowseWorkingDirectory.Size = new Size(69, 31);
+            btnBrowseWorkingDirectory.TabIndex = 1;
+            btnBrowseWorkingDirectory.Text = "...";
+            btnBrowseWorkingDirectory.UseVisualStyleBackColor = true;
+            btnBrowseWorkingDirectory.Click += btnBrowseWorkingDirectory_Click;
+            // 
+            // tableLayoutPanel3
+            // 
+            tableLayoutPanel3.ColumnCount = 3;
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel3.Controls.Add(btnOK, 0, 0);
+            tableLayoutPanel3.Controls.Add(btnCancel, 2, 0);
+            tableLayoutPanel3.Controls.Add(btnClear, 1, 0);
+            tableLayoutPanel3.Dock = DockStyle.Right;
+            tableLayoutPanel3.Location = new Point(317, 126);
+            tableLayoutPanel3.Name = "tableLayoutPanel3";
+            tableLayoutPanel3.RowCount = 1;
+            tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel3.Size = new Size(328, 44);
+            tableLayoutPanel3.TabIndex = 10;
             // 
             // MariadbProfile
             // 
-            this.ClientSize = new System.Drawing.Size(448, 117);
-            this.Controls.Add(this.btnClear);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.txtPort);
-            this.Controls.Add(this.lblPort);
-            this.Controls.Add(this.btnWorkingDirectoryBrowse);
-            this.Controls.Add(this.txtDataDir);
-            this.Controls.Add(this.lblDataDir);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "MariadbProfile";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "MariaDB Profile";
-            this.Load += new System.EventHandler(this.MariadbProfile_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            ClientSize = new Size(648, 173);
+            Controls.Add(tableLayoutPanel1);
+            Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "MariadbProfile";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "MariaDB Profile";
+            Load += MariadbProfile_Load;
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
+            tableLayoutPanel3.ResumeLayout(false);
+            ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lblDataDir;
-        private System.Windows.Forms.TextBox txtDataDir;
-        private System.Windows.Forms.Button btnWorkingDirectoryBrowse;
         private System.Windows.Forms.Label lblPort;
         private System.Windows.Forms.TextBox txtPort;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnClear;
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
+        private TextBox txtStartupFile;
+        private Button btnStartupFileBrowse;
+        private Label label1;
+        private Label label4;
+        private TableLayoutPanel tableLayoutPanel4;
+        private TextBox txtWorkingDirectory;
+        private Button btnBrowseWorkingDirectory;
+        private TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TextBox txtDataDirectory;
+        private Button btnBrowseDataDirectory;
     }
 }

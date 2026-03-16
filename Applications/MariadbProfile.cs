@@ -15,24 +15,10 @@ namespace devkit2.Applications
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JsonObject? Profile { get; set; } = null;
 
-        private void btnWorkingDirectoryBrowse_Click(object sender, EventArgs e)
-        {
-            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
-            {
-                dialog.Description = "Select a Folder";
-                dialog.UseDescriptionForTitle = true;
-
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    txtDataDir.Text = dialog.SelectedPath;
-                }
-            }
-        }
-
         private void btnOK_Click(object sender, EventArgs e)
         {
             if (Profile == null) { Profile = new JsonObject(); }
-            Profile["DataDir"] = txtDataDir.Text;
+            Profile["DataDir"] = txtDataDirectory.Text;
             Profile["Port"] = txtPort.Text;
             DialogResult = DialogResult.OK;
             Close();
@@ -55,8 +41,27 @@ namespace devkit2.Applications
         {
             if (Profile != null)
             {
-                txtDataDir.Text = Profile["DataDir"]?.ToString();
+                txtDataDirectory.Text = Profile["DataDir"]?.ToString();
                 txtPort.Text = Profile["Port"]?.ToString();
+            }
+        }
+
+        private void btnBrowseWorkingDirectory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBrowseDataDirectory_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Select a Folder";
+                dialog.UseDescriptionForTitle = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtDataDirectory.Text = dialog.SelectedPath;
+                }
             }
         }
     }

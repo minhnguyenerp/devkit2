@@ -1,6 +1,8 @@
 ﻿using devkit2.Common;
+using IniParser.Model;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -89,11 +91,12 @@ namespace devkit2.Applications
             // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
             string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
             string binDir = Path.Combine(baseDir, "bin");
-            string mariadbdPath = Path.Combine(binDir, "mariadbd.exe");
-            string installDbPath = Path.Combine(binDir, "mariadb-install-db.exe");
-            string adminPath = Path.Combine(binDir, "mariadb-admin.exe");
+            string mariadbdApp = Path.Combine(binDir, "mariadbd.exe");
+            string installDbApp = Path.Combine(binDir, "mariadb-install-db.exe");
 
-            if (!File.Exists(mariadbdPath))
+            if (!File.Exists(mariadbdApp))
+                return false;
+            if (!File.Exists(installDbApp))
                 return false;
 
             // Read profile values (port, datadir)
@@ -104,136 +107,57 @@ namespace devkit2.Applications
                 int.TryParse(profile["Port"].ToString(), out port);
             }
 
-            // Put my.ini inside the data directory by default so each data folder can have its own config
-            string configPath = profile? ["Config"]?.ToString() ?? Path.Combine(dataDir, "my.ini");
+            string mysqlSystemDir = Path.Combine(dataDir, "mysql");
+            bool hasSystemTables = Directory.Exists(mysqlSystemDir) && Directory.EnumerateFileSystemEntries(mysqlSystemDir).Any();
+
+            if (!hasSystemTables)
+            {
+                var initPsi = new ProcessStartInfo();
+                initPsi.FileName = installDbApp;
+                initPsi.Arguments = $"--datadir=\"{dataDir}\"";
+                initPsi.UseShellExecute = false;
+                initPsi.CreateNoWindow = true;
+                initPsi.WorkingDirectory = binDir;
+                using (var initProc = Process.Start(initPsi))
+                {
+                    initProc?.WaitForExit(120000);
+                }
+            }
+
+            if(!File.Exists(Path.Combine(dataDir, "my.ini")))
+            {
+                File.WriteAllText(Path.Combine(dataDir, "my.ini"), $"[mariadbd]");
+            }
+
+            var iniParser = new IniParser.FileIniDataParser();
+            IniData iniData = iniParser.ReadFile(Path.Combine(dataDir, "my.ini"));
+            iniData["mariadbd"]["basedir"] = $"\"{baseDir}\"";
+            iniData["mariadbd"]["datadir"] = $"\"{dataDir}\"";
+            iniData["mariadbd"]["port"] = port.ToString();
+            iniData["mariadbd"]["socket"] = "mysql.sock";
+            iniData["mariadbd"]["skip-grant-tables"] = "0";
+            iniData["mariadbd"]["skip-networking"] = "0";
+            iniData["mariadbd"]["character-set-server"] = "utf8mb4";
+            iniData["mariadbd"]["collation-server"] = "utf8mb4_general_ci";
+            iniData["client"]["port"] = port.ToString();
+            iniData["client"]["user"] = "root";
+            iniData["client"]["password"] = "";
+            iniParser.WriteFile(Path.Combine(dataDir, "my.ini"), iniData, Encoding.ASCII);
+
             string errLog = Path.Combine(dataDir, "mariadb-error-log.err");
-
-            try
-            {
-                // Ensure data directory exists for later use
-                if (!Directory.Exists(dataDir))
-                {
-                    Directory.CreateDirectory(dataDir);
-                }
-
-                // If config does not exist, create a my.ini in the data folder based on Scripts\my.ini
-                if (!File.Exists(configPath))
-                {
-                    var cfg = new System.Text.StringBuilder();
-                    cfg.AppendLine("[mariadbd]");
-                    cfg.AppendLine($"basedir=\"{baseDir}\"");
-                    cfg.AppendLine($"datadir=\"{dataDir}\"");
-                    cfg.AppendLine($"port={port}");
-                    cfg.AppendLine("socket=mysql.sock");
-                    cfg.AppendLine("skip-grant-tables=0");
-                    cfg.AppendLine("skip-networking=0");
-                    cfg.AppendLine("character-set-server=utf8mb4");
-                    cfg.AppendLine("collation-server=utf8mb4_general_ci");
-                    cfg.AppendLine();
-                    cfg.AppendLine("[client]");
-                    cfg.AppendLine($"port={port}");
-                    cfg.AppendLine("user=root");
-                    cfg.AppendLine("password=");
-                    File.WriteAllText(configPath, cfg.ToString());
-                }
-
-                // Initialize database if mysql system tables are missing.
-                // Previous heuristic checked for any file in data dir which could be wrong when temporary InnoDB files exist
-                string mysqlSystemDir = Path.Combine(dataDir, "mysql");
-                bool hasSystemTables = Directory.Exists(mysqlSystemDir) && Directory.EnumerateFileSystemEntries(mysqlSystemDir).Any();
-
-                if (!hasSystemTables)
-                {
-                    // Try mariadb-install-db first (script does this)
-                    if (File.Exists(installDbPath))
-                    {
-                        var initPsi = new ProcessStartInfo();
-                        initPsi.FileName = installDbPath;
-                        initPsi.Arguments = $"--datadir=\"{dataDir}\"";
-                        initPsi.UseShellExecute = false;
-                        initPsi.CreateNoWindow = true;
-                        initPsi.WorkingDirectory = binDir;
-                        LoadEnvironments(ref initPsi, environments);
-
-                        using (var initProc = Process.Start(initPsi))
-                        {
-                            initProc?.WaitForExit(60000);
-                        }
-                    }
-                    else
-                    {
-                        // Fallback: use mariadbd --initialize-insecure
-                        try
-                        {
-                            var initPsi = new ProcessStartInfo();
-                            initPsi.FileName = mariadbdPath;
-                            initPsi.Arguments = $"--defaults-file=\"{configPath}\" --initialize-insecure --datadir=\"{dataDir}\" --basedir=\"{baseDir}\"";
-                            initPsi.UseShellExecute = false;
-                            initPsi.CreateNoWindow = true;
-                            initPsi.WorkingDirectory = binDir;
-                            LoadEnvironments(ref initPsi, environments);
-
-                            using (var initProc = Process.Start(initPsi))
-                            {
-                                initProc?.WaitForExit(60000);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-
-                // Start mariadbd hidden/detached with defaults-file and log-error
-                var runPsi = new ProcessStartInfo();
-                runPsi.FileName = mariadbdPath;
-                runPsi.Arguments = $"--defaults-file=\"{configPath}\" --log-error=\"{errLog}\"";
-                runPsi.UseShellExecute = false;
-                runPsi.CreateNoWindow = true;
-                runPsi.RedirectStandardOutput = true;
-                runPsi.RedirectStandardError = true;
-                runPsi.WorkingDirectory = binDir;
-                LoadEnvironments(ref runPsi, environments);
-
-                var proc = Process.Start(runPsi);
-                if (proc == null)
-                    return false;
-
-                // Poll for readiness using mariadb-admin ping (up to ~15s)
-                if (File.Exists(adminPath))
-                {
-                    for (int i = 0; i < 3; i++)
-                    {
-                        try
-                        {
-                            var pingPsi = new ProcessStartInfo();
-                            pingPsi.FileName = adminPath;
-                            pingPsi.Arguments = $"-uroot -h127.0.0.1 -P{port} --protocol=tcp ping";
-                            pingPsi.UseShellExecute = false;
-                            pingPsi.CreateNoWindow = true;
-                            pingPsi.RedirectStandardOutput = true;
-                            pingPsi.RedirectStandardError = true;
-                            pingPsi.WorkingDirectory = binDir;
-                            LoadEnvironments(ref pingPsi, environments);
-
-                            using (var pingProc = Process.Start(pingPsi))
-                            {
-                                if (pingProc != null && pingProc.WaitForExit(1000) && pingProc.ExitCode == 0)
-                                {
-                                    return true;
-                                }
-                            }
-                        }
-                        catch { }
-                        Thread.Sleep(1000);
-                    }
-                }
-
-                // If admin not available or ping failed, still consider started if process was launched
-                return true;
-            }
-            catch
-            {
+            var runPsi = new ProcessStartInfo();
+            runPsi.FileName = mariadbdApp;
+            runPsi.Arguments = $"--defaults-file=\"{Path.Combine(dataDir, "my.ini")}\" --log-error=\"{errLog}\"";
+            runPsi.UseShellExecute = false;
+            runPsi.CreateNoWindow = true;
+            runPsi.RedirectStandardOutput = true;
+            runPsi.RedirectStandardError = true;
+            runPsi.WorkingDirectory = binDir;
+            LoadEnvironments(ref runPsi, environments);
+            var proc = Process.Start(runPsi);
+            if (proc == null)
                 return false;
-            }
+            return true;
         }
 
         public override bool Stop(string version)
