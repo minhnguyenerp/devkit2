@@ -17,16 +17,14 @@ Var InstallSizeKB
 ; App constants
 ; ---------------------------
 !define APP_NAME        "DevKit2"
-!define APP_VERSION     "1.0.3"
+!define APP_VERSION     "1.0.5"
 !define APP_PUBLISHER   "Minh Research"
 !define APP_URL         "https://github.com/minhnguyenerp/devkit2/"
 !define APP_EXE         "devkit2.exe"
 
-!define DOTNET_EXE      "windowsdesktop-runtime-10.0.5-win-x64.exe"
-
 !define INSTALL_DIR     "$PROGRAMFILES64\Minh Research\${APP_NAME}"
 
-!define SRC_DIR         "..\bin\Release\net10.0-windows"
+!define SRC_DIR         "..\bin\Release\net10.0-windows\singleexe"
 
 ; ---------------------------
 ; General
@@ -92,9 +90,6 @@ Section "Main Application" SecMain
   SetRegView 64
   SetShellVarContext all
 
-  ; prerequisites
-  Call EnsureDotNetDesktopRuntime
-
   ; Copy EVERYTHING from build output (including UserData) -> overwrite on upgrade
   SetOutPath "$INSTDIR"
   File /r "${SRC_DIR}\*.*"
@@ -154,43 +149,6 @@ SectionEnd
 
 Function LaunchApp
   Exec '"$INSTDIR\${APP_EXE}"'
-FunctionEnd
-
-; ---- .NET Desktop Runtime 10.0.5 presence check
-Function DotNetIsMissing
-  Push $0
-  StrCpy $0 0
-
-  ${If} ${FileExists} "$PROGRAMFILES64\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.5\*.*"
-    StrCpy $0 0
-  ${ElseIf} ${FileExists} "$PROGRAMFILES\dotnet\shared\Microsoft.WindowsDesktop.App\10.0.5\*.*"
-    StrCpy $0 0
-  ${Else}
-    StrCpy $0 1
-  ${EndIf}
-
-  Exch $0
-FunctionEnd
-
-Function EnsureDotNetDesktopRuntime
-  Push $0
-  Call DotNetIsMissing
-  Pop $0
-
-  ${If} $0 == 1
-    DetailPrint "Installing .NET Desktop Runtime 10.0.5 (silent)..."
-
-    SetOutPath "$TEMP"
-    File "/oname=$TEMP\${DOTNET_EXE}" "${DOTNET_EXE}"
-
-    ExecWait '"$TEMP\${DOTNET_EXE}" /install /quiet /norestart' $0
-    ${If} $0 != 0
-      MessageBox MB_ICONSTOP ".NET Runtime installer exited with code $0. Please fix and run installer again."
-      Abort
-    ${EndIf}
-  ${EndIf}
-
-  Pop $0
 FunctionEnd
 
 ; ---- Uninstaller-only function: delete everything except $INSTDIR\UserData
