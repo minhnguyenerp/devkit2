@@ -86,119 +86,203 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
-            // Determine mysqld path inside installed folder
-            string mysqldPath = Path.Combine(appPath, version, $"mariadb-{version}-winx64", "bin", "mysqld.exe");
+            // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
+            string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
+            string binDir = Path.Combine(baseDir, "bin");
+            string mariadbdPath = Path.Combine(binDir, "mariadbd.exe");
+            string installDbPath = Path.Combine(binDir, "mariadb-install-db.exe");
+            string adminPath = Path.Combine(binDir, "mariadb-admin.exe");
 
-            if (!File.Exists(mysqldPath))
+            if (!File.Exists(mariadbdPath))
                 return false;
 
             // Read profile values (port, datadir)
-            string dataDir = profile? ["DataDir"]?.ToString() ?? Path.Combine(appPath, version, $"mariadb-{version}-winx64", "data");
+            string dataDir = profile? ["DataDir"]?.ToString() ?? Path.Combine(baseDir, "data");
             int port = 3306;
             if (profile != null && profile["Port"] != null)
             {
                 int.TryParse(profile["Port"].ToString(), out port);
             }
 
+            // Put my.ini inside the data directory by default so each data folder can have its own config
+            string configPath = profile? ["Config"]?.ToString() ?? Path.Combine(dataDir, "my.ini");
+            string errLog = Path.Combine(dataDir, "mariadb-error-log.err");
+
             try
             {
-                // Ensure data directory exists
+                // Ensure data directory exists for later use
                 if (!Directory.Exists(dataDir))
                 {
                     Directory.CreateDirectory(dataDir);
                 }
 
-                // Prepare a my.ini defaults file in the data directory so mysqld uses correct paths
-                string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
-                string configPath = Path.Combine(dataDir, "my.ini");
+                // If config does not exist, create a my.ini in the data folder based on Scripts\my.ini
                 if (!File.Exists(configPath))
                 {
                     var cfg = new System.Text.StringBuilder();
-                    cfg.AppendLine("[mysqld]");
+                    cfg.AppendLine("[mariadbd]");
                     cfg.AppendLine($"basedir=\"{baseDir}\"");
                     cfg.AppendLine($"datadir=\"{dataDir}\"");
                     cfg.AppendLine($"port={port}");
-                    cfg.AppendLine("bind-address=127.0.0.1");
-                    cfg.AppendLine("skip-name-resolve");
+                    cfg.AppendLine("socket=mysql.sock");
+                    cfg.AppendLine("skip-grant-tables=0");
+                    cfg.AppendLine("skip-networking=0");
+                    cfg.AppendLine("character-set-server=utf8mb4");
+                    cfg.AppendLine("collation-server=utf8mb4_general_ci");
+                    cfg.AppendLine();
+                    cfg.AppendLine("[client]");
+                    cfg.AppendLine($"port={port}");
+                    cfg.AppendLine("user=root");
+                    cfg.AppendLine("password=");
                     File.WriteAllText(configPath, cfg.ToString());
                 }
 
-                // Initialize database if data directory does not contain mysql system files
-                bool hasMeaningfulFiles = Directory.EnumerateFileSystemEntries(dataDir)
-                    .Any(p => !string.Equals(Path.GetFileName(p), Path.GetFileName(configPath), StringComparison.OrdinalIgnoreCase));
-                if (!hasMeaningfulFiles)
-                {
-                    var initPsi = new ProcessStartInfo();
-                    initPsi.FileName = mysqldPath;
-                    initPsi.Arguments = $"--defaults-file=\"{configPath}\" --initialize-insecure --datadir=\"{dataDir}\"";
-                    initPsi.UseShellExecute = false;
-                    initPsi.CreateNoWindow = true;
-                    initPsi.WorkingDirectory = Path.GetDirectoryName(mysqldPath) ?? string.Empty;
-                    LoadEnvironments(ref initPsi, environments);
+                // Initialize database if mysql system tables are missing.
+                // Previous heuristic checked for any file in data dir which could be wrong when temporary InnoDB files exist
+                string mysqlSystemDir = Path.Combine(dataDir, "mysql");
+                bool hasSystemTables = Directory.Exists(mysqlSystemDir) && Directory.EnumerateFileSystemEntries(mysqlSystemDir).Any();
 
-                    using (var initProc = Process.Start(initPsi))
+                if (!hasSystemTables)
+                {
+                    // Try mariadb-install-db first (script does this)
+                    if (File.Exists(installDbPath))
                     {
-                        initProc?.WaitForExit(60000);
+                        var initPsi = new ProcessStartInfo();
+                        initPsi.FileName = installDbPath;
+                        initPsi.Arguments = $"--datadir=\"{dataDir}\"";
+                        initPsi.UseShellExecute = false;
+                        initPsi.CreateNoWindow = true;
+                        initPsi.WorkingDirectory = binDir;
+                        LoadEnvironments(ref initPsi, environments);
+
+                        using (var initProc = Process.Start(initPsi))
+                        {
+                            initProc?.WaitForExit(60000);
+                        }
+                    }
+                    else
+                    {
+                        // Fallback: use mariadbd --initialize-insecure
+                        try
+                        {
+                            var initPsi = new ProcessStartInfo();
+                            initPsi.FileName = mariadbdPath;
+                            initPsi.Arguments = $"--defaults-file=\"{configPath}\" --initialize-insecure --datadir=\"{dataDir}\" --basedir=\"{baseDir}\"";
+                            initPsi.UseShellExecute = false;
+                            initPsi.CreateNoWindow = true;
+                            initPsi.WorkingDirectory = binDir;
+                            LoadEnvironments(ref initPsi, environments);
+
+                            using (var initProc = Process.Start(initPsi))
+                            {
+                                initProc?.WaitForExit(60000);
+                            }
+                        }
+                        catch { }
                     }
                 }
 
-                // Start mysqld in background using the defaults file
+                // Start mariadbd hidden/detached with defaults-file and log-error
                 var runPsi = new ProcessStartInfo();
-                runPsi.FileName = mysqldPath;
-                runPsi.Arguments = $"--defaults-file=\"{configPath}\" --datadir=\"{dataDir}\" --port={port} --bind-address=127.0.0.1";
+                runPsi.FileName = mariadbdPath;
+                runPsi.Arguments = $"--defaults-file=\"{configPath}\" --log-error=\"{errLog}\"";
                 runPsi.UseShellExecute = false;
                 runPsi.CreateNoWindow = true;
                 runPsi.RedirectStandardOutput = true;
                 runPsi.RedirectStandardError = true;
-                runPsi.WorkingDirectory = Path.GetDirectoryName(mysqldPath) ?? string.Empty;
+                runPsi.WorkingDirectory = binDir;
                 LoadEnvironments(ref runPsi, environments);
 
                 var proc = Process.Start(runPsi);
-                if (proc != null)
+                if (proc == null)
+                    return false;
+
+                // Poll for readiness using mariadb-admin ping (up to ~15s)
+                if (File.Exists(adminPath))
                 {
-                    // detach from the process by not waiting on it; let it run in background
-                    return true;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        try
+                        {
+                            var pingPsi = new ProcessStartInfo();
+                            pingPsi.FileName = adminPath;
+                            pingPsi.Arguments = $"-uroot -h127.0.0.1 -P{port} --protocol=tcp ping";
+                            pingPsi.UseShellExecute = false;
+                            pingPsi.CreateNoWindow = true;
+                            pingPsi.RedirectStandardOutput = true;
+                            pingPsi.RedirectStandardError = true;
+                            pingPsi.WorkingDirectory = binDir;
+                            LoadEnvironments(ref pingPsi, environments);
+
+                            using (var pingProc = Process.Start(pingPsi))
+                            {
+                                if (pingProc != null && pingProc.WaitForExit(1000) && pingProc.ExitCode == 0)
+                                {
+                                    return true;
+                                }
+                            }
+                        }
+                        catch { }
+                        Thread.Sleep(1000);
+                    }
                 }
+
+                // If admin not available or ping failed, still consider started if process was launched
+                return true;
             }
             catch
             {
                 return false;
             }
-
-            return false;
         }
 
         public override bool Stop(string version)
         {
-            string mysqldPath = Path.Combine(appPath, version, $"mariadb-{version}-winx64", "bin", "mysqld.exe");
+            string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
+            string binDir = Path.Combine(baseDir, "bin");
+            string adminPath = Path.Combine(binDir, "mariadb-admin.exe");
+
+            int port = 3306;
 
             try
             {
-                var procs = Process.GetProcessesByName("mysqld");
-                foreach (var p in procs)
+                // First try a graceful shutdown using mariadb-admin if available
+                if (File.Exists(adminPath))
                 {
                     try
                     {
-                        // Try to match exact executable path if possible
-                        string? mainModule = null;
-                        try { mainModule = p.MainModule?.FileName; } catch { }
-                        if (mainModule != null)
+                        var shutPsi = new ProcessStartInfo();
+                        shutPsi.FileName = adminPath;
+                        shutPsi.Arguments = $"-uroot -h127.0.0.1 -P{port} --protocol=tcp shutdown";
+                        shutPsi.UseShellExecute = false;
+                        shutPsi.CreateNoWindow = true;
+                        shutPsi.RedirectStandardOutput = true;
+                        shutPsi.RedirectStandardError = true;
+                        shutPsi.WorkingDirectory = binDir;
+                        var shutProc = Process.Start(shutPsi);
+                        if (shutProc != null)
                         {
-                            if (string.Equals(Path.GetFullPath(mainModule), Path.GetFullPath(mysqldPath), StringComparison.OrdinalIgnoreCase))
+                            if (shutProc.WaitForExit(5000) && shutProc.ExitCode == 0)
                             {
-                                p.Kill();
-                                p.WaitForExit(5000);
+                                return true;
                             }
-                        }
-                        else
-                        {
-                            // If cannot get main module, attempt to kill anyway
-                            p.Kill();
-                            p.WaitForExit(5000);
                         }
                     }
                     catch { }
                 }
+
+                // If graceful shutdown didn't work, kill any mariadbd.exe processes
+                var procs = Process.GetProcessesByName("mariadbd");
+                foreach (var p in procs)
+                {
+                    try
+                    {
+                        p.Kill();
+                        p.WaitForExit(5000);
+                    }
+                    catch { }
+                }
+
                 return true;
             }
             catch { return false; }
