@@ -192,6 +192,14 @@ namespace devkit2.Applications
             }
             catch
             {
+                if (File.Exists(file))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch { }
+                }
                 return false;
             }
         }

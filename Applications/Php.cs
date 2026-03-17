@@ -36,6 +36,7 @@ namespace devkit2.Applications
                 return new ValueName[]
                 {
                     new ValueName("8.5.4", "8.5.4"),
+                    new ValueName("7.4.33", "7.4.33"),
                 };
             }
         }
@@ -47,8 +48,12 @@ namespace devkit2.Applications
             switch (version)
             {
                 case "8.5.4":
-                    url = "https://downloads.php.net/~windows/releases/archives/php-8.5.4-Win32-vs17-x64.zip";
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php-8.5.4-Win32-vs17-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "php-8.5.4-Win32-vs17-x64.zip");
+                    break;
+                case "7.4.33":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php-7.4.33-Win32-vc15-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "php-7.4.33-Win32-vc15-x64.zip");
                     break;
             }
 
