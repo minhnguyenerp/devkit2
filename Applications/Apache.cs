@@ -145,17 +145,17 @@ namespace devkit2.Applications
             string apacheDirSvRoot = Path.Combine(appPath, version, "Apache24");
             string apacheApp = Path.Combine(apacheDirSvRoot, "bin", "httpd.exe");
             string phpApp = string.Empty;
-            string phpVer = string.Empty;
+            int phpVer = 8;
             List<string> indexes = new List<string>() { "index.html" };
             foreach (var item in environments)
             {
                 if(item.Name.Contains("php"))
                 {
                     phpApp = Path.Combine(item.Name, "php.exe");
-                    if (item.Name.Contains("8.")) { phpVer = "8"; }
-                    else if (item.Name.Contains("7.")) { phpVer = "7"; }
-                    else if (item.Name.Contains("6.")) { phpVer = "6"; }
-                    else if (item.Name.Contains("5.")) { phpVer = "5"; }
+                    if (item.Name.Contains("8.")) { phpVer = 8; }
+                    else if (item.Name.Contains("7.")) { phpVer = 7; }
+                    else if (item.Name.Contains("6.")) { phpVer = 6; }
+                    else if (item.Name.Contains("5.")) { phpVer = 5; }
                     indexes.Add("index.php");
                 }
             }
@@ -219,7 +219,7 @@ LoadModule setenvif_module modules/mod_setenvif.so
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule rewrite_module modules/mod_rewrite.so
 #begin php
-{(File.Exists(phpModule) ? $@"LoadModule php_module ""{phpModule.Replace('\\', '/')}""" : "")}
+{(File.Exists(phpModule) ? $@"LoadModule php{(phpVer >= 8 ? "" : "7")}_module ""{phpModule.Replace('\\', '/')}""" : "")}
 {(File.Exists(phpModule) ? $@"PHPINIDir ""{phpDir.Replace('\\', '/')}""" : "")}
 {(File.Exists(phpModule) ? "AddType application/x-httpd-php .php" : "")}
 #end php
@@ -257,7 +257,7 @@ DirectoryIndex ${{INDEXES}}
                     if (File.Exists(phpModule))
                     {
                         config = config.Substring(0, nBeginPhp) + $@"#begin php
-{$@"LoadModule php_module ""{phpModule.Replace('\\', '/')}"""}
+{$@"LoadModule php{(phpVer >= 8 ? "" : "7")}_module ""{phpModule.Replace('\\', '/')}"""}
 {$@"PHPINIDir ""{phpDir.Replace('\\', '/')}"""}
 {"AddType application/x-httpd-php .php"}
 #end php" + config.Substring(nEndPhp + "#end php".Length);
@@ -282,7 +282,7 @@ Define INDEXES ""{string.Join(" ", indexes)}""
 
             var runPsi = new ProcessStartInfo();
             runPsi.FileName = apacheApp;
-            runPsi.Arguments = $" -f \"{confFile}\"";
+            runPsi.Arguments = $"-f \"{confFile}\"";
             runPsi.UseShellExecute = false;
             runPsi.CreateNoWindow = true;
             runPsi.RedirectStandardOutput = true;
