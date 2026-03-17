@@ -163,54 +163,7 @@ namespace devkit2.Applications
 
         public override bool Stop(string version)
         {
-            string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
-            string binDir = Path.Combine(baseDir, "bin");
-            string adminPath = Path.Combine(binDir, "mariadb-admin.exe");
-
-            int port = 3306;
-
-            try
-            {
-                // First try a graceful shutdown using mariadb-admin if available
-                if (File.Exists(adminPath))
-                {
-                    try
-                    {
-                        var shutPsi = new ProcessStartInfo();
-                        shutPsi.FileName = adminPath;
-                        shutPsi.Arguments = $"-uroot -h127.0.0.1 -P{port} --protocol=tcp shutdown";
-                        shutPsi.UseShellExecute = false;
-                        shutPsi.CreateNoWindow = true;
-                        shutPsi.RedirectStandardOutput = true;
-                        shutPsi.RedirectStandardError = true;
-                        shutPsi.WorkingDirectory = binDir;
-                        var shutProc = Process.Start(shutPsi);
-                        if (shutProc != null)
-                        {
-                            if (shutProc.WaitForExit(5000) && shutProc.ExitCode == 0)
-                            {
-                                return true;
-                            }
-                        }
-                    }
-                    catch { }
-                }
-
-                // If graceful shutdown didn't work, kill any mariadbd.exe processes
-                var procs = Process.GetProcessesByName("mariadbd");
-                foreach (var p in procs)
-                {
-                    try
-                    {
-                        p.Kill();
-                        p.WaitForExit(5000);
-                    }
-                    catch { }
-                }
-
-                return true;
-            }
-            catch { return false; }
+            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)

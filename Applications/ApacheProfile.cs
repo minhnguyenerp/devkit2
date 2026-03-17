@@ -1,0 +1,86 @@
+﻿using devkit2.Properties;
+using System.ComponentModel;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
+
+namespace devkit2.Applications
+{
+    public partial class ApacheProfile : Form
+    {
+        public ApacheProfile()
+        {
+            InitializeComponent();
+            Icon = Resources.dev_23828;
+        }
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public JsonObject? Profile { get; set; } = null;
+
+        private void ApacheProfile_Load(object sender, EventArgs e)
+        {
+            if (Profile != null)
+            {
+                txtInstanceDirectory.Text = Profile["InstanceDirectory"]?.ToString();
+                txtPort.Text = Profile["Port"]?.ToString();
+            }
+        }
+
+        private void btnBrowseInstanceDirectory_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog dialog = new FolderBrowserDialog())
+            {
+                dialog.Description = "Select a Folder";
+                dialog.UseDescriptionForTitle = true;
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    txtInstanceDirectory.Text = dialog.SelectedPath;
+                    if (File.Exists(Path.Combine(txtInstanceDirectory.Text, "httpd.conf")))
+                    {
+                        string config = File.ReadAllText(Path.Combine(txtInstanceDirectory.Text, "httpd.conf"));
+                        int nBeginPort = config.IndexOf("#begin port");
+                        int nEndPort = config.IndexOf("#end port");
+                        if (nBeginPort > 0 && nEndPort > 0)
+                        {
+                            string str = config.Substring(nBeginPort, nEndPort + "#end port".Length - nBeginPort);
+                            string[] lines = str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+                            foreach(string line in lines)
+                            {
+                                if(line.Contains("Define"))
+                                {
+                                    string[] sParams = Regex.Replace(line, @"\s+", " ").Trim().Split(' ');
+                                    if(sParams.Length >= 3)
+                                    {
+                                        txtPort.Text = sParams[2];
+                                        break;
+                                    }    
+                                }    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (Profile == null) { Profile = new JsonObject(); }
+            Profile["InstanceDirectory"] = txtInstanceDirectory.Text;
+            Profile["Port"] = txtPort.Text;
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+    }
+}

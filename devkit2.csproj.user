@@ -4,7 +4,13 @@
     <_LastSelectedProfileId>C:\Development\devkit2\Properties\PublishProfiles\SingleExe.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="Applications\ApacheProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Applications\BaseApplicationProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Applications\CaddyProfile.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Applications\MariadbProfile.cs">

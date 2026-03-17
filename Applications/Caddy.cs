@@ -1,6 +1,7 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -86,25 +87,85 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "caddy.exe");
-            psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
-
-            try
+            string caddyDirSvRoot = Path.Combine(appPath, version);
+            string caddyApp = Path.Combine(caddyDirSvRoot, "caddy.exe");
+            string phpCgiApp = string.Empty;
+            foreach (var item in environments)
             {
-                if (Process.Start(psi) != null)
+                if (item.Name.Contains("php"))
                 {
-                    return true;
+                    phpCgiApp = Path.Combine(item.Name, "php-cgi.exe");
                 }
             }
-            catch { return false; }
-            return false;
+
+            string instanceDir = profile?["InstanceDirectory"]?.ToString() ?? caddyDirSvRoot;
+            string webDir = Path.Combine(instanceDir, "www");
+            Directory.CreateDirectory(webDir);
+            string confFile = Path.Combine(instanceDir, "Caddyfile");
+
+            int port = 80;
+            if (profile != null && profile["Port"] != null)
+            {
+                int.TryParse(profile["Port"].ToString(), out port);
+            }
+
+            // Genereate Caddyfile
+            string config = $@"{{
+    admin off
+}}
+
+:{port} {{
+    root * ""{webDir}""
+    encode gzip zstd
+    php_fastcgi 127.0.0.1:{port + 1}
+    file_server
+}}
+";
+            File.WriteAllText(confFile, config, Encoding.ASCII);
+
+            // Start PHP CGI if available
+            if(!string.IsNullOrEmpty(phpCgiApp))
+            {
+                var psiCgi = new ProcessStartInfo
+                {
+                    FileName = phpCgiApp,
+                    Arguments = $"-b 127.0.0.1:{port + 1}",
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+                Process.Start(psiCgi);
+            }
+
+            var runPsi = new ProcessStartInfo();
+            runPsi.FileName = caddyApp;
+            runPsi.Arguments = $"run --adapter caddyfile --config \"{confFile}\"";
+            runPsi.UseShellExecute = false;
+            runPsi.CreateNoWindow = true;
+            runPsi.RedirectStandardOutput = true;
+            runPsi.RedirectStandardError = true;
+            LoadEnvironments(ref runPsi, environments);
+            var proc = Process.Start(runPsi);
+            if (proc == null)
+                return false;
+            return true;
         }
 
         public override bool Stop(string version)
         {
             return false;
+        }
+
+        public override JsonObject? ProfileEdit(JsonObject? init = null)
+        {
+            using (var dlg = new CaddyProfile())
+            {
+                dlg.Profile = init;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    return dlg.Profile;
+                }
+                return init;
+            }
         }
 
         public override Icon Icon
