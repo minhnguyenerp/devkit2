@@ -1,4 +1,5 @@
 ﻿using devkit2.Common;
+using devkit2.Properties;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using System.Diagnostics;
@@ -134,9 +135,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[0].Value, $"rust-{InstalledVersions[0].Value}-x86_64-pc-windows-gnu", "rustc", "bin", "rustc.exe")
-                            );
+                            _icon = Resources.file_type_rust_icon_130185;
                         }
                         catch { }
                     }

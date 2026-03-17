@@ -113,9 +113,39 @@ namespace devkit2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon file_type_mariadb_icon_130403 {
+            get {
+                object obj = ResourceManager.GetObject("file_type_mariadb_icon_130403", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon file_type_rust_icon_130185 {
+            get {
+                object obj = ResourceManager.GetObject("file_type_rust_icon_130185", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon golang_gopher_src_logo_icon_168155 {
             get {
                 object obj = ResourceManager.GetObject("golang_gopher_src_logo_icon_168155", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon golang_logo_icon_171073 {
+            get {
+                object obj = ResourceManager.GetObject("golang_logo_icon_171073", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

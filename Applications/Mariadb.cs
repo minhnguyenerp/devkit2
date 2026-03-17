@@ -1,4 +1,5 @@
 ﻿using devkit2.Common;
+using devkit2.Properties;
 using IniParser.Model;
 using System.Diagnostics;
 using System.IO.Compression;
@@ -99,8 +100,8 @@ namespace devkit2.Applications
             if (!File.Exists(installDbApp))
                 return false;
 
-            // Read profile values (port, datadir)
-            string dataDir = profile? ["DataDir"]?.ToString() ?? Path.Combine(baseDir, "data");
+            // Read profile values (port, datadirectory)
+            string dataDir = profile?["DataDirectory"]?.ToString() ?? Path.Combine(baseDir, "data");
             int port = 3306;
             if (profile != null && profile["Port"] != null)
             {
@@ -235,7 +236,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"mariadb-{InstalledVersions[0].Value}-winx64", "bin", "mariadb.exe"));
+                            _icon = Resources.file_type_mariadb_icon_130403;
                         }
                         catch { }
                     }

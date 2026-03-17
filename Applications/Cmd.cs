@@ -6,18 +6,27 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Go : BaseApplication
+    internal sealed class Cmd : BaseApplication
     {
-        public override string Name => "Go";
+        public override string Name => "Cmd";
 
-        public Go()
+        public Cmd()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "go");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "cmd");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+
+            foreach (var ver in AvailableVersions)
+            {
+                if (Config != null && Config["InstalledVersions"] == null) { Config["InstalledVersions"] = new JsonArray(); }
+                if (!IsInstalled(ver.Value) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                {
+                    ((JsonArray)Config["InstalledVersions"]).Add(ver.Value);
+                }
+            }
         }
 
         public override bool Valid
@@ -36,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.26.1", "1.26.1"),
+                    new ValueName("Any", "Any"),
                 };
             }
         }
@@ -44,51 +53,24 @@ namespace devkit2.Applications
         public override bool Install(string version)
         {
             string url = string.Empty;
-            string file = string.Empty;
             switch (version)
             {
-                case "1.26.1":
-                    url = "https://go.dev/dl/go1.26.1.windows-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "go1.26.1.windows-amd64.zip");
+                case "Any":
+                    url = "https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd";
                     break;
             }
 
-            if (url != string.Empty && file != string.Empty)
+            Process.Start(new ProcessStartInfo
             {
-                if (!File.Exists(file))
-                {
-                    if (!base.Download(url, file))
-                    {
-                        return false;
-                    }
-                }
-
-                string extractPath = Path.Combine(appPath, version);
-                Directory.CreateDirectory(extractPath);
-                ZipFile.ExtractToDirectory(file, extractPath, true);
-                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gopath"));
-                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gocache"));
-                Directory.CreateDirectory(Path.Combine(extractPath, "go", "gotelemetry"));
-
-                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
-
-                return true;
-            }
-            return false;
+                FileName = url,
+                UseShellExecute = true
+            });
+            return true;
         }
 
         public override ValueName[] GetEnvironments(string version)
         {
-            return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, "go", "bin")),
-                new ValueName("GOPATH", Path.Combine(appPath, version, "go", "gopath")),
-                new ValueName("GOCACHE", Path.Combine(appPath, version, "go", "gocache")),
-                new ValueName("GOTELEMETRYDIR", Path.Combine(appPath, version, "go", "gotelemetry")),
-            };
+            return Array.Empty<ValueName>();
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
@@ -96,6 +78,19 @@ namespace devkit2.Applications
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
+            if (profile != null)
+            {
+                string workingDir = profile["WorkingDirectory"]?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+                {
+                    psi.WorkingDirectory = workingDir;
+                }
+                string startupFile = profile["StartupFile"]?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(startupFile) && File.Exists(startupFile))
+                {
+                    psi.ArgumentList.Add(startupFile);
+                }
+            }
             LoadEnvironments(ref psi, environments);
 
             try
@@ -105,7 +100,11 @@ namespace devkit2.Applications
                     return true;
                 }
             }
-            catch { return false; }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             return false;
         }
 
@@ -124,7 +123,12 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Resources.golang_logo_icon_171073;
+                            _icon = Icon.ExtractAssociatedIcon(
+                                Path.Combine(
+                                    Environment.GetFolderPath(Environment.SpecialFolder.System),
+                                    "cmd.exe"
+                                )
+                            );
                         }
                         catch { }
                     }

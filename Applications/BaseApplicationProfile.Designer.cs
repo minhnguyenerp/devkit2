@@ -93,7 +93,6 @@
             txtStartupFile.Location = new Point(5, 6);
             txtStartupFile.Margin = new Padding(5, 6, 5, 6);
             txtStartupFile.Name = "txtStartupFile";
-            txtStartupFile.ReadOnly = true;
             txtStartupFile.Size = new Size(410, 29);
             txtStartupFile.TabIndex = 0;
             // 
@@ -157,7 +156,6 @@
             txtWorkingDirectory.Location = new Point(5, 6);
             txtWorkingDirectory.Margin = new Padding(5, 6, 5, 6);
             txtWorkingDirectory.Name = "txtWorkingDirectory";
-            txtWorkingDirectory.ReadOnly = true;
             txtWorkingDirectory.Size = new Size(410, 29);
             txtWorkingDirectory.TabIndex = 0;
             // 

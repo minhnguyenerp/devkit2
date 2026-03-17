@@ -1,6 +1,8 @@
 ﻿using devkit2.Common;
+using IniParser.Model;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -87,25 +89,81 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
-            psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
+            // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
+            string baseDir = Path.Combine(appPath, version, "pgsql");
+            string binDir = Path.Combine(baseDir, "bin");
+            string postgresApp = Path.Combine(binDir, "postgres.exe");
+            string installDbApp = Path.Combine(binDir, "initdb.exe");
 
-            try
+            if (!File.Exists(postgresApp))
+                return false;
+            if (!File.Exists(installDbApp))
+                return false;
+
+            // Read profile values (port, datadirectory)
+            string dataDir = profile?["DataDirectory"]?.ToString() ?? Path.Combine(baseDir, "data");
+            int port = 5432;
+            if (profile != null && profile["Port"] != null)
             {
-                if (Process.Start(psi) != null)
+                int.TryParse(profile["Port"].ToString(), out port);
+            }
+
+            string postgresSystemDir = Path.Combine(dataDir, "global");
+            bool hasSystemTables = Directory.Exists(postgresSystemDir) && Directory.EnumerateFileSystemEntries(postgresSystemDir).Any();
+
+            if (!hasSystemTables)
+            {
+                var initPsi = new ProcessStartInfo();
+                initPsi.FileName = installDbApp;
+                initPsi.Arguments = $"-D \"{dataDir}\" -U postgres -E UTF8 --auth=trust";
+                initPsi.UseShellExecute = false;
+                initPsi.CreateNoWindow = true;
+                initPsi.WorkingDirectory = binDir;
+                using (var initProc = Process.Start(initPsi))
                 {
-                    return true;
+                    initProc?.WaitForExit(120000);
+                }
+                if (!Directory.Exists(Path.Combine(dataDir, "log")))
+                {
+                    Directory.CreateDirectory(Path.Combine(dataDir, "log"));
                 }
             }
-            catch { return false; }
-            return false;
+
+            var runPsi = new ProcessStartInfo();
+            runPsi.FileName = postgresApp;
+            runPsi.Arguments = $"-D \"{dataDir}\" -c port={port} -c logging_collector=on -c log_directory=log -c log_filename=postgresql.log -c log_truncate_on_rotation=on -c log_rotation_age=1d";
+            runPsi.UseShellExecute = false;
+            runPsi.CreateNoWindow = true;
+            runPsi.RedirectStandardOutput = true;
+            runPsi.RedirectStandardError = true;
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? binDir;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            {
+                runPsi.WorkingDirectory = workingDir;
+            }
+            LoadEnvironments(ref runPsi, environments);
+            var proc = Process.Start(runPsi);
+            if (proc == null)
+                return false;
+            return true;
         }
 
         public override bool Stop(string version)
         {
             return false;
+        }
+
+        public override JsonObject? ProfileEdit(JsonObject? init = null)
+        {
+            using (var dlg = new PostgreSQLProfile())
+            {
+                dlg.Profile = init;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    return dlg.Profile;
+                }
+                return init;
+            }
         }
 
         public override Icon Icon

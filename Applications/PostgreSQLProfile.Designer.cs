@@ -1,6 +1,6 @@
-namespace devkit2.Applications
+﻿namespace devkit2.Applications
 {
-    partial class MariadbProfile
+    partial class PostgreSQLProfile
     {
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,6 @@ namespace devkit2.Applications
         /// </summary>
         private void InitializeComponent()
         {
-            lblPort = new Label();
-            txtPort = new TextBox();
-            btnOK = new Button();
-            btnCancel = new Button();
-            btnClear = new Button();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
             txtDataDirectory = new TextBox();
@@ -42,64 +37,17 @@ namespace devkit2.Applications
             tableLayoutPanel4 = new TableLayoutPanel();
             txtWorkingDirectory = new TextBox();
             btnBrowseWorkingDirectory = new Button();
+            txtPort = new TextBox();
             tableLayoutPanel3 = new TableLayoutPanel();
+            btnOK = new Button();
+            btnCancel = new Button();
+            btnClear = new Button();
+            lblPort = new Label();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
             SuspendLayout();
-            // 
-            // lblPort
-            // 
-            lblPort.AutoSize = true;
-            lblPort.Dock = DockStyle.Fill;
-            lblPort.Location = new Point(3, 78);
-            lblPort.Name = "lblPort";
-            lblPort.Size = new Size(145, 39);
-            lblPort.TabIndex = 3;
-            lblPort.Text = "Port";
-            lblPort.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // txtPort
-            // 
-            txtPort.Dock = DockStyle.Fill;
-            txtPort.Location = new Point(154, 81);
-            txtPort.Name = "txtPort";
-            txtPort.Size = new Size(491, 29);
-            txtPort.TabIndex = 4;
-            // 
-            // btnOK
-            // 
-            btnOK.Dock = DockStyle.Fill;
-            btnOK.Location = new Point(3, 3);
-            btnOK.Name = "btnOK";
-            btnOK.Size = new Size(103, 38);
-            btnOK.TabIndex = 5;
-            btnOK.Text = "OK";
-            btnOK.UseVisualStyleBackColor = true;
-            btnOK.Click += btnOK_Click;
-            // 
-            // btnCancel
-            // 
-            btnCancel.Dock = DockStyle.Fill;
-            btnCancel.Location = new Point(221, 3);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(104, 38);
-            btnCancel.TabIndex = 6;
-            btnCancel.Text = "Cancel";
-            btnCancel.UseVisualStyleBackColor = true;
-            btnCancel.Click += btnCancel_Click;
-            // 
-            // btnClear
-            // 
-            btnClear.Dock = DockStyle.Fill;
-            btnClear.Location = new Point(112, 3);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(103, 38);
-            btnClear.TabIndex = 7;
-            btnClear.Text = "Clear";
-            btnClear.UseVisualStyleBackColor = true;
-            btnClear.Click += btnClear_Click;
             // 
             // tableLayoutPanel1
             // 
@@ -124,7 +72,7 @@ namespace devkit2.Applications
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(648, 173);
-            tableLayoutPanel1.TabIndex = 8;
+            tableLayoutPanel1.TabIndex = 9;
             // 
             // tableLayoutPanel2
             // 
@@ -228,6 +176,14 @@ namespace devkit2.Applications
             btnBrowseWorkingDirectory.UseVisualStyleBackColor = true;
             btnBrowseWorkingDirectory.Click += btnBrowseWorkingDirectory_Click;
             // 
+            // txtPort
+            // 
+            txtPort.Dock = DockStyle.Fill;
+            txtPort.Location = new Point(154, 81);
+            txtPort.Name = "txtPort";
+            txtPort.Size = new Size(491, 29);
+            txtPort.TabIndex = 4;
+            // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.ColumnCount = 3;
@@ -245,17 +201,62 @@ namespace devkit2.Applications
             tableLayoutPanel3.Size = new Size(328, 44);
             tableLayoutPanel3.TabIndex = 10;
             // 
-            // MariadbProfile
+            // btnOK
             // 
+            btnOK.Dock = DockStyle.Fill;
+            btnOK.Location = new Point(3, 3);
+            btnOK.Name = "btnOK";
+            btnOK.Size = new Size(103, 38);
+            btnOK.TabIndex = 5;
+            btnOK.Text = "OK";
+            btnOK.UseVisualStyleBackColor = true;
+            btnOK.Click += btnOK_Click;
+            // 
+            // btnCancel
+            // 
+            btnCancel.Dock = DockStyle.Fill;
+            btnCancel.Location = new Point(221, 3);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(104, 38);
+            btnCancel.TabIndex = 6;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // btnClear
+            // 
+            btnClear.Dock = DockStyle.Fill;
+            btnClear.Location = new Point(112, 3);
+            btnClear.Name = "btnClear";
+            btnClear.Size = new Size(103, 38);
+            btnClear.TabIndex = 7;
+            btnClear.Text = "Clear";
+            btnClear.UseVisualStyleBackColor = true;
+            btnClear.Click += btnClear_Click;
+            // 
+            // lblPort
+            // 
+            lblPort.AutoSize = true;
+            lblPort.Dock = DockStyle.Fill;
+            lblPort.Location = new Point(3, 78);
+            lblPort.Name = "lblPort";
+            lblPort.Size = new Size(145, 39);
+            lblPort.TabIndex = 3;
+            lblPort.Text = "Port";
+            lblPort.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // PostgreSQLProfile
+            // 
+            AutoScaleDimensions = new SizeF(9F, 21F);
+            AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(648, 173);
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "MariadbProfile";
+            Margin = new Padding(4);
+            Name = "PostgreSQLProfile";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "MariaDB Profile";
-            Load += MariadbProfile_Load;
+            Text = "PostgreSQL Profile";
+            Load += PostgreSQLProfile_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
@@ -264,26 +265,24 @@ namespace devkit2.Applications
             tableLayoutPanel4.PerformLayout();
             tableLayoutPanel3.ResumeLayout(false);
             ResumeLayout(false);
-
         }
 
         #endregion
-        private System.Windows.Forms.Label lblPort;
-        private System.Windows.Forms.TextBox txtPort;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.Button btnClear;
+
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
-        private TextBox txtStartupFile;
-        private Button btnStartupFileBrowse;
+        private TextBox txtDataDirectory;
+        private Button btnBrowseDataDirectory;
         private Label label1;
         private Label label4;
         private TableLayoutPanel tableLayoutPanel4;
         private TextBox txtWorkingDirectory;
         private Button btnBrowseWorkingDirectory;
+        private TextBox txtPort;
         private TableLayoutPanel tableLayoutPanel3;
-        private System.Windows.Forms.TextBox txtDataDirectory;
-        private Button btnBrowseDataDirectory;
+        private Button btnOK;
+        private Button btnCancel;
+        private Button btnClear;
+        private Label lblPort;
     }
 }
