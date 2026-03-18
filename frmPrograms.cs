@@ -1,4 +1,5 @@
 ﻿using devkit2.Applications;
+using devkit2.Common;
 using devkit2.Properties;
 
 namespace devkit2
@@ -85,6 +86,8 @@ namespace devkit2
             if (e.ColumnIndex == colAction.Index)
             {
                 var row = datagridview.Rows[e.RowIndex];
+                if(row.Cells[colAction.Index].Value.ToString().Contains("...")) { return; }
+
                 bool isChecked = (bool)(row.Cells[colInstalled.Index].Value ?? false);
                 var app = row.Tag as IApplication;
                 if (app != null)
@@ -99,8 +102,19 @@ namespace devkit2
                         }
                         else
                         {
-                            app.Uninstall(version);
-                            RowRefresh(row);
+                            Task.Run(() =>
+                            {
+                                row.Cells[colProgram.Index].Value = app.Name + " [Removing...]";
+                                row.Cells[colAction.Index].Value = "Removing...";
+                                app.Uninstall(version);
+                            }).ContinueWith(t =>
+                            {
+                                if (t.Exception != null)
+                                {
+                                    MessageBox.Show(t.Exception?.InnerException?.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                RowRefresh(row);
+                            }, TaskScheduler.FromCurrentSynchronizationContext());
                         }
                     }
                     else
@@ -112,8 +126,33 @@ namespace devkit2
                         }
                         else
                         {
-                            app.Install(version);
-                            RowRefresh(row);
+                            var progress = new Progress<DownloadProgress>(info =>
+                            {
+                                string downloaded = Format.FormatSize(info.BytesReceived);
+                                string total = info.TotalBytes.HasValue ? Format.FormatSize(info.TotalBytes.Value) : "?";
+                                string speed = Format.FormatSpeed(info.SpeedBytesPerSecond);
+                                if (info.ProgressPercentage < 100)
+                                {
+                                    row.Cells[colProgram.Index].Value = $"{app.Name} [Downloading... {info.ProgressPercentage:F2}% ({downloaded}/{total}) - {speed}]";
+                                }
+                                else
+                                {
+                                    row.Cells[colProgram.Index].Value = app.Name + " [Installing...]";
+                                }
+                            });
+
+                            Task.Run(() =>
+                            {
+                                row.Cells[colAction.Index].Value = "Installing...";
+                                app.Install(version, progress);
+                            }).ContinueWith(t =>
+                            {
+                                if (t.Exception != null)
+                                {
+                                    MessageBox.Show(t.Exception?.InnerException?.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                RowRefresh(row);
+                            }, TaskScheduler.FromCurrentSynchronizationContext());
                         }
                     }
                 }

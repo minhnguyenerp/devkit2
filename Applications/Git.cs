@@ -39,7 +39,7 @@ namespace devkit2.Applications
             }
         }
 
-        public override bool Install(string version)
+        public override bool Install(string version, IProgress<DownloadProgress>? progress = null)
         {
             string url = string.Empty;
             string file = string.Empty;
@@ -53,12 +53,9 @@ namespace devkit2.Applications
 
             if (url != string.Empty && file != string.Empty)
             {
-                if (!File.Exists(file))
+                if (!base.Download(url, file, progress))
                 {
-                    if (!base.Download(url, file))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
 
                 string extractPath = Path.Combine(appPath, version);

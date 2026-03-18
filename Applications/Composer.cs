@@ -40,7 +40,7 @@ namespace devkit2.Applications
             }
         }
 
-        public override bool Install(string version)
+        public override bool Install(string version, IProgress<DownloadProgress>? progress = null)
         {
             string url = string.Empty;
             string file = string.Empty;
@@ -54,17 +54,14 @@ namespace devkit2.Applications
 
             if (url != string.Empty && file != string.Empty)
             {
-                if (!File.Exists(file))
+                Directory.CreateDirectory(Path.Combine(appPath, version));
+                if (!base.Download(url, file, progress))
                 {
-                    Directory.CreateDirectory(Path.Combine(appPath, version));
-                    if (!base.Download(url, file))
-                    {
-                        return false;
-                    }
-                    File.WriteAllText(Path.Combine(appPath, version, "composer.bat"),
+                    return false;
+                }
+                File.WriteAllText(Path.Combine(appPath, version, "composer.bat"),
 @"@echo off
 php.exe ""%~dp0composer.phar"" %*");
-                }
 
                 if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                 {

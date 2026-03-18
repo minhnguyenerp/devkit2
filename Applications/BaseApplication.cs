@@ -106,7 +106,7 @@ namespace devkit2.Applications
 
         public virtual bool IsRunning(string version) { return false; }
 
-        public virtual bool Install(string version) { return false; }
+        public virtual bool Install(string version, IProgress<DownloadProgress>? progress = null) { return false; }
 
         public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null) { return false; }
 
@@ -139,7 +139,7 @@ namespace devkit2.Applications
             return false;
         }
 
-        protected virtual bool Download(string url, string file)
+        protected bool DownloadSync(string url, string file)
         {
             try
             {
@@ -200,6 +200,124 @@ namespace devkit2.Applications
                     }
                     catch { }
                 }
+                return false;
+            }
+        }
+
+        protected virtual bool Download(string url, string file, IProgress<DownloadProgress>? progress)
+        {
+            try
+            {
+                if (File.Exists(file))
+                {
+                    var fileInfo = new FileInfo(file);
+                    long size = fileInfo.Length;
+                    progress?.Report(new DownloadProgress
+                    {
+                        BytesReceived = size,
+                        TotalBytes = size,
+                        SpeedBytesPerSecond = 0
+                    });
+                    return true;
+                }
+
+                var handler = new SocketsHttpHandler
+                {
+                    AllowAutoRedirect = true,
+                    ConnectCallback = async (context, cancellationToken) =>
+                    {
+                        var addresses = await Dns.GetHostAddressesAsync(context.DnsEndPoint.Host);
+
+                        // IPv4 trước, IPv6 sau
+                        var ordered = addresses
+                            .OrderBy(a => a.AddressFamily == AddressFamily.InterNetwork ? 0 : 1)
+                            .ToList();
+
+                        Exception? lastEx = null;
+
+                        foreach (var ip in ordered)
+                        {
+                            try
+                            {
+                                var socket = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                                await socket.ConnectAsync(ip, context.DnsEndPoint.Port, cancellationToken);
+                                return new NetworkStream(socket, ownsSocket: true);
+                            }
+                            catch (Exception ex)
+                            {
+                                lastEx = ex;
+                            }
+                        }
+
+                        throw lastEx ?? new Exception("Unable to connect to any resolved address.");
+                    }
+                };
+
+                using var client = new HttpClient(handler);
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0");
+
+                using var response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
+                                           .GetAwaiter()
+                                           .GetResult();
+
+                response.EnsureSuccessStatusCode();
+
+                var totalBytes = response.Content.Headers.ContentLength;
+
+                using var input = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+                using var output = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None);
+
+                byte[] buffer = new byte[81920];
+                int bytesRead;
+                long totalRead = 0;
+
+                var stopwatch = Stopwatch.StartNew();
+                long lastReportedBytes = 0;
+                var lastReportTime = stopwatch.Elapsed;
+
+                while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    output.Write(buffer, 0, bytesRead);
+                    totalRead += bytesRead;
+
+                    var elapsed = stopwatch.Elapsed.TotalSeconds;
+                    double avgSpeed = elapsed > 0 ? totalRead / elapsed : 0;
+
+                    // report liên tục, hoặc có thể giới hạn theo thời gian
+                    progress?.Report(new DownloadProgress
+                    {
+                        BytesReceived = totalRead,
+                        TotalBytes = totalBytes,
+                        SpeedBytesPerSecond = avgSpeed
+                    });
+
+                    lastReportedBytes = totalRead;
+                    lastReportTime = stopwatch.Elapsed;
+                }
+
+                // report lần cuối để chắc chắn đủ 100%
+                progress?.Report(new DownloadProgress
+                {
+                    BytesReceived = totalRead,
+                    TotalBytes = totalBytes,
+                    SpeedBytesPerSecond = stopwatch.Elapsed.TotalSeconds > 0
+                        ? totalRead / stopwatch.Elapsed.TotalSeconds
+                        : 0
+                });
+
+                return true;
+            }
+            catch
+            {
+                if (File.Exists(file))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch { }
+                }
+
                 return false;
             }
         }

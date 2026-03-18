@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.IO.Compression;
 using System.Reflection;
+using System.Security.Policy;
 using System.Text;
 using System.Text.Json.Nodes;
 
@@ -43,7 +44,7 @@ namespace devkit2.Applications
             }
         }
 
-        public override bool Install(string version)
+        public override bool Install(string version, IProgress<DownloadProgress>? progress = null)
         {
             List<(string Url, string File)> list = new List<(string Url, string File)>();
             switch (version)
@@ -100,23 +101,28 @@ namespace devkit2.Applications
                     break;
             }
 
-            bool isOk = false;
+            bool isOk = true;
             foreach(var tuple in list)
             {
                 if (tuple.Url != string.Empty && tuple.File!= string.Empty)
                 {
-                    if (!File.Exists(tuple.File))
+                    if (!base.Download(tuple.Url, tuple.File, progress))
                     {
-                        if (!base.Download(tuple.Url, tuple.File))
-                        {
-                            break;
-                        }
+                        isOk = false;
+                        continue;
                     }
-
                     string extractPath = Path.Combine(appPath, version);
                     Directory.CreateDirectory(extractPath);
-                    ZipFile.ExtractToDirectory(tuple.File, extractPath, true);
-                    isOk = true;
+                    try
+                    {
+                        ZipFile.ExtractToDirectory(tuple.File, extractPath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        isOk = false;
+                        MessageBox.Show(ex.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        File.Delete(tuple.File);
+                    }
                 }
             }
 

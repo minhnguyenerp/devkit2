@@ -1,19 +1,17 @@
 ﻿using devkit2.Common;
-using devkit2.Properties;
-using SharpCompress.Common;
-using SharpCompress.Readers;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Rust : BaseApplication
+    internal sealed class ILSpy : BaseApplication
     {
-        public override string Name => "Rust";
+        public override string Name => "ILSpy";
 
-        public Rust()
+        public ILSpy()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rust");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "ilspy");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -37,7 +35,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.94.0", "1.94.0"),
+                    new ValueName("9.1", "9.1"),
                 };
             }
         }
@@ -48,9 +46,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.94.0":
-                    url = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-gnu.tar.xz";
-                    file = Path.Combine(Path.GetTempPath(), "rust-1.94.0-x86_64-pc-windows-gnu.tar.xz");
+                case "9.1":
+                    url = "https://github.com/icsharpcode/ILSpy/releases/download/v9.1/ILSpy_selfcontained_9.1.0.7988-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "ILSpy_selfcontained_9.1.0.7988-x64.zip");
                     break;
             }
 
@@ -65,20 +63,7 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(extractPath);
                 try
                 {
-                    using var stream = File.OpenRead(file);
-                    using var reader = ReaderFactory.OpenReader(stream);
-
-                    while (reader.MoveToNextEntry())
-                    {
-                        if (!reader.Entry.IsDirectory)
-                        {
-                            reader.WriteEntryToDirectory(extractPath, new ExtractionOptions
-                            {
-                                ExtractFullPath = true,
-                                Overwrite = true
-                            });
-                        }
-                    }
+                    ZipFile.ExtractToDirectory(file, extractPath, true);
                 }
                 catch (Exception ex)
                 {
@@ -101,18 +86,23 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin")),
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin")),
-                new ValueName("RUSTFLAGS", "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu")),
-                new ValueName("CARGO_HOME", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo")),
+                new ValueName("PATH", Path.Combine(appPath, version)),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
+            psi.FileName = Path.Combine(appPath, version, $"ILSpy.exe");
             psi.UseShellExecute = false;
+            if (profile != null)
+            {
+                string workingDir = profile["WorkingDirectory"]?.ToString() ?? string.Empty;
+                if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+                {
+                    psi.WorkingDirectory = workingDir;
+                }
+            }
             LoadEnvironments(ref psi, environments);
 
             try
@@ -141,7 +131,7 @@ namespace devkit2.Applications
                     {
                         try
                         {
-                            _icon = Resources.file_type_rust_icon_130185;
+                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "ILSpy.exe"));
                         }
                         catch { }
                     }

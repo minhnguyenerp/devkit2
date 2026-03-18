@@ -50,7 +50,7 @@ namespace devkit2.Applications
             }
         }
 
-        public override bool Install(string version)
+        public override bool Install(string version, IProgress<DownloadProgress>? progress = null)
         {
             string url = string.Empty;
             switch (version)

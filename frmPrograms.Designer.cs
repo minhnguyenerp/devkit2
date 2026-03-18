@@ -93,7 +93,6 @@
             colAction.Name = "colAction";
             colAction.ReadOnly = true;
             colAction.Resizable = DataGridViewTriState.False;
-            colAction.Width = 80;
             // 
             // frmPrograms
             // 
