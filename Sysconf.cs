@@ -183,7 +183,7 @@ namespace devkit2
                         }
                         catch
                         {
-                            bResult = false;
+                            bResult = true;
                         }
 
                         if(bResult)
@@ -203,7 +203,7 @@ namespace devkit2
                     }
                 }
             }
-            return false;
+            return true;
         }
     }
 }
