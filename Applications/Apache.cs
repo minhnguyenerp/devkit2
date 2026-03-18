@@ -1,11 +1,9 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.IO.Compression;
-using System.Reflection;
-using System.Security.Policy;
 using System.Text;
 using System.Text.Json.Nodes;
+using devkit2.Properties;
 
 namespace devkit2.Applications
 {
@@ -146,7 +144,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             string apacheDirSvRoot = Path.Combine(appPath, version, "Apache24");
             string apacheApp = Path.Combine(apacheDirSvRoot, "bin", "httpd.exe");
@@ -297,6 +295,14 @@ Define INDEXES ""{string.Join(" ", indexes)}""
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
+
+            Sysconf.Instance.AddRunningApplication(new RunningApplication {
+                UniqueCode = uniqueCode,
+                Pid = proc.Id,
+                Sessionid = proc.SessionId,
+                ProcessName = proc.ProcessName,
+                StartTime = proc.StartTime,
+            });
             return true;
         }
 
@@ -329,6 +335,7 @@ Define INDEXES ""{string.Join(" ", indexes)}""
                         try
                         {
                             _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Apache24", "bin", "httpd.exe"));
+                            _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
                         } catch { }
                     }
                 }

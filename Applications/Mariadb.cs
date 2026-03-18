@@ -93,7 +93,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
             string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
@@ -131,7 +131,7 @@ namespace devkit2.Applications
                 }
             }
 
-            if(!File.Exists(Path.Combine(dataDir, "my.ini")))
+            if (!File.Exists(Path.Combine(dataDir, "my.ini")))
             {
                 File.WriteAllText(Path.Combine(dataDir, "my.ini"), $"[mariadbd]");
             }
@@ -164,6 +164,14 @@ namespace devkit2.Applications
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
+            Sysconf.Instance.AddRunningApplication(new RunningApplication
+            {
+                UniqueCode = uniqueCode,
+                Pid = proc.Id,
+                Sessionid = proc.SessionId,
+                ProcessName = proc.ProcessName,
+                StartTime = proc.StartTime,
+            });
             return true;
         }
 
@@ -196,6 +204,7 @@ namespace devkit2.Applications
                         try
                         {
                             _icon = Resources.file_type_mariadb_icon_130403;
+                            _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
                         }
                         catch { }
                     }

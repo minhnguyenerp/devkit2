@@ -22,6 +22,7 @@ namespace devkit2
             foreach (var app in Sysconf.Instance.Applications)
             {
                 imgList.Images.Add(app.Name, app.Icon);
+                imgList.Images.Add(app.Name + "_Running", app.RunningIcon);
             }
             listView1.LargeImageList = imgList;
             listView1.View = View.LargeIcon;
@@ -50,17 +51,24 @@ namespace devkit2
             }
 
             listViewMenu = new ContextMenuStrip();
-            listViewMenu.Items.Add("Run", null, listView1_Run_Click);
+            listViewMenu.Items.Add("Start", null, listView1_Start_Click);
+            listViewMenu.Items.Add("Stop", null, listView1_Stop_Click);
             listViewMenu.Items.Add(new ToolStripSeparator());
             listViewMenu.Items.Add("Edit", null, listView1_Edit_Click);
             listViewMenu.Items.Add("Delete", null, listView1_Delete_Click);
             listView1.ContextMenuStrip = listViewMenu;
         }
 
-        private void listView1_Run_Click(object sender, EventArgs e)
+        private void listView1_Start_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count <= 0) { return; }
             RunSelectedProject();
+        }
+
+        private void listView1_Stop_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) { return; }
+            StopSelectedProject();
         }
 
         private void listView1_Edit_Click(object sender, EventArgs e)
@@ -137,14 +145,23 @@ namespace devkit2
                     if (oneFound != null)
                     {
                         oneFound.Text = project["ProjectName"]?.ToString() ?? "Noname";
-                        oneFound.ImageKey = project["Program"]?.ToString() ?? "";
                     }
                     else
                     {
                         ListViewItem item = new ListViewItem(project["ProjectName"]?.ToString() ?? "Noname");
                         item.Tag = project["GUID"]?.ToString() ?? "GUID";
-                        item.ImageKey = project["Program"]?.ToString() ?? "";
                         listView1.Items.Add(item);
+                        oneFound = item;
+                    }
+
+                    var runningApp = Sysconf.Instance.GetRunningApplication(oneFound?.Tag?.ToString() ?? "");
+                    if (runningApp != null)
+                    {
+                        oneFound?.ImageKey = project["Program"]?.ToString() + "_Running" ?? "";
+                    }
+                    else
+                    {
+                        oneFound?.ImageKey = project["Program"]?.ToString() ?? "";
                     }
                 }
             }
@@ -164,6 +181,39 @@ namespace devkit2
         private void frmMyProjects_Load(object sender, EventArgs e)
         {
             LoadProjects();
+        }
+
+        private bool StopSelectedProject()
+        {
+            var item = listView1.SelectedItems[0];
+            string guid = item.Tag?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(guid))
+            {
+                bool result = Sysconf.Instance.CloseApplication(guid);
+
+                JsonObject? proj = null;
+                foreach (var one in projects)
+                {
+                    if (one != null && guid == (one["GUID"]?.ToString() ?? string.Empty))
+                    {
+                        proj = (JsonObject)one;
+                        break;
+                    }
+                }
+                if (proj != null)
+                {
+                    if (result == true)
+                    {
+                        item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                    }
+                    else
+                    {
+                        item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                    }
+                }
+                return result;
+            }
+            return false;
         }
 
         private void RunSelectedProject()
@@ -221,7 +271,15 @@ namespace devkit2
                                 }
                             }
                         }
-                        primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile);
+
+                        if (primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid))
+                        {
+                            item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                        }
+                        else
+                        {
+                            item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                        }
                     }
                 }
             }

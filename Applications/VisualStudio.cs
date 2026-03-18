@@ -1,7 +1,6 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
-using System.IO.Compression;
-using System.Runtime.ConstrainedExecution;
+using devkit2.Properties;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -97,7 +96,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(
@@ -126,8 +125,17 @@ namespace devkit2.Applications
 
             try
             {
-                if (Process.Start(psi) != null)
+                var proc = Process.Start(psi);
+                if (proc != null)
                 {
+                    Sysconf.Instance.AddRunningApplication(new RunningApplication
+                    {
+                        UniqueCode = uniqueCode,
+                        Pid = proc.Id,
+                        Sessionid = proc.SessionId,
+                        ProcessName = proc.ProcessName,
+                        StartTime = proc.StartTime,
+                    });
                     return true;
                 }
             }
@@ -165,6 +173,7 @@ namespace devkit2.Applications
                                     "devenv.exe"
                                 )
                             );
+                            _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
                         }
                         catch { }
                     }

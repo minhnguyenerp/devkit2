@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace devkit2.Applications
 {
@@ -104,11 +105,14 @@ namespace devkit2.Applications
             return false;
         }
 
-        public virtual bool IsRunning(string version) { return false; }
+        public virtual bool IsRunning(string version, string uniqueCode = "")
+        {
+            return false;
+        }
 
         public virtual bool Install(string version, IProgress<DownloadProgress>? progress = null) { return false; }
 
-        public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null) { return false; }
+        public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "") { return false; }
 
         public virtual bool Stop(string version) { return false; }
 
@@ -359,6 +363,17 @@ namespace devkit2.Applications
                 if (_icon == null)
                     _icon = Resources.dev_23828;
                 return _icon;
+            }
+        }
+
+        protected Icon? _runningIcon = null;
+        public virtual Icon RunningIcon
+        {
+            get
+            {
+                if (_runningIcon == null)
+                    _runningIcon = IconUtil.MakeOverlay(Resources.dev_23828, Resources.play);
+                return _runningIcon;
             }
         }
 

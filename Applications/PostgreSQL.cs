@@ -91,7 +91,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
             string baseDir = Path.Combine(appPath, version, "pgsql");
@@ -149,6 +149,14 @@ namespace devkit2.Applications
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
+            Sysconf.Instance.AddRunningApplication(new RunningApplication
+            {
+                UniqueCode = uniqueCode,
+                Pid = proc.Id,
+                Sessionid = proc.SessionId,
+                ProcessName = proc.ProcessName,
+                StartTime = proc.StartTime,
+            });
             return true;
         }
 

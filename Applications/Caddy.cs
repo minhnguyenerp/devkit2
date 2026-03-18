@@ -91,7 +91,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             string caddyDirSvRoot = Path.Combine(appPath, version);
             string caddyApp = Path.Combine(caddyDirSvRoot, "caddy.exe");
@@ -130,7 +130,7 @@ namespace devkit2.Applications
             File.WriteAllText(confFile, config, Encoding.ASCII);
 
             // Start PHP CGI if available
-            if(!string.IsNullOrEmpty(phpCgiApp))
+            if (!string.IsNullOrEmpty(phpCgiApp))
             {
                 var psiCgi = new ProcessStartInfo
                 {
@@ -153,6 +153,14 @@ namespace devkit2.Applications
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
+            Sysconf.Instance.AddRunningApplication(new RunningApplication
+            {
+                UniqueCode = uniqueCode,
+                Pid = proc.Id,
+                Sessionid = proc.SessionId,
+                ProcessName = proc.ProcessName,
+                StartTime = proc.StartTime,
+            });
             return true;
         }
 

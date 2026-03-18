@@ -108,7 +108,7 @@ namespace devkit2.Applications
             };
         }
 
-        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null)
+        public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
@@ -117,8 +117,17 @@ namespace devkit2.Applications
 
             try
             {
-                if (Process.Start(psi) != null)
+                var proc = Process.Start(psi);
+                if (proc != null)
                 {
+                    Sysconf.Instance.AddRunningApplication(new RunningApplication
+                    {
+                        UniqueCode = uniqueCode,
+                        Pid = proc.Id,
+                        Sessionid = proc.SessionId,
+                        ProcessName = proc.ProcessName,
+                        StartTime = proc.StartTime,
+                    });
                     return true;
                 }
             }
