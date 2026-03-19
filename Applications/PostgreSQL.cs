@@ -17,6 +17,11 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+            try
+            {
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "pgsql", "bin", "psql.exe"));
+            }
+            catch { }
         }
 
         public override bool Valid
@@ -175,29 +180,6 @@ namespace devkit2.Applications
                     return dlg.Profile;
                 }
                 return init;
-            }
-        }
-
-        public override Icon Icon
-        {
-            get
-            {
-                if (_icon == null)
-                {
-                    if (InstalledVersions.Length > 0)
-                    {
-                        try
-                        {
-                            _icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "pgsql", "bin", "psql.exe"));
-                        }
-                        catch { }
-                    }
-                }
-                if (_icon == null)
-                {
-                    _icon = base.Icon;
-                }
-                return _icon;
             }
         }
     }

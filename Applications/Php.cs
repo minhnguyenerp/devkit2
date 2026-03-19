@@ -17,6 +17,13 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+            try
+            {
+                base.Icon = Icon.ExtractAssociatedIcon(
+                    Path.Combine(appPath, InstalledVersions[0].Value, "php.exe")
+                );
+            }
+            catch { }
         }
 
         public override bool Valid
@@ -45,15 +52,29 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
+            string iniUrl = string.Empty;
+            List<(string Url, string File, string[] Extracts)> extensions = new List<(string Url, string File, string[] Extracts)>();
             switch (version)
             {
                 case "8.5.4":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php-8.5.4-Win32-vs17-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "php-8.5.4-Win32-vs17-x64.zip");
+                    iniUrl = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php.ini-8.5.4";
+                    extensions.Add((
+                        Url: "https://downloads.php.net/~windows/pecl/releases/apcu/5.1.28/php_apcu-5.1.28-8.5-ts-vs17-x64.zip",
+                        File: Path.Combine(Path.GetTempPath(), "php_apcu-5.1.28-8.5-ts-vs17-x64.zip"),
+                        Extracts: new string[] { "php_apcu.dll" }
+                    ));
                     break;
                 case "7.4.33":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php-7.4.33-Win32-vc15-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "php-7.4.33-Win32-vc15-x64.zip");
+                    iniUrl = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php.ini-7.4.33";
+                    extensions.Add((
+                        Url: "https://downloads.php.net/~windows/pecl/releases/apcu/5.1.28/php_apcu-5.1.28-7.4-ts-vc15-x64.zip",
+                        File: Path.Combine(Path.GetTempPath(), "php_apcu-5.1.28-7.4-ts-vc15-x64.zip"),
+                        Extracts: new string[] { "php_apcu.dll" }
+                    ));
                     break;
             }
 
@@ -69,6 +90,22 @@ namespace devkit2.Applications
                 try
                 {
                     ZipFile.ExtractToDirectory(file, extractPath, true);
+                    string phpIniFile = Path.Combine(extractPath, "php.ini");
+                    base.Download(iniUrl, phpIniFile, progress);
+                    string strToReplace = $";extension_dir = \"ext\"";
+                    string strPhpIni = File.ReadAllText(phpIniFile);
+                    strPhpIni = strPhpIni.Replace(strToReplace, $"extension_dir=\"{Path.Combine(extractPath, "ext")}\"");
+                    File.WriteAllText(phpIniFile, strPhpIni);
+                    foreach (var extension in extensions)
+                    {
+                        if(base.Download(extension.Url, extension.File, progress))
+                        {
+                            ZipHelper.ExtractSelectedFiles(
+                                extension.File,
+                                Path.Combine(extractPath, "ext"),
+                                extension.Extracts, out string error);
+                        }
+                    }    
                 }
                 catch (Exception ex)
                 {
@@ -125,31 +162,6 @@ namespace devkit2.Applications
         public override bool Stop(string version)
         {
             return false;
-        }
-
-        public override Icon Icon
-        {
-            get
-            {
-                if (_icon == null)
-                {
-                    if (InstalledVersions.Length > 0)
-                    {
-                        try
-                        {
-                            _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(appPath, InstalledVersions[0].Value, "php.exe")
-                            );
-                        }
-                        catch { }
-                    }
-                }
-                if (_icon == null)
-                {
-                    _icon = base.Icon;
-                }
-                return _icon;
-            }
         }
     }
 }

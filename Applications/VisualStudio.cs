@@ -37,6 +37,22 @@ namespace devkit2.Applications
                     }
                 }
             }
+
+            try
+            {
+                base.Icon = Icon.ExtractAssociatedIcon(
+                    Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                        "Microsoft Visual Studio",
+                        InstalledVersions[0].Value,
+                        "Community",
+                        "Common7",
+                        "IDE",
+                        "devenv.exe"
+                    )
+                );
+            }
+            catch { }
         }
 
         public override bool Valid
@@ -150,40 +166,6 @@ namespace devkit2.Applications
         public override bool Stop(string version)
         {
             return false;
-        }
-
-        public override Icon Icon
-        {
-            get
-            {
-                if (_icon == null)
-                {
-                    if (InstalledVersions.Length > 0)
-                    {
-                        try
-                        {
-                            _icon = Icon.ExtractAssociatedIcon(
-                                Path.Combine(
-                                    Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
-                                    "Microsoft Visual Studio",
-                                    InstalledVersions[0].Value,
-                                    "Community",
-                                    "Common7",
-                                    "IDE",
-                                    "devenv.exe"
-                                )
-                            );
-                            _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
-                        }
-                        catch { }
-                    }
-                }
-                if (_icon == null)
-                {
-                    _icon = base.Icon;
-                }
-                return _icon;
-            }
         }
     }
 }

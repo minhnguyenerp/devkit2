@@ -17,8 +17,8 @@ namespace devkit2.Applications
         ValueName[] GetEnvironments(string version);
         bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "");
         bool Stop(string version);
-        Icon Icon { get; }
-        Icon RunningIcon { get; }
+        Icon? Icon { get; set; }
+        Icon? RunningIcon { get; }
         JsonObject? ProfileEdit(JsonObject? init = null);
     }
 }

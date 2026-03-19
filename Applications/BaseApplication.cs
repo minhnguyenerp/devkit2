@@ -123,20 +123,28 @@ namespace devkit2.Applications
             string extractPath = Path.Combine(appPath, version);
             if (Directory.Exists(extractPath))
             {
-                Directory.Delete(extractPath, true);
-                if (Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+                try
                 {
-                    JsonArray installedVersions = (JsonArray?)Config["InstalledVersions"] ?? new JsonArray();
-                    JsonArray arr = new JsonArray();
-                    foreach (var one in installedVersions)
+                    Directory.Delete(extractPath, true);
+                    if (Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
                     {
-                        if (one != null && one.ToString() != version)
+                        JsonArray installedVersions = (JsonArray?)Config["InstalledVersions"] ?? new JsonArray();
+                        JsonArray arr = new JsonArray();
+                        foreach (var one in installedVersions)
                         {
-                            arr.Add(one.ToString());
+                            if (one != null && one.ToString() != version)
+                            {
+                                arr.Add(one.ToString());
+                            }
                         }
+                        Config["InstalledVersions"] = arr;
+                        SaveConfig(Config, appPath);
                     }
-                    Config["InstalledVersions"] = arr;
-                    SaveConfig(Config, appPath);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
                 return true;
             }
@@ -355,8 +363,8 @@ namespace devkit2.Applications
             }
         }
 
-        protected Icon? _icon = null;
-        public virtual Icon Icon
+        private Icon? _icon = null;
+        public virtual Icon? Icon
         {
             get
             {
@@ -364,10 +372,18 @@ namespace devkit2.Applications
                     _icon = Resources.dev_23828;
                 return _icon;
             }
+            set
+            {
+                if (value != null)
+                {
+                    _icon = value;
+                    _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
+                }
+            }
         }
 
-        protected Icon? _runningIcon = null;
-        public virtual Icon RunningIcon
+        private Icon? _runningIcon = null;
+        public virtual Icon? RunningIcon
         {
             get
             {
