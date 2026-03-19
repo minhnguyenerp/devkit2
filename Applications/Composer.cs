@@ -68,11 +68,7 @@ namespace devkit2.Applications
 @"@echo off
 php.exe ""%~dp0composer.phar"" %*");
 
-                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
+                base.SaveNewVersion(version);
 
                 return true;
             }

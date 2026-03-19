@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Text;
 using System.Text.Json.Nodes;
-using devkit2.Properties;
 
 namespace devkit2.Applications
 {
@@ -131,11 +130,7 @@ namespace devkit2.Applications
 
             if (isOk)
             {
-                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
+                base.SaveNewVersion(version);
                 return true;
             }
 
@@ -155,7 +150,7 @@ namespace devkit2.Applications
             string apacheApp = Path.Combine(apacheDirSvRoot, "bin", "httpd.exe");
             string phpApp = string.Empty;
             int phpVer = 8;
-            List<string> indexes = new List<string>() { "index.html" };
+            List<string> indexes = new List<string>() { "index.html", "index.htm", "index" };
             foreach (var item in environments)
             {
                 if(item.Name.Contains("php"))
@@ -178,7 +173,7 @@ namespace devkit2.Applications
             string phpModule = Path.Combine(phpDir, $"php{phpVer}apache{apacheVer}.dll");
 
             string instanceDir = profile?["InstanceDirectory"]?.ToString() ?? apacheDirSvRoot;
-            string webDir = Path.Combine(instanceDir, "www");
+            string webDir = profile?["WebRootDirectory"]?.ToString() ?? Path.Combine(instanceDir, "www");
             Directory.CreateDirectory(webDir);
             string logsDir = Path.Combine(instanceDir, "logs");
             Directory.CreateDirectory(logsDir);
@@ -201,8 +196,12 @@ Define PORT {port}
 Listen ${{PORT}}
 ServerName localhost:${{PORT}}
 
-ErrorLog ""{logsDir.Replace('\\', '/')}/error.log""
-CustomLog ""{logsDir.Replace('\\', '/')}/access.log"" common
+#ErrorLog nul
+#CustomLog nul common
+#begin logdir
+ErrorLog ""{logsDir.Replace('\\', '/')}/apache-error.log""
+CustomLog ""{logsDir.Replace('\\', '/')}/apache-access.log"" common
+#end logdir
 
 LoadModule access_compat_module modules/mod_access_compat.so
 LoadModule actions_module modules/mod_actions.so
@@ -237,10 +236,14 @@ LoadModule rewrite_module modules/mod_rewrite.so
 Define INDEXES ""{string.Join(" ", indexes)}""
 #end indexes
 
-DocumentRoot ""{webDir.Replace('\\', '/')}""
+#begin webroot
+Define WEBROOT ""{webDir.Replace('\\', '/')}""
+#end webroot
+
+DocumentRoot ""${{WEBROOT}}""
 DirectoryIndex ${{INDEXES}}
 
-<Directory ""{webDir.Replace('\\', '/')}"">
+<Directory ""${{WEBROOT}}"">
     AllowOverride All
     Require all granted
 </Directory>";
@@ -280,18 +283,39 @@ DirectoryIndex ${{INDEXES}}
 
                 int nBeginIndexes = config.IndexOf("#begin indexes");
                 int nEndIndexes = config.IndexOf("#end indexes");
-                if(nBeginIndexes > 0 && nEndIndexes > 0)
+                if (nBeginIndexes > 0 && nEndIndexes > 0)
                 {
                     config = config.Substring(0, nBeginIndexes) + $@"#begin indexes
 Define INDEXES ""{string.Join(" ", indexes)}""
 #end indexes" + config.Substring(nEndIndexes + "#end indexes".Length);
                 }
+
+                int nBeginWebRoot = config.IndexOf("#begin webroot");
+                int nEndWebRoot = config.IndexOf("#end webroot");
+                if (nBeginWebRoot > 0 && nEndWebRoot > 0)
+                {
+                    config = config.Substring(0, nBeginWebRoot) + $@"#begin webroot
+Define WEBROOT ""{webDir.Replace('\\', '/')}""
+#end webroot" + config.Substring(nEndWebRoot + "#end webroot".Length);
+                }
+
+                int nBeginLogDir = config.IndexOf("#begin logdir");
+                int nEndLogDir = config.IndexOf("#end logdir");
+                if (nBeginLogDir > 0 && nEndLogDir > 0)
+                {
+                    config = config.Substring(0, nBeginLogDir) + $@"#begin logdir
+ErrorLog ""{logsDir.Replace('\\', '/')}/apache-error.log""
+CustomLog ""{logsDir.Replace('\\', '/')}/apache-access.log"" common
+#end logdir" + config.Substring(nEndLogDir + "#end logdir".Length);
+                }
+
                 File.WriteAllText(confFile, config, Encoding.ASCII);
-            }    
+            }
 
             var runPsi = new ProcessStartInfo();
             runPsi.FileName = apacheApp;
             runPsi.Arguments = $"-f \"{confFile}\"";
+            runPsi.WorkingDirectory = instanceDir;
             runPsi.UseShellExecute = false;
             runPsi.CreateNoWindow = true;
             runPsi.RedirectStandardOutput = true;

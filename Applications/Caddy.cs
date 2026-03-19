@@ -78,11 +78,7 @@ namespace devkit2.Applications
                     return false;
                 }
 
-                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
+                base.SaveNewVersion(version);
 
                 return true;
             }
@@ -110,8 +106,10 @@ namespace devkit2.Applications
             }
 
             string instanceDir = profile?["InstanceDirectory"]?.ToString() ?? caddyDirSvRoot;
-            string webDir = Path.Combine(instanceDir, "www");
+            string webDir = profile?["WebRootDirectory"]?.ToString() ?? Path.Combine(instanceDir, "www");
             Directory.CreateDirectory(webDir);
+            string logsDir = Path.Combine(instanceDir, "logs");
+            Directory.CreateDirectory(logsDir);
             string confFile = Path.Combine(instanceDir, "Caddyfile");
 
             int port = 80;
@@ -120,19 +118,83 @@ namespace devkit2.Applications
                 int.TryParse(profile["Port"].ToString(), out port);
             }
 
-            // Genereate Caddyfile
-            string config = $@"{{
+            if (!File.Exists(confFile))
+            {
+                // Genereate Caddyfile
+                string config = $@"{{
     admin off
 }}
 
+#begin port
 :{port} {{
+#end port
+    #begin webroot
     root * ""{webDir}""
+    #end webroot
+    #begin logdir
+    log {{
+        output file ""{Path.Combine(logsDir, "caddy-access.log")}"" {{
+            roll_size 10MB
+            roll_keep 5
+        }}
+    }}
+    #end logdir
     encode gzip zstd
-    php_fastcgi 127.0.0.1:{port + 1}
+    try_files {{path}} {{path}}/ /index.php
+    #begin fastcgi port
+    {(!string.IsNullOrEmpty(phpCgiApp) ? $@"php_fastcgi 127.0.0.1:{port + 1}" : "")}
+    #end fastcgi port
     file_server
 }}
 ";
-            File.WriteAllText(confFile, config, Encoding.ASCII);
+                File.WriteAllText(confFile, config, Encoding.ASCII);
+            }
+            else
+            {
+                string config = File.ReadAllText(confFile, Encoding.ASCII);
+                int nBeginPort = config.IndexOf("#begin port");
+                int nEndPort = config.IndexOf("#end port");
+                if (nBeginPort > 0 && nEndPort > 0)
+                {
+                    config = config.Substring(0, nBeginPort) +
+                        $"#begin port\r\n:{port} {{\r\n#end port" +
+                        config.Substring(nEndPort + "#end port".Length);
+                }
+
+                int nBeginFastCgiPort = config.IndexOf("#begin fastcgi port");
+                int nEndFastCgiPort = config.IndexOf("#end fastcgi port");
+                if (nBeginFastCgiPort > 0 && nEndFastCgiPort > 0)
+                {
+                    config = config.Substring(0, nBeginFastCgiPort) + $@"#begin fastcgi port
+{(!string.IsNullOrEmpty(phpCgiApp) ? $@"php_fastcgi 127.0.0.1:{port + 1}" : "")}
+#end fastcgi port" + config.Substring(nEndFastCgiPort + "#end fastcgi port".Length);
+                }
+
+                int nBeginWebRoot = config.IndexOf("#begin webroot");
+                int nEndWebRoot = config.IndexOf("#end webroot");
+                if (nBeginWebRoot > 0 && nEndWebRoot > 0)
+                {
+                    config = config.Substring(0, nBeginWebRoot) + $@"#begin webroot
+    root * ""{webDir}""
+#end webroot" + config.Substring(nEndWebRoot + "#end webroot".Length);
+                }
+
+                int nBeginLogDir = config.IndexOf("#begin logdir");
+                int nEndLogDir = config.IndexOf("#end logdir");
+                if (nBeginLogDir > 0 && nEndLogDir > 0)
+                {
+                    config = config.Substring(0, nBeginLogDir) + $@"#begin logdir
+    log {{
+        output file ""{Path.Combine(logsDir, "caddy-access.log")}"" {{
+            roll_size 10MB
+            roll_keep 5
+        }}
+    }}
+#end logdir" + config.Substring(nEndLogDir + "#end logdir".Length);
+                }
+
+                File.WriteAllText(confFile, config, Encoding.ASCII);
+            }
 
             // Start PHP CGI if available
             if (!string.IsNullOrEmpty(phpCgiApp))
@@ -150,6 +212,7 @@ namespace devkit2.Applications
             var runPsi = new ProcessStartInfo();
             runPsi.FileName = caddyApp;
             runPsi.Arguments = $"run --adapter caddyfile --config \"{confFile}\"";
+            runPsi.WorkingDirectory = instanceDir;
             runPsi.UseShellExecute = false;
             runPsi.CreateNoWindow = true;
             runPsi.RedirectStandardOutput = true;

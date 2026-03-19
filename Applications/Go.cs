@@ -81,11 +81,7 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(Path.Combine(extractPath, "go", "gocache"));
                 Directory.CreateDirectory(Path.Combine(extractPath, "go", "gotelemetry"));
 
-                if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
+                base.SaveNewVersion(version);
 
                 return true;
             }

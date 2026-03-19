@@ -70,7 +70,7 @@ namespace devkit2
                 row.Cells[colProgram.Index].Value = app?.Name ?? "Unknown";
                 //row.Cells[colVersion.Index].Value = string.Join(", ", app?.InstalledVersions);
                 var comboCell = (DataGridViewComboBoxCell)row.Cells[colSelect.Index];
-                comboCell.DataSource = app?.AvailableVersions;
+                comboCell.DataSource = app?.InstalledVersions;
                 comboCell.DisplayMember = "Name";
                 comboCell.ValueMember = "Value";
                 var selected = app?.InstalledVersions?.FirstOrDefault()?.Value;

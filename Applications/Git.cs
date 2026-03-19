@@ -78,11 +78,7 @@ namespace devkit2.Applications
                     Process.Start(psi).WaitForExit();
                 } catch { return false; }
 
-                if(!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
-                {
-                    ((JsonArray)Config["InstalledVersions"]).Add(version);
-                }
-                base.SaveConfig(Config, appPath);
+                base.SaveNewVersion(version);
 
                 return true;
             }

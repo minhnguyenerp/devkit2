@@ -2,12 +2,11 @@
 using System.ComponentModel;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-
 namespace devkit2.Applications
 {
-    public partial class ApacheProfile : Form
+    public partial class NginxProfile : Form
     {
-        public ApacheProfile()
+        public NginxProfile()
         {
             InitializeComponent();
             Icon = Resources.dev_23828;
@@ -16,16 +15,6 @@ namespace devkit2.Applications
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public JsonObject? Profile { get; set; } = null;
-
-        private void ApacheProfile_Load(object sender, EventArgs e)
-        {
-            if (Profile != null)
-            {
-                txtInstanceDirectory.Text = Profile["InstanceDirectory"]?.ToString();
-                txtWebRootDirectory.Text = Profile["WebRootDirectory"]?.ToString();
-                txtPort.Text = Profile["Port"]?.ToString();
-            }
-        }
 
         private void btnBrowseInstanceDirectory_Click(object sender, EventArgs e)
         {
@@ -37,9 +26,9 @@ namespace devkit2.Applications
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     txtInstanceDirectory.Text = dialog.SelectedPath;
-                    if (File.Exists(Path.Combine(txtInstanceDirectory.Text, "httpd.conf")))
+                    if (File.Exists(Path.Combine(txtInstanceDirectory.Text, "nginx.conf")))
                     {
-                        string config = File.ReadAllText(Path.Combine(txtInstanceDirectory.Text, "httpd.conf"));
+                        string config = File.ReadAllText(Path.Combine(txtInstanceDirectory.Text, "nginx.conf"));
                         int nBeginWebRoot = config.IndexOf("#begin webroot");
                         int nEndWebRoot = config.IndexOf("#end webroot");
                         if (nBeginWebRoot > 0 && nEndWebRoot > 0)
@@ -48,7 +37,7 @@ namespace devkit2.Applications
                             string[] lines = str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
                             foreach (string line in lines)
                             {
-                                if (line.Contains("Define"))
+                                if (line.Contains("\""))
                                 {
                                     string[] sParams = line.Split('"');
                                     if (sParams.Length >= 2)
@@ -65,18 +54,10 @@ namespace devkit2.Applications
                         if (nBeginPort > 0 && nEndPort > 0)
                         {
                             string str = config.Substring(nBeginPort, nEndPort + "#end port".Length - nBeginPort);
-                            string[] lines = str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
-                            foreach (string line in lines)
+                            var match = Regex.Match(str, @"(?m)(\d+)");
+                            if (match.Success)
                             {
-                                if (line.Contains("Define"))
-                                {
-                                    string[] sParams = Regex.Replace(line, @"\s+", " ").Trim().Split(' ');
-                                    if (sParams.Length >= 3)
-                                    {
-                                        txtPort.Text = sParams[2];
-                                        break;
-                                    }
-                                }
+                                txtPort.Text = match.Groups[1].Value;
                             }
                         }
                     }
@@ -117,6 +98,16 @@ namespace devkit2.Applications
                 {
                     txtWebRootDirectory.Text = dialog.SelectedPath;
                 }
+            }
+        }
+
+        private void NginxProfile_Load(object sender, EventArgs e)
+        {
+            if (Profile != null)
+            {
+                txtInstanceDirectory.Text = Profile["InstanceDirectory"]?.ToString();
+                txtWebRootDirectory.Text = Profile["WebRootDirectory"]?.ToString();
+                txtPort.Text = Profile["Port"]?.ToString();
             }
         }
     }

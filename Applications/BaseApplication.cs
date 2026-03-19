@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace devkit2.Applications
 {
@@ -398,6 +397,29 @@ namespace devkit2.Applications
             BaseApplicationProfile dlgProfile = new BaseApplicationProfile() { Profile = init };
             dlgProfile.ShowDialog();
             return dlgProfile.Profile;
+        }
+
+        protected virtual void SaveNewVersion(string version)
+        {
+            if (!IsInstalled(version) && Config != null && Config["InstalledVersions"] != null && Config["InstalledVersions"] is JsonArray)
+            {
+                ((JsonArray)Config["InstalledVersions"]).Add(version);
+            }
+
+            JsonArray sortedVersion = new JsonArray();
+            foreach(var one in AvailableVersions)
+            {
+                foreach(var installed in Config["InstalledVersions"] as JsonArray)
+                {
+                    if (installed?.ToString() == one.Value)
+                    {
+                        sortedVersion.Add(installed?.ToString() ?? "");
+                        break;
+                    }
+                }
+            }
+            Config["InstalledVersions"] = sortedVersion;
+            SaveConfig(Config, appPath);
         }
     }
 }
