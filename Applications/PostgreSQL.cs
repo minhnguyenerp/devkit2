@@ -94,6 +94,11 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
+            if (Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
+            {
+                MessageBox.Show("PostgreSQL is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
             // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
             string baseDir = Path.Combine(appPath, version, "pgsql");
             string binDir = Path.Combine(baseDir, "bin");

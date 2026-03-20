@@ -51,6 +51,11 @@ namespace devkit2
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            var frm = tabPageManualLaunch.Controls[0] as Form;
+            if (frm != null)
+            {
+                frm.Close();
+            }
             /*if (!reallyExit)
             {
                 e.Cancel = true;

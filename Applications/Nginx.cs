@@ -94,6 +94,11 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
+            if (Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
+            {
+                MessageBox.Show("Nginx is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
             string nginxDirSvRoot = Path.Combine(appPath, version, $"nginx-{version}");
             string nginxApp = Path.Combine(nginxDirSvRoot, "nginx.exe");
             string phpCgiApp = string.Empty;

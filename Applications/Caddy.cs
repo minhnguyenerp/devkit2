@@ -94,6 +94,11 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
+            if (Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
+            {
+                MessageBox.Show("Caddy is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
             string caddyDirSvRoot = Path.Combine(appPath, version);
             string caddyApp = Path.Combine(caddyDirSvRoot, "caddy.exe");
             string phpCgiApp = string.Empty;

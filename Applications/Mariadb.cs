@@ -96,6 +96,11 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
+            if (Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
+            {
+                MessageBox.Show("Mariadb is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
             // Use the same layout as the scripts: baseDir contains bin, my.ini located at baseDir, data under baseDir/data
             string baseDir = Path.Combine(appPath, version, $"mariadb-{version}-winx64");
             string binDir = Path.Combine(baseDir, "bin");

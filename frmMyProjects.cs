@@ -187,10 +187,9 @@ namespace devkit2
         {
             var item = listView1.SelectedItems[0];
             string guid = item.Tag?.ToString() ?? string.Empty;
+            bool result = false;
             if (!string.IsNullOrEmpty(guid))
             {
-                bool result = Sysconf.Instance.CloseApplication(guid);
-
                 JsonObject? proj = null;
                 foreach (var one in projects)
                 {
@@ -202,6 +201,16 @@ namespace devkit2
                 }
                 if (proj != null)
                 {
+                    int guidBegin = 0;
+                    foreach (var env in proj["Environments"] as JsonArray)
+                    {
+                        if (env != null && env["Program"] != null && env["Version"] != null && env["Run"]?.ToString() == "true")
+                        {
+                            Sysconf.Instance.CloseApplication(guid + (guidBegin++).ToString());
+                        }
+                    }
+
+                    result = Sysconf.Instance.CloseApplication(guid);
                     if (result == true)
                     {
                         item?.ImageKey = proj["Program"]?.ToString() ?? "";
@@ -211,9 +220,8 @@ namespace devkit2
                         item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
                     }
                 }
-                return result;
             }
-            return false;
+            return result;
         }
 
         private void RunSelectedProject()
@@ -267,6 +275,22 @@ namespace devkit2
                                     if (subapp != null)
                                     {
                                         listEnv.AddRange(subapp.GetEnvironments(env["Version"]?.ToString() ?? string.Empty));
+                                    }
+                                }
+                            }
+
+                            int guidBegin = 0;
+                            foreach (var env in proj["Environments"] as JsonArray)
+                            {
+                                if (env != null && env["Program"] != null && env["Version"] != null && env["Run"]?.ToString() == "true")
+                                {
+                                    foreach (var app in Sysconf.Instance.Applications)
+                                    {
+                                        if (app.Name == env["Program"]?.ToString())
+                                        {
+                                            app.Start(env["Version"]?.ToString() ?? string.Empty, listEnv.ToArray(), env["Profile"] as JsonObject, guid + (guidBegin++).ToString());
+                                            break;
+                                        }
                                     }
                                 }
                             }

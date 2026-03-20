@@ -35,7 +35,7 @@ namespace devkit2
                     newRowIndex = dataGridView1.Rows.Add();
                     var newRow = dataGridView1.Rows[newRowIndex];
                     newRow.Cells[colProgram.Index].Value = app.Name;
-                    var comboCell = (DataGridViewComboBoxCell)newRow.Cells[colVersion.Index];
+                    var comboCell = (DataGridViewComboBoxCell)newRow.Cells[colEnvironment.Index];
                     var list = app?.InstalledVersions?.ToList() ?? new List<ValueName>();
                     list.Insert(0, new ValueName("", ""));
                     comboCell.DataSource = list;
@@ -87,10 +87,15 @@ namespace devkit2
                             var app = row.Tag as IApplication;
                             if (app != null && env != null && app.Name == env["Program"]?.ToString())
                             {
-                                var cell = row.Cells[colVersion.Index];
+                                var cell = row.Cells[colEnvironment.Index];
                                 if (cell != null)
                                 {
                                     cell.Value = env["Version"]?.ToString();
+                                }
+                                var cellRun = row.Cells[colRun.Index];
+                                if(cellRun != null)
+                                {
+                                    cellRun.Value = (env["Run"] != null && (env["Run"]?.ToString().ToLower() == "true"));
                                 }
                                 if (env["Profile"] != null)
                                 {
@@ -154,14 +159,15 @@ namespace devkit2
             var jsonArray = new JsonArray();
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                var cell = row.Cells[colVersion.Index].Value as string;
-                if (cell != null && !string.IsNullOrEmpty(cell))
+                var cell = row.Cells[colEnvironment.Index].Value as string;
+                if (!string.IsNullOrEmpty(cell))
                 {
                     jsonArray.Add(new JsonObject
                     {
                         ["Program"] = (row.Tag as IApplication)?.Name ?? string.Empty,
                         ["Version"] = cell,
                         ["Profile"] = (row.Cells[colProfile.Index].Tag as JsonObject)?.DeepClone(),
+                        ["Run"] = ((row.Cells[colRun.Index].Value as bool?) == true)
                     });
                 }
             }

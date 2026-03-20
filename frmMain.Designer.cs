@@ -100,6 +100,7 @@
             Name = "frmMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DevKit2";
+            FormClosing += MainForm_FormClosing;
             Load += frmMain_Load;
             tabControlContainer.ResumeLayout(false);
             ResumeLayout(false);

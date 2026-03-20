@@ -39,7 +39,8 @@
             btnProfile = new Button();
             dataGridView1 = new DataGridView();
             colProgram = new DataGridViewTextBoxColumn();
-            colVersion = new DataGridViewComboBoxColumn();
+            colEnvironment = new DataGridViewComboBoxColumn();
+            colRun = new DataGridViewCheckBoxColumn();
             colProfile = new DataGridViewTextBoxColumn();
             tableLayoutPanel3 = new TableLayoutPanel();
             btnOK = new Button();
@@ -174,7 +175,7 @@
             // 
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colProgram, colVersion, colProfile });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { colProgram, colEnvironment, colRun, colProfile });
             dataGridView1.Dock = DockStyle.Fill;
             dataGridView1.Location = new Point(130, 73);
             dataGridView1.Name = "dataGridView1";
@@ -191,11 +192,17 @@
             colProgram.ReadOnly = true;
             colProgram.Width = 200;
             // 
-            // colVersion
+            // colEnvironment
             // 
-            colVersion.HeaderText = "Version";
-            colVersion.Name = "colVersion";
-            colVersion.Width = 130;
+            colEnvironment.HeaderText = "Environment";
+            colEnvironment.Name = "colEnvironment";
+            colEnvironment.Width = 130;
+            // 
+            // colRun
+            // 
+            colRun.HeaderText = "Run";
+            colRun.Name = "colRun";
+            colRun.Width = 42;
             // 
             // colProfile
             // 
@@ -278,7 +285,8 @@
         private DataGridView dataGridView1;
         private Button btnProfile;
         private DataGridViewTextBoxColumn colProgram;
-        private DataGridViewComboBoxColumn colVersion;
+        private DataGridViewComboBoxColumn colEnvironment;
+        private DataGridViewCheckBoxColumn colRun;
         private DataGridViewTextBoxColumn colProfile;
     }
 }

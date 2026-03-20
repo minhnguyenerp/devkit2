@@ -104,11 +104,6 @@ namespace devkit2.Applications
             return false;
         }
 
-        public virtual bool IsRunning(string version, string uniqueCode = "")
-        {
-            return false;
-        }
-
         public virtual bool Install(string version, IProgress<DownloadProgress>? progress = null) { return false; }
 
         public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "") { return false; }

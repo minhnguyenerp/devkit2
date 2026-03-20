@@ -55,7 +55,8 @@ namespace devkit2.Applications
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            Profile = null;
+            DialogResult = DialogResult.OK;
             Close();
         }
 

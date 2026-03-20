@@ -1,6 +1,7 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace devkit2
@@ -21,6 +22,36 @@ namespace devkit2
         private void frmStart_Load(object sender, EventArgs e)
         {
             LoadApplications();
+            string configFile = Path.Combine(BaseApplication.LocalApplicationData, "settings", "starts.json");
+            if (File.Exists(configFile))
+            {
+                string strConfig = File.ReadAllText(configFile);
+                try
+                {
+                    var starts = JsonSerializer.Deserialize<JsonArray>(strConfig);
+                    foreach(var one in starts)
+                    {
+                        string? appName = one?["ApplicationName"]?.ToString();
+                        var profile = one?["Profile"] as JsonObject;
+                        if (!string.IsNullOrEmpty(appName))
+                        {
+                            foreach (DataGridViewRow row in dataGridViewPrograms.Rows)
+                            {
+                                if (row.Cells[colProgram.Index]?.Value?.ToString() == appName)
+                                {
+                                    row.Cells[colProfile.Index].Tag = profile?.DeepClone();
+                                    if (profile != null)
+                                    {
+                                        row.Cells[colProfile.Index].Value = profile.ToString();
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
         }
 
         public override void Refresh()
@@ -69,13 +100,15 @@ namespace devkit2
                 var app = (IApplication)row.Tag;
                 row.Cells[colProgram.Index].Value = app?.Name ?? "Unknown";
                 //row.Cells[colVersion.Index].Value = string.Join(", ", app?.InstalledVersions);
-                var comboCell = (DataGridViewComboBoxCell)row.Cells[colSelect.Index];
-                comboCell.DataSource = app?.InstalledVersions;
+                var comboCell = (DataGridViewComboBoxCell)row.Cells[colEnvironment.Index];
+                var list = app?.InstalledVersions?.ToList() ?? new List<ValueName>();
+                list.Insert(0, new ValueName("", ""));
+                comboCell.DataSource = list;
                 comboCell.DisplayMember = "Name";
                 comboCell.ValueMember = "Value";
-                var selected = app?.InstalledVersions?.FirstOrDefault()?.Value;
+                //var selected = app?.InstalledVersions?.FirstOrDefault()?.Value;
                 //__internalTrigger = true;
-                comboCell.Value = selected;
+                //comboCell.Value = selected;
             }
         }
 
@@ -98,9 +131,8 @@ namespace devkit2
                 if (row.Tag != null && row.Tag is IApplication)
                 {
                     var app = (IApplication)row.Tag;
-                    var version = row.Cells[colSelect.Index].Value?.ToString() ?? "";
-                    bool isEnv = (bool)(row.Cells[colEnv.Index].Value ?? false);
-                    if (!string.IsNullOrEmpty(version) && isEnv)
+                    var version = row.Cells[colEnvironment.Index].Value?.ToString() ?? "";
+                    if (!string.IsNullOrEmpty(version))
                     {
                         environments.AddRange(app.GetEnvironments(version));
                     }
@@ -113,10 +145,10 @@ namespace devkit2
                 var app = row.Tag as IApplication;
                 if (app != null)
                 {
-                    string version = row.Cells[colSelect.Index]?.Value?.ToString() ?? "";
+                    string version = row.Cells[colEnvironment.Index]?.Value?.ToString() ?? "";
                     if (!string.IsNullOrEmpty(version))
                     {
-                        app.Start(version, environments.ToArray(), row.Cells[colProfile.Index]?.Tag as JsonObject);
+                        app.Start(version, environments.ToArray(), row.Cells[colProfile.Index]?.Tag as JsonObject, MD5.Hash(app.Name + version + ((row.Cells[colProfile.Index]?.Tag as JsonArray)?.ToString()) ?? ""));
                     }
                     else
                     {
@@ -164,6 +196,22 @@ namespace devkit2
                     }
                 }
             }
+        }
+
+        private void frmStart_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            string configFile = Path.Combine(BaseApplication.LocalApplicationData, "settings", "starts.json");
+            JsonArray array = new JsonArray();
+            foreach (DataGridViewRow one in dataGridViewPrograms.Rows)
+            {
+                array.Add(new JsonObject
+                {
+                    ["ApplicationName"] = one.Cells[colProgram.Index]?.Value?.ToString(),
+                    ["Profile"] = one.Cells[colProfile.Index]?.Tag as JsonObject,
+                });
+            }
+            string json = JsonSerializer.Serialize(array, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(configFile, json);
         }
     }
 }

@@ -146,6 +146,11 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
+            if(Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
+            {
+                MessageBox.Show("Apache is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
+            }
             string apacheDirSvRoot = Path.Combine(appPath, version, "Apache24");
             string apacheApp = Path.Combine(apacheDirSvRoot, "bin", "httpd.exe");
             string phpApp = string.Empty;

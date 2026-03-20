@@ -31,9 +31,8 @@
             dataGridViewPrograms = new DataGridView();
             colNo = new DataGridViewTextBoxColumn();
             colProgram = new DataGridViewTextBoxColumn();
-            colSelect = new DataGridViewComboBoxColumn();
+            colEnvironment = new DataGridViewComboBoxColumn();
             colProfile = new DataGridViewTextBoxColumn();
-            colEnv = new DataGridViewCheckBoxColumn();
             colStart = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrograms).BeginInit();
             SuspendLayout();
@@ -42,7 +41,7 @@
             // 
             dataGridViewPrograms.BorderStyle = BorderStyle.None;
             dataGridViewPrograms.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colSelect, colProfile, colEnv, colStart });
+            dataGridViewPrograms.Columns.AddRange(new DataGridViewColumn[] { colNo, colProgram, colEnvironment, colProfile, colStart });
             dataGridViewPrograms.Dock = DockStyle.Fill;
             dataGridViewPrograms.Location = new Point(0, 0);
             dataGridViewPrograms.Name = "dataGridViewPrograms";
@@ -67,11 +66,11 @@
             colProgram.ReadOnly = true;
             colProgram.Width = 120;
             // 
-            // colSelect
+            // colEnvironment
             // 
-            colSelect.HeaderText = "Select";
-            colSelect.Name = "colSelect";
-            colSelect.Width = 120;
+            colEnvironment.HeaderText = "Environment";
+            colEnvironment.Name = "colEnvironment";
+            colEnvironment.Width = 120;
             // 
             // colProfile
             // 
@@ -79,13 +78,6 @@
             colProfile.Name = "colProfile";
             colProfile.ReadOnly = true;
             colProfile.Width = 350;
-            // 
-            // colEnv
-            // 
-            colEnv.HeaderText = "Env";
-            colEnv.Name = "colEnv";
-            colEnv.Resizable = DataGridViewTriState.False;
-            colEnv.Width = 60;
             // 
             // colStart
             // 
@@ -103,6 +95,7 @@
             Controls.Add(dataGridViewPrograms);
             Name = "frmStart";
             Text = "frmStart";
+            FormClosing += frmStart_FormClosing;
             Load += frmStart_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrograms).EndInit();
             ResumeLayout(false);
@@ -113,9 +106,8 @@
         private DataGridView dataGridViewPrograms;
         private DataGridViewTextBoxColumn colNo;
         private DataGridViewTextBoxColumn colProgram;
-        private DataGridViewComboBoxColumn colSelect;
+        private DataGridViewComboBoxColumn colEnvironment;
         private DataGridViewTextBoxColumn colProfile;
-        private DataGridViewCheckBoxColumn colEnv;
         private DataGridViewButtonColumn colStart;
     }
 }

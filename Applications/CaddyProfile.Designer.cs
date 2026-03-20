@@ -29,24 +29,24 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel4 = new TableLayoutPanel();
+            txtWebRootDirectory = new TextBox();
+            btnBrowseWebRootDirectory = new Button();
+            label2 = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             txtInstanceDirectory = new TextBox();
             btnBrowseInstanceDirectory = new Button();
             label1 = new Label();
+            lblPort = new Label();
             txtPort = new TextBox();
             tableLayoutPanel3 = new TableLayoutPanel();
             btnOK = new Button();
             btnCancel = new Button();
             btnClear = new Button();
-            lblPort = new Label();
-            label2 = new Label();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            txtWebRootDirectory = new TextBox();
-            btnBrowseWebRootDirectory = new Button();
             tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel4.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel3.SuspendLayout();
-            tableLayoutPanel4.SuspendLayout();
             SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -73,6 +73,57 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(648, 169);
             tableLayoutPanel1.TabIndex = 11;
+            // 
+            // tableLayoutPanel4
+            // 
+            tableLayoutPanel4.ColumnCount = 2;
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 77F));
+            tableLayoutPanel4.Controls.Add(txtWebRootDirectory, 0, 0);
+            tableLayoutPanel4.Controls.Add(btnBrowseWebRootDirectory, 1, 0);
+            tableLayoutPanel4.Dock = DockStyle.Fill;
+            tableLayoutPanel4.Location = new Point(159, 39);
+            tableLayoutPanel4.Margin = new Padding(0);
+            tableLayoutPanel4.Name = "tableLayoutPanel4";
+            tableLayoutPanel4.RowCount = 1;
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel4.Size = new Size(489, 39);
+            tableLayoutPanel4.TabIndex = 16;
+            // 
+            // txtWebRootDirectory
+            // 
+            txtWebRootDirectory.BackColor = Color.White;
+            txtWebRootDirectory.Dock = DockStyle.Fill;
+            txtWebRootDirectory.Location = new Point(5, 6);
+            txtWebRootDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtWebRootDirectory.Name = "txtWebRootDirectory";
+            txtWebRootDirectory.Size = new Size(402, 29);
+            txtWebRootDirectory.TabIndex = 0;
+            // 
+            // btnBrowseWebRootDirectory
+            // 
+            btnBrowseWebRootDirectory.Dock = DockStyle.Fill;
+            btnBrowseWebRootDirectory.Location = new Point(416, 4);
+            btnBrowseWebRootDirectory.Margin = new Padding(4);
+            btnBrowseWebRootDirectory.Name = "btnBrowseWebRootDirectory";
+            btnBrowseWebRootDirectory.Size = new Size(69, 31);
+            btnBrowseWebRootDirectory.TabIndex = 1;
+            btnBrowseWebRootDirectory.Text = "...";
+            btnBrowseWebRootDirectory.UseVisualStyleBackColor = true;
+            btnBrowseWebRootDirectory.Click += btnBrowseWebRootDirectory_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Location = new Point(5, 39);
+            label2.Margin = new Padding(5, 0, 5, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(149, 39);
+            label2.TabIndex = 15;
+            label2.Text = "Web Root Directory";
+            label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel2
             // 
@@ -124,6 +175,17 @@
             label1.TabIndex = 11;
             label1.Text = "Instance Directory";
             label1.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblPort
+            // 
+            lblPort.AutoSize = true;
+            lblPort.Dock = DockStyle.Fill;
+            lblPort.Location = new Point(3, 78);
+            lblPort.Name = "lblPort";
+            lblPort.Size = new Size(153, 39);
+            lblPort.TabIndex = 3;
+            lblPort.Text = "Port";
+            lblPort.TextAlign = ContentAlignment.MiddleRight;
             // 
             // txtPort
             // 
@@ -183,68 +245,6 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
-            // lblPort
-            // 
-            lblPort.AutoSize = true;
-            lblPort.Dock = DockStyle.Fill;
-            lblPort.Location = new Point(3, 78);
-            lblPort.Name = "lblPort";
-            lblPort.Size = new Size(153, 39);
-            lblPort.TabIndex = 3;
-            lblPort.Text = "Port";
-            lblPort.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(5, 39);
-            label2.Margin = new Padding(5, 0, 5, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(149, 39);
-            label2.TabIndex = 15;
-            label2.Text = "Web Root Directory";
-            label2.TextAlign = ContentAlignment.MiddleRight;
-            // 
-            // tableLayoutPanel4
-            // 
-            tableLayoutPanel4.ColumnCount = 2;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 77F));
-            tableLayoutPanel4.Controls.Add(txtWebRootDirectory, 0, 0);
-            tableLayoutPanel4.Controls.Add(btnBrowseWebRootDirectory, 1, 0);
-            tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(159, 39);
-            tableLayoutPanel4.Margin = new Padding(0);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RowCount = 1;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel4.Size = new Size(489, 39);
-            tableLayoutPanel4.TabIndex = 16;
-            // 
-            // txtWebRootDirectory
-            // 
-            txtWebRootDirectory.BackColor = Color.White;
-            txtWebRootDirectory.Dock = DockStyle.Fill;
-            txtWebRootDirectory.Location = new Point(5, 6);
-            txtWebRootDirectory.Margin = new Padding(5, 6, 5, 6);
-            txtWebRootDirectory.Name = "txtWebRootDirectory";
-            txtWebRootDirectory.Size = new Size(402, 29);
-            txtWebRootDirectory.TabIndex = 0;
-            // 
-            // btnBrowseWebRootDirectory
-            // 
-            btnBrowseWebRootDirectory.Dock = DockStyle.Fill;
-            btnBrowseWebRootDirectory.Location = new Point(416, 4);
-            btnBrowseWebRootDirectory.Margin = new Padding(4);
-            btnBrowseWebRootDirectory.Name = "btnBrowseWebRootDirectory";
-            btnBrowseWebRootDirectory.Size = new Size(69, 31);
-            btnBrowseWebRootDirectory.TabIndex = 1;
-            btnBrowseWebRootDirectory.Text = "...";
-            btnBrowseWebRootDirectory.UseVisualStyleBackColor = true;
-            btnBrowseWebRootDirectory.Click += btnBrowseWebRootDirectory_Click;
-            // 
             // CaddyProfile
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
@@ -259,11 +259,11 @@
             Load += CaddyProfile_Load;
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel4.ResumeLayout(false);
+            tableLayoutPanel4.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
             tableLayoutPanel2.PerformLayout();
             tableLayoutPanel3.ResumeLayout(false);
-            tableLayoutPanel4.ResumeLayout(false);
-            tableLayoutPanel4.PerformLayout();
             ResumeLayout(false);
         }
 
