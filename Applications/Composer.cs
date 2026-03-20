@@ -101,16 +101,13 @@ php.exe ""%~dp0composer.phar"" %*");
                         Sessionid = proc.SessionId,
                         ProcessName = proc.ProcessName,
                         StartTime = proc.StartTime,
+                        ApplicationName = Name,
+                        ApplicationVersion = version,
                     });
                     return true;
                 }
             }
             catch { return false; }
-            return false;
-        }
-
-        public override bool Stop(string version)
-        {
             return false;
         }
     }

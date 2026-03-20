@@ -354,6 +354,7 @@ http {{
             }
 
             // Start PHP CGI if available
+            RunningApplication? runningCgi = null;
             if (!string.IsNullOrEmpty(phpCgiApp))
             {
                 var psiCgi = new ProcessStartInfo
@@ -363,12 +364,23 @@ http {{
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
-                Process.Start(psiCgi);
+                var cgiproc = Process.Start(psiCgi);
+                if (cgiproc != null)
+                {
+                    runningCgi = new RunningApplication
+                    {
+                        UniqueCode = uniqueCode,
+                        Pid = cgiproc.Id,
+                        Sessionid = cgiproc.SessionId,
+                        ProcessName = cgiproc.ProcessName,
+                        StartTime = cgiproc.StartTime,
+                    };
+                }
             }
 
             var runPsi = new ProcessStartInfo();
             runPsi.FileName = nginxApp;
-            runPsi.Arguments = $"-c \"{confFile}\"";
+            runPsi.Arguments = $"-c \"{confFile}\" -p \"{instanceDir}\"";
             runPsi.WorkingDirectory = instanceDir;
             runPsi.UseShellExecute = false;
             runPsi.CreateNoWindow = true;
@@ -378,20 +390,23 @@ http {{
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
-            Sysconf.Instance.AddRunningApplication(new RunningApplication
+            var runningApp = new RunningApplication
             {
                 UniqueCode = uniqueCode,
                 Pid = proc.Id,
                 Sessionid = proc.SessionId,
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
-            });
+                ApplicationName = Name,
+                RuntimeDirectory = instanceDir,
+                ApplicationVersion = version,
+            };
+            if (runningCgi != null)
+            {
+                runningApp.Childs.Add(runningCgi);
+            }
+            Sysconf.Instance.AddRunningApplication(runningApp);
             return true;
-        }
-
-        public override bool Stop(string version)
-        {
-            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)
@@ -405,6 +420,27 @@ http {{
                 }
                 return init;
             }
+        }
+
+        public override bool Stop(RunningApplication runningApplication)
+        {
+            string nginxDirSvRoot = Path.Combine(appPath, runningApplication.ApplicationVersion, $"nginx-{runningApplication.ApplicationVersion}");
+            string nginxApp = Path.Combine(nginxDirSvRoot, "nginx.exe");
+            string confFile = Path.Combine(runningApplication.RuntimeDirectory, "nginx.conf");
+            var stopPsi = new ProcessStartInfo();
+            stopPsi.FileName = nginxApp;
+            stopPsi.Arguments = $"-s stop -c \"{confFile}\" -p \"{runningApplication.RuntimeDirectory}\"";
+            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.UseShellExecute = false;
+            stopPsi.CreateNoWindow = true;
+            stopPsi.RedirectStandardOutput = true;
+            stopPsi.RedirectStandardError = true;
+            var proc = Process.Start(stopPsi);
+            proc?.WaitForExit(5000);
+            base.Stop(runningApplication);
+            if (proc == null)
+                return false;
+            return true;
         }
     }
 }

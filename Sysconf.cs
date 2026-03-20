@@ -10,7 +10,7 @@ namespace devkit2
     {
         private static Sysconf? instance = null;
         private static readonly object padlock = new object();
-        private static JsonArray runningPids = new JsonArray();
+        //private static JsonArray runningPids = new JsonArray();
 
         Sysconf() { }
         public static Sysconf Instance
@@ -28,35 +28,20 @@ namespace devkit2
                         if (File.Exists(runningFile))
                         {
                             string strRunning = File.ReadAllText(runningFile);
-                            try
+                            List<RunningApplication>? runningApps = JsonSerializer.Deserialize<List<RunningApplication>>(strRunning);
+                            if (runningApps != null && runningApps.Any())
                             {
-                                runningPids = JsonSerializer.Deserialize<JsonArray>(strRunning);
-                            }
-                            catch
-                            {
-                                runningPids = new JsonArray();
-                            }
-
-                            foreach(var onePid in runningPids)
-                            {
-                                if (onePid != null && onePid is JsonObject)
+                                List<string> lstCodes = new List<string>();
+                                foreach (RunningApplication app in runningApps)
                                 {
-                                    RunningApplication? running = JsonSerializer.Deserialize<RunningApplication>(onePid.ToString());
-                                    if (running != null)
-                                    {
-                                        instance.AddRunningApplication(running, false);
-                                    }
+                                    instance.AddRunningApplication(app, false);
+                                    lstCodes.Add(app.UniqueCode);
                                 }
-                            }
 
-                            List<string> lstCodes = new List<string>();
-                            foreach (var onePid in runningPids)
-                            {
-                                lstCodes.Add(onePid?["UniqueCode"]?.ToString() ?? "");
-                            }
-                            foreach(var one in lstCodes)
-                            {
-                                instance.GetRunningApplication(one);
+                                foreach (var one in lstCodes)
+                                {
+                                    instance.GetRunningApplication(one);
+                                }
                             }
                         }
                     }
@@ -92,9 +77,8 @@ namespace devkit2
                     runningApplications.Add(running);
                     if (isSave)
                     {
-                        runningPids.Add(JsonSerializer.SerializeToNode(running));
                         string configFile = Path.Combine(BaseApplication.LocalApplicationData, "settings", "runnings.json");
-                        string json = JsonSerializer.Serialize(runningPids, new JsonSerializerOptions { WriteIndented = true });
+                        string json = JsonSerializer.Serialize(runningApplications, new JsonSerializerOptions { WriteIndented = true });
                         File.WriteAllText(configFile, json);
                     }
                     return true;
@@ -123,16 +107,8 @@ namespace devkit2
                         catch
                         {
                             runningApplications.Remove(app);
-                            foreach(var onePid in runningPids)
-                            {
-                                if (onePid != null && onePid is JsonObject && onePid?["UniqueCode"]?.ToString() == uniqueCode)
-                                {
-                                    runningPids.Remove(onePid);
-                                    break;
-                                }
-                            }
                             string configFile = Path.Combine(BaseApplication.LocalApplicationData, "settings", "runnings.json");
-                            string json = JsonSerializer.Serialize(runningPids, new JsonSerializerOptions { WriteIndented = true });
+                            string json = JsonSerializer.Serialize(runningApplications, new JsonSerializerOptions { WriteIndented = true });
                             File.WriteAllText(configFile, json);
                             return null;
                         }
@@ -145,65 +121,34 @@ namespace devkit2
         public bool CloseApplication(string uniqueCode)
         {
             if (string.IsNullOrEmpty(uniqueCode)) { return false; }
+            bool bResult = false;
             lock (runningAppLock)
             {
                 foreach (RunningApplication app in runningApplications)
                 {
                     if (app.UniqueCode == uniqueCode)
                     {
-                        bool bResult = false;
-                        try
+                        if (!string.IsNullOrEmpty(app.ApplicationName))
                         {
-                            var proc = Process.GetProcessById(app.Pid);
-                            if (proc != null && !proc.HasExited)
+                            foreach (var application in applications)
                             {
-                                if (proc.HasExited)
+                                if (application.Name == app.ApplicationName)
                                 {
-                                    bResult = true;
-                                }
-                                else
-                                {
-                                    // 1. nếu có window → đóng nhẹ
-                                    if (proc.MainWindowHandle != IntPtr.Zero)
-                                    {
-                                        if (proc.CloseMainWindow())
-                                        {
-                                            if (proc.WaitForExit(5000))
-                                                bResult = true;
-                                        }
-                                    }
-
-                                    if (!bResult)
-                                    {
-                                        proc.Kill();
-                                        bResult = proc.WaitForExit(5000);
-                                    }
-                                }
-                            }
-                        }
-                        catch
-                        {
-                            bResult = true;
-                        }
-
-                        if(bResult)
-                        {
-                            runningApplications.Remove(app);
-                            foreach (var onePid in runningPids)
-                            {
-                                if (onePid != null && onePid is JsonObject && onePid?["UniqueCode"]?.ToString() == uniqueCode)
-                                {
-                                    runningPids.Remove(onePid);
+                                    bResult = application.Stop(app);
                                     break;
                                 }
                             }
-                        }    
+                        }
 
-                        return bResult;
+                        if (bResult)
+                        {
+                            runningApplications.Remove(app);
+                        }
+                        break;
                     }
                 }
             }
-            return true;
+            return bResult;
         }
     }
 }

@@ -113,7 +113,84 @@ namespace devkit2.Applications
 
         public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "") { return false; }
 
-        public virtual bool Stop(string version) { return false; }
+        protected bool CloseChildProcesses(RunningApplication app)
+        {
+            bool bResult = true;
+            foreach (var child in app.Childs)
+            {
+                try
+                {
+                    var proc = Process.GetProcessById(child.Pid);
+                    if (proc != null && !proc.HasExited)
+                    {
+                        if (proc.HasExited)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            // 1. nếu có window → đóng nhẹ
+                            if (proc.MainWindowHandle != IntPtr.Zero)
+                            {
+                                if (proc.CloseMainWindow())
+                                {
+                                    if (proc.WaitForExit(5000))
+                                        continue;
+                                }
+                            }
+                            proc.Kill();
+                            bResult = proc.WaitForExit(5000);
+                        }
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+            return bResult;
+        }
+
+        public virtual bool Stop(RunningApplication runningApplication)
+        {
+            CloseChildProcesses(runningApplication);
+
+            bool bResult = false;
+            try
+            {
+                var proc = Process.GetProcessById(runningApplication.Pid);
+                if (proc != null && !proc.HasExited)
+                {
+                    if (proc.HasExited)
+                    {
+                        bResult = true;
+                    }
+                    else
+                    {
+                        // 1. nếu có window → đóng nhẹ
+                        if (proc.MainWindowHandle != IntPtr.Zero)
+                        {
+                            if (proc.CloseMainWindow())
+                            {
+                                if (proc.WaitForExit(5000))
+                                    bResult = true;
+                            }
+                        }
+
+                        if (!bResult)
+                        {
+                            proc.Kill();
+                            bResult = proc.WaitForExit(5000);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                bResult = true;
+            }
+            return bResult;
+        }
 
         public virtual ValueName[] GetEnvironments(string version) { return Array.Empty<ValueName>(); }
 

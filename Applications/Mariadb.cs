@@ -172,13 +172,11 @@ namespace devkit2.Applications
                 Sessionid = proc.SessionId,
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
+                ApplicationName = Name,
+                ApplicationVersion = version,
+                RuntimeDirectory = dataDir,
             });
             return true;
-        }
-
-        public override bool Stop(string version)
-        {
-            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)
@@ -192,6 +190,27 @@ namespace devkit2.Applications
                 }
                 return init;
             }
+        }
+
+        public override bool Stop(RunningApplication runningApplication)
+        {
+            string baseDir = Path.Combine(appPath, runningApplication.ApplicationVersion, $"mariadb-{runningApplication.ApplicationVersion}-winx64");
+            string binDir = Path.Combine(baseDir, "bin");
+            string mariadbdApp = Path.Combine(binDir, "mariadb-admin.exe");
+            var stopPsi = new ProcessStartInfo();
+            stopPsi.FileName = mariadbdApp;
+            stopPsi.Arguments = $"--defaults-file=\"{Path.Combine(runningApplication.RuntimeDirectory, "my.ini")}\" shutdown";
+            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.UseShellExecute = false;
+            stopPsi.CreateNoWindow = true;
+            stopPsi.RedirectStandardOutput = true;
+            stopPsi.RedirectStandardError = true;
+            var proc = Process.Start(stopPsi);
+            proc?.WaitForExit(5000);
+            base.Stop(runningApplication);
+            if (proc == null)
+                return false;
+            return true;
         }
     }
 }

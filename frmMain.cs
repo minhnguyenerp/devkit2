@@ -36,9 +36,9 @@ namespace devkit2
 
             trayIcon.DoubleClick += TrayIcon_DoubleClick;
 
-            this.Resize += MainForm_Resize;
-            this.FormClosing += MainForm_FormClosing;
-            trayIcon.Visible = true;
+            //this.Resize += MainForm_Resize;
+            //this.FormClosing += MainForm_FormClosing;
+            //trayIcon.Visible = true;
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

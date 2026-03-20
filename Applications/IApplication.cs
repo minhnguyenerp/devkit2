@@ -1,6 +1,5 @@
 ﻿using devkit2.Common;
 using System.Text.Json.Nodes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace devkit2.Applications
 {
@@ -16,7 +15,7 @@ namespace devkit2.Applications
         bool Uninstall(string version);
         ValueName[] GetEnvironments(string version);
         bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "");
-        bool Stop(string version);
+        bool Stop(RunningApplication runningApplication);
         Icon? Icon { get; set; }
         Icon? RunningIcon { get; }
         JsonObject? ProfileEdit(JsonObject? init = null);

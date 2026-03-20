@@ -112,6 +112,8 @@ namespace devkit2.Applications
                         Sessionid = proc.SessionId,
                         ProcessName = proc.ProcessName,
                         StartTime = proc.StartTime,
+                        ApplicationName = Name,
+                        ApplicationVersion = version,
                     });
                     return true;
                 }
@@ -120,9 +122,5 @@ namespace devkit2.Applications
             return false;
         }
 
-        public override bool Stop(string version)
-        {
-            return false;
-        }
     }
 }

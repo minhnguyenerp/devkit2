@@ -7,6 +7,10 @@
         public DateTime StartTime { get; set; }
         public string ProcessName { get; set; } = string.Empty;
         public string UniqueCode { get; set; } = string.Empty;
+        public List<RunningApplication> Childs { get; set; } = new List<RunningApplication>();
+        public string ApplicationName { get; set; } = string.Empty;
+        public string RuntimeDirectory { get; set; } = string.Empty;
+        public string ApplicationVersion { get; set; } = string.Empty;
 
         public override bool Equals(object obj)
         {

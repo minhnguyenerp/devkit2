@@ -97,6 +97,16 @@ namespace devkit2.Applications
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, "notepad++.exe");
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            {
+                psi.WorkingDirectory = workingDir;
+            }
+            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(startupFile) && File.Exists(startupFile))
+            {
+                psi.ArgumentList.Add(startupFile);
+            }
             psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments);
 
@@ -112,16 +122,13 @@ namespace devkit2.Applications
                         Sessionid = proc.SessionId,
                         ProcessName = proc.ProcessName,
                         StartTime = proc.StartTime,
+                        ApplicationName = Name,
+                        ApplicationVersion = version,
                     });
                     return true;
                 }
             }
             catch { return false; }
-            return false;
-        }
-
-        public override bool Stop(string version)
-        {
             return false;
         }
     }

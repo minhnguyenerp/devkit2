@@ -123,6 +123,8 @@ namespace devkit2.Applications
                         Sessionid = proc.SessionId,
                         ProcessName = proc.ProcessName,
                         StartTime = proc.StartTime,
+                        ApplicationName = Name,
+                        ApplicationVersion = version,
                     });
                     return true;
                 }
@@ -132,11 +134,6 @@ namespace devkit2.Applications
                 MessageBox.Show(ex.ToString(), "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            return false;
-        }
-
-        public override bool Stop(string version)
-        {
             return false;
         }
     }

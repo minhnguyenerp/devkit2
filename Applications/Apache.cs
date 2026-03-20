@@ -331,13 +331,11 @@ CustomLog ""{logsDir.Replace('\\', '/')}/apache-access.log"" common
                 Sessionid = proc.SessionId,
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
+                ApplicationName = Name,
+                RuntimeDirectory = instanceDir,
+                ApplicationVersion = version,
             });
             return true;
-        }
-
-        public override bool Stop(string version)
-        {
-            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)

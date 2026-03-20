@@ -157,13 +157,11 @@ namespace devkit2.Applications
                 Sessionid = proc.SessionId,
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
+                ApplicationName = Name,
+                ApplicationVersion = version,
+                RuntimeDirectory = dataDir,
             });
             return true;
-        }
-
-        public override bool Stop(string version)
-        {
-            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)
@@ -177,6 +175,27 @@ namespace devkit2.Applications
                 }
                 return init;
             }
+        }
+
+        public override bool Stop(RunningApplication runningApplication)
+        {
+            string baseDir = Path.Combine(appPath, runningApplication.ApplicationVersion, "pgsql");
+            string binDir = Path.Combine(baseDir, "bin");
+            string postgresApp = Path.Combine(binDir, "pg_ctl.exe");
+            var stopPsi = new ProcessStartInfo();
+            stopPsi.FileName = postgresApp;
+            stopPsi.Arguments = $"-D \"{runningApplication.RuntimeDirectory}\" stop";
+            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.UseShellExecute = false;
+            stopPsi.CreateNoWindow = true;
+            stopPsi.RedirectStandardOutput = true;
+            stopPsi.RedirectStandardError = true;
+            var proc = Process.Start(stopPsi);
+            proc?.WaitForExit(5000);
+            base.Stop(runningApplication);
+            if (proc == null)
+                return false;
+            return true;
         }
     }
 }

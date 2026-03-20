@@ -197,6 +197,7 @@ namespace devkit2.Applications
             }
 
             // Start PHP CGI if available
+            RunningApplication? runningCgi = null;
             if (!string.IsNullOrEmpty(phpCgiApp))
             {
                 var psiCgi = new ProcessStartInfo
@@ -206,7 +207,18 @@ namespace devkit2.Applications
                     UseShellExecute = false,
                     CreateNoWindow = true
                 };
-                Process.Start(psiCgi);
+                var cgiproc = Process.Start(psiCgi);
+                if (cgiproc != null)
+                {
+                    runningCgi = new RunningApplication
+                    {
+                        UniqueCode = uniqueCode,
+                        Pid = cgiproc.Id,
+                        Sessionid = cgiproc.SessionId,
+                        ProcessName = cgiproc.ProcessName,
+                        StartTime = cgiproc.StartTime,
+                    };
+                }
             }
 
             var runPsi = new ProcessStartInfo();
@@ -221,20 +233,23 @@ namespace devkit2.Applications
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;
-            Sysconf.Instance.AddRunningApplication(new RunningApplication
+            var runningApp = new RunningApplication
             {
                 UniqueCode = uniqueCode,
                 Pid = proc.Id,
                 Sessionid = proc.SessionId,
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
-            });
+                ApplicationName = Name,
+                RuntimeDirectory = instanceDir,
+                ApplicationVersion = version,
+            };
+            if (runningCgi != null)
+            {
+                runningApp.Childs.Add(runningCgi);
+            }
+            Sysconf.Instance.AddRunningApplication(runningApp);
             return true;
-        }
-
-        public override bool Stop(string version)
-        {
-            return false;
         }
 
         public override JsonObject? ProfileEdit(JsonObject? init = null)
