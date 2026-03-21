@@ -1,6 +1,7 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -244,6 +245,7 @@ namespace devkit2
                     IApplication? primaryApplication = null;
                     string primaryVersion = string.Empty;
                     JsonObject? primaryProfile = null;
+                    bool needToSaveProjectConfig = false;
                     foreach (var app in Sysconf.Instance.Applications)
                     {
                         if (app.Name == proj["Program"]?.ToString())
@@ -288,7 +290,24 @@ namespace devkit2
                                     {
                                         if (app.Name == env["Program"]?.ToString())
                                         {
-                                            app.Start(env["Version"]?.ToString() ?? string.Empty, listEnv.ToArray(), env["Profile"] as JsonObject, guid + (guidBegin++).ToString());
+                                            string strversion = env["Version"]?.ToString() ?? string.Empty;
+                                            if(!app.IsInstalled(strversion) && !string.IsNullOrEmpty(app.InstalledVersions?.FirstOrDefault()?.ToString()))
+                                            {
+                                                if(MessageBox.Show($"{app.Name} version {strversion} is no longer existed, do you want to switch to {app.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                                                {
+                                                    strversion = app.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
+                                                    env["Version"] = strversion;
+                                                    needToSaveProjectConfig = true;
+                                                }
+                                            }
+                                            if (app.IsInstalled(strversion))
+                                            {
+                                                app.Start(strversion, listEnv.ToArray(), env["Profile"] as JsonObject, guid + (guidBegin++).ToString());
+                                            }
+                                            else
+                                            {
+                                                MessageBox.Show($"Cannot start {app.Name} version {strversion}", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                            }
                                             break;
                                         }
                                     }
@@ -296,13 +315,31 @@ namespace devkit2
                             }
                         }
 
-                        if (primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid))
+                        if (!primaryApplication.IsInstalled(primaryVersion) && !string.IsNullOrEmpty(primaryApplication.InstalledVersions?.FirstOrDefault()?.ToString()))
                         {
-                            item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                            if (MessageBox.Show($"{primaryApplication.Name} version {primaryVersion} is no longer existed, do you want to switch to {primaryApplication.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                            {
+                                primaryVersion = primaryApplication.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
+                                proj["Version"] = primaryVersion;
+                                needToSaveProjectConfig = true;
+                            }
                         }
-                        else
+
+                        if (primaryApplication.IsInstalled(primaryVersion))
                         {
-                            item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                            if (primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid))
+                            {
+                                item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                            }
+                            else
+                            {
+                                item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                            }
+                        }
+
+                        if(needToSaveProjectConfig)
+                        {
+                            SaveProjects();
                         }
                     }
                 }
