@@ -28,7 +28,7 @@ No installation required. No system changes. You're ready to go.
 DevKit2 is organized into four main tabs
 
 ### 1. My Projects
-![My Projects](Images/My%20Projects.png)
+![My Projects](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/My%20Projects.png)
 
 This tab displays your development projects.
 
@@ -39,7 +39,7 @@ This tab displays your development projects.
 This is your central workspace dashboard.
 
 ### 2. Manual Launch
-![Manual Launch](Images/Manual%20Launch.png)
+![Manual Launch](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/Manual%20Launch.png)
 
 This tab allows you to manually launch development tools and services.
 
@@ -58,7 +58,7 @@ Use this tab when you want to:
 - Run utilities independently of projects
 
 ### 3. Programs
-![Programs](Images/Programs.png)
+![Programs](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/Programs.png)
 
 This tab is used to manage available software packages.
 
