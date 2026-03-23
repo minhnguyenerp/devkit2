@@ -29,6 +29,7 @@ DevKit2 is organized into four main tabs
 
 ### 1. My Projects
 ![My Projects](Images/My%20Projects.png)
+
 This tab displays your development projects.
 
 - Each item represents a project or workspace
@@ -38,6 +39,8 @@ This tab displays your development projects.
 This is your central workspace dashboard.
 
 ### 2. Manual Launch
+![Manual Launch](Images/Manual%20Launch.png)
+
 This tab allows you to manually launch development tools and services.
 
 You can run tools such as:
@@ -55,6 +58,8 @@ Use this tab when you want to:
 - Run utilities independently of projects
 
 ### 3. Programs
+![Programs](Images/Programs.png)
+
 This tab is used to manage available software packages.
 
 Features:
