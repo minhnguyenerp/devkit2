@@ -124,18 +124,15 @@ namespace devkit2.Applications
                 "IDE",
                 "devenv.exe"
             );
-            if (profile != null)
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
-                string workingDir = profile["WorkingDirectory"]?.ToString() ?? string.Empty;
-                if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
-                {
-                    psi.WorkingDirectory = workingDir;
-                }
-                string startupFile = profile["StartupFile"]?.ToString() ?? string.Empty;
-                if (!string.IsNullOrEmpty(startupFile) && File.Exists(startupFile))
-                {
-                    psi.ArgumentList.Add(startupFile);
-                }
+                psi.WorkingDirectory = workingDir;
+            }
+            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(startupFile) && (File.Exists(startupFile) || Directory.Exists(startupFile)))
+            {
+                psi.ArgumentList.Add(startupFile);
             }
             LoadEnvironments(ref psi, environments);
 

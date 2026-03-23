@@ -97,6 +97,16 @@ namespace devkit2.Applications
         {
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, "Zed.exe");
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            {
+                psi.WorkingDirectory = workingDir;
+            }
+            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(startupFile) && (File.Exists(startupFile) || Directory.Exists(startupFile)))
+            {
+                psi.ArgumentList.Add(startupFile);
+            }
             psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments);
 
