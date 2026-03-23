@@ -1,22 +1,24 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
+using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace devkit2
 {
-    public partial class frmMyProjects : Form
+    public partial class frmManualLaunch : Form
     {
         private ImageList imgList = new ImageList();
         private JsonArray projects = new JsonArray();
         private string strConfigFile = string.Empty;
         private ContextMenuStrip listViewMenu;
 
-        public frmMyProjects()
+        public frmManualLaunch()
         {
             InitializeComponent();
             Icon = Resources.dev_23828;
+
             imgList.ImageSize = new Size(32, 32);
             imgList.ColorDepth = ColorDepth.Depth32Bit;
             foreach (var app in Sysconf.Instance.Applications)
@@ -28,12 +30,12 @@ namespace devkit2
             listView1.View = View.LargeIcon;
             listView1.MultiSelect = false;
 
-            string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DevKit2", "projects");
+            string configPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DevKit2", "settings");
             if (!Directory.Exists(configPath))
             {
                 Directory.CreateDirectory(configPath);
             }
-            strConfigFile = Path.Combine(configPath, "projects.json");
+            strConfigFile = Path.Combine(configPath, "launchs.json");
             if (!File.Exists(strConfigFile))
             {
                 string json = JsonSerializer.Serialize(projects, new JsonSerializerOptions { WriteIndented = true });
@@ -50,12 +52,13 @@ namespace devkit2
                 projects = new JsonArray();
             }
 
+            RefreshApps();
+
             listViewMenu = new ContextMenuStrip();
             listViewMenu.Items.Add("Start", null, listView1_Start_Click);
             listViewMenu.Items.Add("Stop", null, listView1_Stop_Click);
             listViewMenu.Items.Add(new ToolStripSeparator());
             listViewMenu.Items.Add("Edit", null, listView1_Edit_Click);
-            listViewMenu.Items.Add("Delete", null, listView1_Delete_Click);
             listView1.ContextMenuStrip = listViewMenu;
         }
 
@@ -76,56 +79,56 @@ namespace devkit2
             EditSelectedProject();
         }
 
-        private void DeleteSelectedProject()
-        {
-            if (listView1.SelectedItems.Count == 0)
-                return;
-
-            ListViewItem item = listView1.SelectedItems[0];
-
-            if (item != null)
-            {
-                DialogResult result = MessageBox.Show(
-                    "Are you sure you want to delete this project?",
-                    "DevKit2",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
-                {
-                    foreach (var project in projects)
-                    {
-                        if (project != null)
-                        {
-
-                            if (item.Tag != null &&
-                                !string.IsNullOrEmpty(item.Tag.ToString()) &&
-                                item.Tag.ToString() == project["GUID"]?.ToString())
-                            {
-                                projects.Remove(project);
-                                break;
-                            }
-                        }
-                    }
-                    listView1.Items.Remove(item);
-                    SaveProjects();
-                }
-            }
-        }
-
-        private void listView1_Delete_Click(object sender, EventArgs e)
-        {
-            DeleteSelectedProject();
-        }
-
         private void SaveProjects()
         {
             string json = JsonSerializer.Serialize(projects, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(strConfigFile, json);
         }
 
+        private void RefreshApps()
+        {
+            JsonArray refreshedApps = new JsonArray();
+            foreach (var app in Sysconf.Instance.Applications)
+            {
+                if (app != null && app.Valid && app.InstalledVersions.Length > 0)
+                {
+                    string md5 = MD5.Hash(app.Name);
+                    if (projects != null)
+                    {
+                        JsonObject? appFound = null;
+                        foreach (var japp in projects)
+                        {
+                            if (japp?["GUID"]?.ToString() == md5)
+                            {
+                                appFound = japp as JsonObject;
+                                break;
+                            }
+                        }
+                        if (appFound != null)
+                        {
+                            refreshedApps.Add(appFound.DeepClone());
+                        }
+                        else
+                        {
+                            refreshedApps.Add(new JsonObject
+                            {
+                                ["GUID"] = md5,
+                                ["ProjectName"] = app.Name,
+                                ["Program"] = app.Name,
+                                ["Version"] = app.AvailableVersions?.FirstOrDefault()?.ToString() ?? string.Empty,
+                                ["Environments"] = new JsonArray(),
+                                ["Profile"] = null,
+                            });
+                        }
+                    }
+                }
+            }
+            projects = refreshedApps;
+        }
+
         private void LoadProjects()
         {
+            List<string> guids = new List<string>();
             foreach (var project in projects)
             {
                 if (project != null)
@@ -152,6 +155,30 @@ namespace devkit2
                         item.Tag = project["GUID"]?.ToString() ?? "GUID";
                         listView1.Items.Add(item);
                         oneFound = item;
+
+                        // Update image icon
+                        foreach(var one in Sysconf.Instance.Applications)
+                        {
+                            if(item.Tag.ToString() == MD5.Hash(one.Name))
+                            {
+                                listView1.LargeImageList?.Images.RemoveByKey(one.Name);
+                                listView1.LargeImageList?.Images.RemoveByKey($"{one.Name}_Running");
+                                if (one.Icon != null)
+                                {
+                                    listView1.LargeImageList?.Images.Add(one.Name, one.Icon);
+                                }
+                                if (one.RunningIcon != null)
+                                {
+                                    listView1.LargeImageList?.Images.Add($"{one.Name}_Running", one.RunningIcon);
+                                }
+                            }    
+                        }    
+                    }
+
+                    string guid = oneFound?.Tag?.ToString() ?? string.Empty;
+                    if (!string.IsNullOrEmpty(guid))
+                    {
+                        guids.Add(guid);
                     }
 
                     var runningApp = Sysconf.Instance.GetRunningApplication(oneFound?.Tag?.ToString() ?? "");
@@ -165,22 +192,16 @@ namespace devkit2
                     }
                 }
             }
-        }
 
-        private void toolStripButtonNewProject_Click(object sender, EventArgs e)
-        {
-            frmProject project = new frmProject();
-            if (project.ShowDialog() == DialogResult.OK)
+            for (int i = listView1.Items.Count - 1; i >= 0; i--)
             {
-                projects.Add(project.Project);
-                SaveProjects();
-                LoadProjects();
+                ListViewItem? one = listView1.Items[i];
+                if (one != null && one.Tag != null &&
+                    !guids.Contains(one?.Tag?.ToString() ?? string.Empty))
+                {
+                    listView1.Items.RemoveAt(i);
+                }
             }
-        }
-
-        private void frmMyProjects_Load(object sender, EventArgs e)
-        {
-            LoadProjects();
         }
 
         private bool StopSelectedProject()
@@ -290,9 +311,9 @@ namespace devkit2
                                         if (app.Name == env["Program"]?.ToString())
                                         {
                                             string strversion = env["Version"]?.ToString() ?? string.Empty;
-                                            if(!app.IsInstalled(strversion) && !string.IsNullOrEmpty(app.InstalledVersions?.FirstOrDefault()?.ToString()))
+                                            if (!app.IsInstalled(strversion) && !string.IsNullOrEmpty(app.InstalledVersions?.FirstOrDefault()?.ToString()))
                                             {
-                                                if(MessageBox.Show($"{app.Name} version {strversion} is no longer existed, do you want to switch to {app.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                                                if (MessageBox.Show($"{app.Name} version {strversion} is no longer existed, do you want to switch to {app.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                                                 {
                                                     strversion = app.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                                     env["Version"] = strversion;
@@ -336,19 +357,13 @@ namespace devkit2
                             }
                         }
 
-                        if(needToSaveProjectConfig)
+                        if (needToSaveProjectConfig)
                         {
                             SaveProjects();
                         }
                     }
                 }
             }
-        }
-
-        private void listView1_ItemActivate(object sender, EventArgs e)
-        {
-            if (listView1.SelectedItems.Count <= 0) { return; }
-            RunSelectedProject();
         }
 
         private void EditSelectedProject()
@@ -390,14 +405,22 @@ namespace devkit2
             }
         }
 
-        private void toolStripButtonEditProject_Click(object sender, EventArgs e)
+        private void frmManualLaunch_Load(object sender, EventArgs e)
         {
-            EditSelectedProject();
+            LoadProjects();
         }
 
-        private void toolStripButtonDelete_Click(object sender, EventArgs e)
+        private void listView1_ItemActivate(object sender, EventArgs e)
         {
-            DeleteSelectedProject();
+            if (listView1.SelectedItems.Count <= 0) { return; }
+            RunSelectedProject();
+        }
+
+        public override void Refresh()
+        {
+            RefreshApps();
+            LoadProjects();
+            base.Refresh();
         }
     }
 }

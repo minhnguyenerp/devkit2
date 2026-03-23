@@ -434,6 +434,8 @@ namespace devkit2.Applications
             }
         }
 
+        public virtual void ReloadIcon() { }
+
         private Icon? _icon = null;
         public virtual Icon? Icon
         {

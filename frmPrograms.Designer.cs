@@ -101,7 +101,7 @@
             ClientSize = new Size(839, 317);
             Controls.Add(dataGridViewPrograms);
             Name = "frmPrograms";
-            Text = "frmPrograms";
+            Text = "Programs";
             Load += frmPrograms_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrograms).EndInit();
             ResumeLayout(false);

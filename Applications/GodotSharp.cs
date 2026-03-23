@@ -17,10 +17,16 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+            ReloadIcon();
+        }
+
+        public override void ReloadIcon()
+        {
             try
             {
                 base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"Godot_v{InstalledVersions[0].Value}-stable_mono_win64", $"Godot_v{InstalledVersions[0].Value}-stable_mono_win64.exe"));
-            } catch { }
+            }
+            catch { }
         }
 
         public override bool Valid

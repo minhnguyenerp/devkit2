@@ -38,6 +38,11 @@ namespace devkit2.Applications
                 }
             }
 
+            ReloadIcon();
+        }
+
+        public override void ReloadIcon()
+        {
             try
             {
                 base.Icon = Icon.ExtractAssociatedIcon(

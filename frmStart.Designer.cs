@@ -94,7 +94,7 @@
             ClientSize = new Size(869, 450);
             Controls.Add(dataGridViewPrograms);
             Name = "frmStart";
-            Text = "frmStart";
+            Text = "Start";
             FormClosing += frmStart_FormClosing;
             Load += frmStart_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewPrograms).EndInit();

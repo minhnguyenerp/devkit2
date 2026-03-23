@@ -129,7 +129,8 @@ namespace devkit2
             programs.Show();
             programs.Dock = DockStyle.Fill;
 
-            var start = new frmStart();
+            //var start = new frmStart();
+            var start = new frmManualLaunch();
             start.TopLevel = false;
             start.FormBorderStyle = FormBorderStyle.None;
             tabPageManualLaunch.Controls.Add(start);

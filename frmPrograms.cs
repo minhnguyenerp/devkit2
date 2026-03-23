@@ -145,6 +145,7 @@ namespace devkit2
                             {
                                 row.Cells[colAction.Index].Value = "Installing...";
                                 app.Install(version, progress);
+                                app.ReloadIcon();
                             }).ContinueWith(t =>
                             {
                                 if (t.Exception != null)

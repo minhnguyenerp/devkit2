@@ -19,6 +19,11 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+            ReloadIcon();
+        }
+
+        public override void ReloadIcon()
+        {
             try
             {
                 base.Icon = Resources.file_type_rust_icon_130185;
