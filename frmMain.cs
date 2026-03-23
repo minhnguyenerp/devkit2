@@ -136,6 +136,13 @@ namespace devkit2
             tabPageManualLaunch.Controls.Add(start);
             start.Show();
             start.Dock = DockStyle.Fill;
+
+            var document = new frmDocument();
+            document.TopLevel = false;
+            document.FormBorderStyle = FormBorderStyle.None;
+            tabPageDocument.Controls.Add(document);
+            document.Show();
+            document.Dock = DockStyle.Fill;
         }
 
         private void tabControlContainer_Selected(object sender, TabControlEventArgs e)
