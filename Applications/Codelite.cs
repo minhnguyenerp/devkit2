@@ -24,7 +24,10 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "codelite.exe"));
+                if(InstalledVersions[0].Value == "18.2.0")
+                    base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "codelite.exe"));
+                else
+                    base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "bin", "codelite.exe"));
             }
             catch { }
         }
@@ -45,6 +48,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("18.3.0", "18.3.0"),
                     new ValueName("18.2.0", "18.2.0"),
                 };
             }
@@ -56,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "18.3.0":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/CodeLite-18.3.0.zip";
+                    file = Path.Combine(Path.GetTempPath(), "CodeLite-18.3.0.zip");
+                    break;
                 case "18.2.0":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/CodeLite-18.2.0.zip";
                     file = Path.Combine(Path.GetTempPath(), "CodeLite-18.2.0.zip");
@@ -93,13 +101,17 @@ namespace devkit2.Applications
         {
             return new ValueName[] {
                 new ValueName("PATH", Path.Combine(appPath, version)),
+                new ValueName("PATH", Path.Combine(appPath, version, "bin")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "codelite.exe");
+            if(version == "18.2.0")
+                psi.FileName = Path.Combine(appPath, version, "codelite.exe");
+            else
+                psi.FileName = Path.Combine(appPath, version, "bin", "codelite.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
