@@ -6,4 +6,5 @@ Unlike traditional development setups, **DevKit2 installs nothing into your syst
 
 With **DevKit2**, you can start coding immediately without worrying about system pollution, broken PATH variables, or conflicting runtimes. Simply download, extract, and start building.
 
-**Fast. Portable. Clean.**
+Learn more about DevKit2
+- [Overview](Document/Overview.md)
