@@ -267,7 +267,7 @@ namespace devkit2
                                     IApplication? subapp = null;
                                     foreach (var app in Sysconf.Instance.Applications)
                                     {
-                                        if (app.Name == env["Program"]?.ToString())
+                                        if (app.Name == env["Program"]?.ToString() && app.Name != primaryApplication.Name)
                                         {
                                             subapp = app;
                                             break;
@@ -279,6 +279,7 @@ namespace devkit2
                                     }
                                 }
                             }
+                            listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
 
                             int guidBegin = 0;
                             foreach (var env in proj["Environments"] as JsonArray)

@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.6", "3.6"),
                     new ValueName("3.5.2", "3.5.2"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "3.6":
+                    url = "https://www.sumatrapdfreader.org/dl/rel/3.6/SumatraPDF-3.6-64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "SumatraPDF-3.6-64.zip");
+                    break;
                 case "3.5.2":
                     url = "https://www.sumatrapdfreader.org/dl/rel/3.5.2/SumatraPDF-3.5.2-64.zip";
                     file = Path.Combine(Path.GetTempPath(), "SumatraPDF-3.5.2-64.zip");
@@ -101,7 +106,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "SumatraPDF-3.5.2-64.exe");
+            psi.FileName = Path.Combine(appPath, version, $"SumatraPDF-{version}-64.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {

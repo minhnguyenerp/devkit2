@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("26", "26"),
                     new ValueName("25.0.2", "25.0.2"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "26":
+                    url = "https://download.oracle.com/java/26/latest/jdk-26_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "jdk-26_windows-x64_bin.zip");
+                    break;
                 case "25.0.2":
                     url = "https://download.oracle.com/java/25/latest/jdk-25_windows-x64_bin.zip";
                     file = Path.Combine(Path.GetTempPath(), "jdk-25_windows-x64_bin.zip");

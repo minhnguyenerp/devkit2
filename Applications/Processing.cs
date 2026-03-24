@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("4.5.3", "4.5.3"),
                     new ValueName("4.5.2", "4.5.2"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "4.5.3":
+                    url = "https://github.com/processing/processing4/releases/download/processing-1314-4.5.3/processing-4.5.3-windows-x64-portable.zip";
+                    file = Path.Combine(Path.GetTempPath(), "processing-4.5.3-windows-x64-portable.zip");
+                    break;
                 case "4.5.2":
                     url = "https://github.com/processing/processing4/releases/download/processing-1313-4.5.2/processing-4.5.2-windows-x64-portable.zip";
                     file = Path.Combine(Path.GetTempPath(), "processing-4.5.2-windows-x64-portable.zip");

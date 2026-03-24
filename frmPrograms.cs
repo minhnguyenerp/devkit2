@@ -66,7 +66,13 @@ namespace devkit2
                 {
                     actionCell.Value = "";
                 }
-                comboCell.Value = selected;
+
+                var list = comboCell.DataSource as IEnumerable<ValueName>;
+                bool exists = list?.Any(x => x.Value.Equals(selected)) ?? false;
+                if (exists)
+                {
+                    comboCell.Value = selected;
+                }
             }
         }
 
@@ -133,7 +139,7 @@ namespace devkit2
                                 string speed = Format.FormatSpeed(info.SpeedBytesPerSecond);
                                 if (info.ProgressPercentage < 100)
                                 {
-                                    row.Cells[colProgram.Index].Value = $"{app.Name} [Downloading... {info.ProgressPercentage:F2}% ({downloaded}/{total}) - {speed}]";
+                                    row.Cells[colProgram.Index].Value = $"{app.Name} [{info.ProgressPercentage:F2}% ({downloaded}/{total}) - {speed}]";
                                 }
                                 else
                                 {
