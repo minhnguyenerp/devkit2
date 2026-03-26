@@ -73,6 +73,10 @@ namespace devkit2
                 {
                     comboCell.Value = selected;
                 }
+                else
+                {
+                    comboCell.Value = null;
+                }    
             }
         }
 

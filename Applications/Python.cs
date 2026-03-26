@@ -84,6 +84,25 @@ namespace devkit2.Applications
                     return false;
                 }
 
+                var psi = new ProcessStartInfo
+                {
+                    FileName = Path.Combine(appPath, version, $"python-{version}-embed-amd64", "python.exe"),
+                    Arguments = "-m pip install --force-reinstall pip",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (var process = Process.Start(psi))
+                {
+                    //string output = process.StandardOutput.ReadToEnd();
+                    //string error = process.StandardError.ReadToEnd();
+                    process.WaitForExit();
+                    //Console.WriteLine("OUTPUT:\n" + output);
+                    //Console.WriteLine("ERROR:\n" + error);
+                }
+
                 base.SaveNewVersion(version);
 
                 return true;
