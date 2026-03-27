@@ -1,5 +1,36 @@
 ﻿# WinMerge Context Menu (Windows 11) Notes
 
+## Quick Setup via WinMerge UI (Recommended)
+
+The easiest way to enable the Windows 11 context menu integration is directly from the WinMerge application:
+
+1. Open **WinMerge**
+2. Go to:
+
+   ```
+   Edit → Options → Shell Integration
+   ```
+3. Click:
+
+   ```
+   Register Shell Extension for Windows 11
+   ```
+4. Check:
+
+   ```
+   Add to context menu
+   ```
+
+![WinMerge Options](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/WinMergeOptions.png)
+
+### Notes
+
+* The **Register** button installs the MSIX-based context menu extension.
+* The **Add to context menu** checkbox enables or disables the menu via internal configuration.
+* Unchecking the box will immediately hide the context menu.
+
+---
+
 ## Overview
 
 WinMerge uses the **modern Windows 11 context menu system** based on **MSIX + packaged COM extension**, instead of the legacy `regsvr32` shell extension.
@@ -191,3 +222,5 @@ For stability:
 If you are building your own application:
 
 > This pattern (MSIX + registry toggle) is a good reference design for Windows 11 context menu integration.
+
+---
