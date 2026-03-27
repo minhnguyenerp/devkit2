@@ -224,3 +224,5 @@ If you are building your own application:
 > This pattern (MSIX + registry toggle) is a good reference design for Windows 11 context menu integration.
 
 ---
+
+[Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)

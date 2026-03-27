@@ -1,10 +1,16 @@
 ﻿using devkit2.Properties;
 using Markdig;
+using Microsoft.Web.WebView2.Core;
+using System.Text;
 
 namespace devkit2
 {
     public partial class frmDocument : Form
     {
+        private static readonly HttpClient _httpClient = new HttpClient();
+        private const string OldPrefix = "https://github.com/minhnguyenerp/devkit2/blob/main/";
+        private const string NewPrefix = "https://raw.githubusercontent.com/minhnguyenerp/devkit2/refs/heads/main/";
+
         public frmDocument()
         {
             InitializeComponent();
@@ -18,11 +24,58 @@ namespace devkit2
             webView21.EnsureCoreWebView2Async();
         }
 
-        private async void WebView21_CoreWebView2InitializationCompleted(object? sender, Microsoft.Web.WebView2.Core.CoreWebView2InitializationCompletedEventArgs e)
+        private async void CoreWebView2_WebResourceRequested(object? sender, CoreWebView2WebResourceRequestedEventArgs e)
         {
-            var url = "https://raw.githubusercontent.com/minhnguyenerp/devkit2/refs/heads/main/Document/Overview.md";
-            using var client = new HttpClient();
-            string markdown = await client.GetStringAsync(url);
+            if (e.ResourceContext != CoreWebView2WebResourceContext.Document)
+                return;
+
+            var uri = e.Request.Uri;
+            if (string.IsNullOrWhiteSpace(uri))
+                return;
+
+            if (!uri.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                !uri.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            var deferral = e.GetDeferral();
+
+            try
+            {
+                using var request = new HttpRequestMessage(HttpMethod.Get, uri);
+
+                request.Headers.TryAddWithoutValidation(
+                    "User-Agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome Safari");
+
+                var response = await _httpClient.SendAsync(request);
+                var mediaType = response.Content.Headers.ContentType?.MediaType ?? "text/plain";
+
+                if (!mediaType.Contains("text/plain", StringComparison.OrdinalIgnoreCase))
+                    return;
+
+                var html = await response.Content.ReadAsStringAsync();
+                html = MarkDownToHtmlPage(html.Replace(OldPrefix, NewPrefix, StringComparison.OrdinalIgnoreCase));
+                var bytes = Encoding.UTF8.GetBytes(html);
+                var stream = new MemoryStream(bytes);
+
+                e.Response = webView21.CoreWebView2.Environment.CreateWebResourceResponse(
+                    stream,
+                    (int)response.StatusCode,
+                    response.ReasonPhrase ?? "OK",
+                    "Content-Type: text/html; charset=utf-8");
+            }
+            catch (Exception ex)
+            {
+                
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
+
+        private string MarkDownToHtmlPage(string markdown)
+        {
             string htmlPage = $@"
 <html>
 <head>
@@ -61,7 +114,21 @@ code {{
 {Markdown.ToHtml(markdown)}
 </body>
 </html>";
-            webView21.NavigateToString(htmlPage);
+            return htmlPage;
+        }
+
+        private async void WebView21_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
+        {
+            webView21.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.Document);
+            webView21.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
+            var url = "https://raw.githubusercontent.com/minhnguyenerp/devkit2/refs/heads/main/README.md";
+            try
+            {
+                using var client = new HttpClient();
+                string markdown = await client.GetStringAsync(url);
+                webView21.NavigateToString(MarkDownToHtmlPage(markdown.Replace(OldPrefix, NewPrefix, StringComparison.OrdinalIgnoreCase)));
+            }
+            catch { }
         }
     }
 }

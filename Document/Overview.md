@@ -1,123 +1,161 @@
 # DevKit2 Overview
-DevKit2 is a portable and fully isolated development environment designed for modern polyglot development. It provides everything you need to work with:
 
-- PHP
-- Node.js
-- Python
-- Go
-- Ruby
-- Rust
-- Zig
-- Nim
-- and more...
+DevKit2 is a development toolkit for Windows designed to support modern polyglot development. It provides a unified environment for working with multiple programming languages and ecosystems, including:
 
-All in one fast and lightweight toolkit.
+* PHP
+* Node.js
+* Python
+* Go
+* Ruby
+* Rust
+* Zig
+* Nim
+* and more
 
-Unlike traditional development setups, DevKit2 installs nothing into your system. It runs entirely in its own environment, keeping your operating system clean, stable, and free from dependency conflicts.
+All integrated into a fast, lightweight, and structured toolkit.
 
-With DevKit2, you can start coding immediately without worrying about system pollution, broken PATH variables, or conflicting runtimes.
+DevKit2 focuses on creating clean and isolated development environments, helping developers avoid dependency conflicts, unstable setups, and fragmented toolchains.
+
+With DevKit2, you can start coding immediately without worrying about broken PATH configurations or conflicting runtimes. **Initialize your environment and start building immediately.**
+
+---
 
 ## Getting Started
-1. Download DevKit2
-2. Extract the archive
-3. Run the application
 
-No installation required. No system changes. You're ready to go.
+1. Download DevKit2 from <code>https://github.com/minhnguyenerp/devkit2/releases</code>
+2. Run the setup and launch the application
+
+DevKit2 prepares a ready-to-use development environment with minimal setup effort.
+
+---
 
 ## Main Interface
-DevKit2 is organized into four main tabs
+
+DevKit2 is organized into four main tabs:
+
+---
 
 ### 1. My Projects
+
 ![My Projects](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/My%20Projects.png)
 
 This tab displays your development projects.
 
-- Each item represents a project or workspace
-- Click an item to open or launch it
-- Icons help you quickly identify project types (VSCode, database, server, etc.)
+* Each item represents a project or workspace
+* Double click an item to open or launch it, right click for context menu
+* Icons help quickly identify project types (VSCode, database, server, etc.)
 
-This is your central workspace dashboard.
+This serves as your central workspace dashboard.
+
+---
 
 ### 2. Manual Launch
+
 ![Manual Launch](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/Manual%20Launch.png)
 
-This tab allows you to manually launch development tools and services.
+This tab allows manual execution of development tools and services.
 
-You can run tools such as:
+Supported tools include:
 
-- Apache
-- Node.js
-- Git
-- VSCode
-- Databases (MySQL, PostgreSQL, etc.)
-- CLI tools (Curl, Cmd, etc.)
+* Apache
+* Node.js
+* Git
+* VSCode
+* Databases (MySQL, PostgreSQL, etc.)
+* CLI tools (Curl, Cmd, etc.)
 
-Use this tab when you want to:
+Use this tab when you need to:
 
-- Start a specific tool manually
-- Run utilities independently of projects
+* Start a specific tool manually
+* Run utilities independently of a project
+
+---
 
 ### 3. Programs
+
 ![Programs](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/Programs.png)
 
-This tab is used to manage available software packages.
+This tab acts as the package management interface for DevKit2.
 
-Features:
-- View all supported programs
-- Install or uninstall tools
-- Select specific versions
-- Enable/disable programs
-Columns:
-- Program → Name of the tool
-- Version → Available version
-- Installed → Whether it is installed
-- Select → Choose version
-- Action → Install / Uninstall
+#### Features:
 
-This is your package manager inside DevKit2.
+* View all supported tools
+* Install or uninstall programs
+* Select specific versions
+* Enable or disable components
+
+#### Columns:
+
+* **Program** → Tool name
+* **Version** → Available version
+* **Installed** → Installation status
+* **Select** → Version selection
+* **Action** → Install / Uninstall
+
+This provides centralized control over all development dependencies.
+
+---
 
 ### 4. Document
 
-This tab provides built-in documentation and help.
+This tab provides built-in documentation and technical references.
 
-- User guides
-- Setup instructions
-- Technical notes
+* User guides
+* Setup instructions
+* Technical notes
+
+---
 
 ## Key Advantages
-### 1. Fully Portable
-- No installation required
-- Can run from USB or any folder
+
+### 1. Structured Development Environment
+
+* Organized toolchain management
+* Centralized control of runtimes and services
 
 ### 2. Isolated Environment
-- No changes to system PATH
-- No dependency conflicts
 
-### 3. Multi-language Ready
+* Avoids dependency conflicts
+* Keeps development environments predictable and stable
 
-Supports multiple ecosystems in one place:
+### 3. Multi-language Support
 
-- Backend (PHP, Node, Go, Python, Ruby)
-- Systems (Rust, Zig, Nim)
+Supports multiple ecosystems in a single environment:
 
-### 4. Clean System
-- No registry pollution
-- No broken environments
-- No leftover files
+* Backend: PHP, Node.js, Go, Python, Ruby
+* Systems: Rust, Zig, Nim
+
+### 4. Clean and Maintainable Setup
+
+* Reduces configuration complexity
+* Avoids broken environments and inconsistent setups
+
+---
 
 ## Typical Workflow
-- Open DevKit2
-- Install required tools in Programs tab
-- Launch tools via Manual Launch
-- Open your project from My Projects
-- Read documentation in Document
+
+* Open DevKit2
+* Install required tools in the **Programs** tab
+* Launch tools via **Manual Launch**
+* Open your project from **My Projects**
+* Refer to documentation in the **Document** tab
+
+---
 
 ## Tips
-- Keep DevKit2 projects in a dedicated folder (e.g., C:\My Projects)
-- Avoid moving the folder after setup
-- Use consistent project structure for better organization
+
+* Store projects in a dedicated directory (e.g., `C:\My Projects`)
+* Avoid moving the DevKit2 directory after setup
+* Maintain a consistent project structure for better organization
+
+---
 
 ## Summary
-DevKit2 simplifies development by removing the complexity of environment setup.
 
-Instead of managing multiple runtimes and configurations, everything is bundled into a single, portable toolkit.
+DevKit2 simplifies development by standardizing environment setup and tool management.
+
+Instead of manually configuring multiple runtimes and resolving dependency conflicts, developers can work within a unified and controlled environment that supports multiple languages and workflows.
+
+---
+
+[Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)
