@@ -2,8 +2,6 @@
 
 [Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)
 
----
-
 ## Quick Setup via WinMerge UI (Recommended)
 
 The easiest way to enable the Windows 11 context menu integration is directly from the WinMerge application:
