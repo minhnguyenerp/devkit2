@@ -8,6 +8,6 @@ DevKit2 focuses on creating clean and isolated development environments, helping
 
 With DevKit2, you can start coding immediately without worrying about broken PATH variables or conflicting runtimes. Simply set up your environment and start building.
 
-[DevKit2 Overview](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Overview.md)
+[DevKit2 - Overview](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Overview.md)
 
 [DevKit2 - WinMerge Notes](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Winmerge.md)

@@ -119,6 +119,7 @@ code {{
 
         private async void WebView21_CoreWebView2InitializationCompleted(object? sender, CoreWebView2InitializationCompletedEventArgs e)
         {
+            await webView21.CoreWebView2.Profile.ClearBrowsingDataAsync();
             webView21.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.Document);
             webView21.CoreWebView2.WebResourceRequested += CoreWebView2_WebResourceRequested;
             var url = "https://raw.githubusercontent.com/minhnguyenerp/devkit2/refs/heads/main/README.md";

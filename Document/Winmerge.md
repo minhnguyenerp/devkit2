@@ -1,4 +1,8 @@
-﻿# WinMerge Context Menu (Windows 11) Notes
+﻿# DevKit2 - WinMerge Notes about Context Menu (Windows 11)
+
+[Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)
+
+---
 
 ## Quick Setup via WinMerge UI (Recommended)
 
