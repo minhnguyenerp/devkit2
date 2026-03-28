@@ -62,6 +62,8 @@ namespace devkit2.Applications
         protected JsonObject? Config = null;
         protected string appPath = string.Empty;
 
+        public virtual string AppPath => appPath;
+
         public virtual ValueName[] InstalledVersions
         {
             get

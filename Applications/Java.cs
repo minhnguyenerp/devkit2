@@ -106,6 +106,11 @@ namespace devkit2.Applications
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            {
+                psi.WorkingDirectory = workingDir;
+            }
             LoadEnvironments(ref psi, environments);
 
             try

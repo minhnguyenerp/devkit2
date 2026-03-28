@@ -1,8 +1,10 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
 using devkit2.Properties;
+using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace devkit2
 {
@@ -54,9 +56,60 @@ namespace devkit2
             listViewMenu.Items.Add("Start", null, listView1_Start_Click);
             listViewMenu.Items.Add("Stop", null, listView1_Stop_Click);
             listViewMenu.Items.Add(new ToolStripSeparator());
+            listViewMenu.Items.Add("Open Working Directory", null, listView1_OpenWorkingDirectory_Click);
+            listViewMenu.Items.Add("Open Command Prompt", null, listView1_OpenCommandPrompt_Click);
+            listViewMenu.Items.Add(new ToolStripSeparator());
             listViewMenu.Items.Add("Edit", null, listView1_Edit_Click);
             listViewMenu.Items.Add("Delete", null, listView1_Delete_Click);
             listView1.ContextMenuStrip = listViewMenu;
+        }
+
+        private void listView1_OpenWorkingDirectory_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) { return; }
+
+            var item = listView1.SelectedItems[0];
+            string guid = item.Tag?.ToString() ?? string.Empty;
+            JsonObject? profile = null;
+            if (!string.IsNullOrEmpty(guid))
+            {
+                JsonObject? proj = null;
+                foreach (var one in projects)
+                {
+                    if (one != null && guid == (one["GUID"]?.ToString() ?? string.Empty))
+                    {
+                        proj = (JsonObject)one;
+                        break;
+                    }
+                }
+                if (proj != null)
+                {
+                    foreach (var app in Sysconf.Instance.Applications)
+                    {
+                        if (app.Name == proj["Program"]?.ToString())
+                        {
+                            profile = proj["Profile"] as JsonObject;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            var psi = new ProcessStartInfo();
+            psi.FileName = "explorer.exe";
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            {
+                psi.Arguments = workingDir;
+            }
+            psi.UseShellExecute = true;
+            Process.Start(psi);
+        }
+
+        private void listView1_OpenCommandPrompt_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count <= 0) { return; }
+            RunSelectedProject(true);
         }
 
         private void listView1_Start_Click(object sender, EventArgs e)
@@ -224,7 +277,7 @@ namespace devkit2
             return result;
         }
 
-        private void RunSelectedProject()
+        private void RunSelectedProject(bool isCommandPrompt = false)
         {
             var item = listView1.SelectedItems[0];
             string guid = item.Tag?.ToString() ?? string.Empty;
@@ -255,6 +308,20 @@ namespace devkit2
                             break;
                         }
                     }
+
+                    if(isCommandPrompt)
+                    {
+                        foreach (var app in Sysconf.Instance.Applications)
+                        {
+                            if (app.Name == "Cmd")
+                            {
+                                primaryApplication = app;
+                                primaryVersion = app.InstalledVersions.FirstOrDefault()?.ToString() ?? "";
+                                break;
+                            }
+                        }
+                    }
+
                     if (primaryApplication != null && !string.IsNullOrEmpty(primaryVersion))
                     {
                         List<ValueName> listEnv = new List<ValueName>();
@@ -327,13 +394,20 @@ namespace devkit2
 
                         if (primaryApplication.IsInstalled(primaryVersion))
                         {
-                            if (primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid))
+                            if(isCommandPrompt)
                             {
-                                item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                                primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid);
                             }
                             else
                             {
-                                item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                                if (primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid))
+                                {
+                                    item?.ImageKey = proj["Program"]?.ToString() + "_Running" ?? "";
+                                }
+                                else
+                                {
+                                    item?.ImageKey = proj["Program"]?.ToString() ?? "";
+                                }
                             }
                         }
 

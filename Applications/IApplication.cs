@@ -6,6 +6,7 @@ namespace devkit2.Applications
     public interface IApplication
     {
         string Name { get; }
+        string AppPath { get; }
         ValueName[] InstalledVersions { get; }
         ValueName[] AvailableVersions { get; }
         bool Valid { get; }

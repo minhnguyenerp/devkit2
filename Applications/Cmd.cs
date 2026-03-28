@@ -1,7 +1,5 @@
 ﻿using devkit2.Common;
-using devkit2.Properties;
 using System.Diagnostics;
-using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -89,18 +87,10 @@ namespace devkit2.Applications
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
-            if (profile != null)
+            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
-                string workingDir = profile["WorkingDirectory"]?.ToString() ?? string.Empty;
-                if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
-                {
-                    psi.WorkingDirectory = workingDir;
-                }
-                string startupFile = profile["StartupFile"]?.ToString() ?? string.Empty;
-                if (!string.IsNullOrEmpty(startupFile) && File.Exists(startupFile))
-                {
-                    psi.ArgumentList.Add(startupFile);
-                }
+                psi.WorkingDirectory = workingDir;
             }
             LoadEnvironments(ref psi, environments);
 
@@ -109,7 +99,7 @@ namespace devkit2.Applications
                 var proc = Process.Start(psi);
                 if (proc != null)
                 {
-                    Sysconf.Instance.AddRunningApplication(new RunningApplication
+                    /*Sysconf.Instance.AddRunningApplication(new RunningApplication
                     {
                         UniqueCode = uniqueCode,
                         Pid = proc.Id,
@@ -118,7 +108,7 @@ namespace devkit2.Applications
                         StartTime = proc.StartTime,
                         ApplicationName = Name,
                         ApplicationVersion = version,
-                    });
+                    });*/
                     return true;
                 }
             }
