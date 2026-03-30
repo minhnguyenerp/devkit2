@@ -1,10 +1,9 @@
-﻿using devkit2.Applications;
-using devkit2.Common;
+﻿using devkit2.Common;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json.Nodes;
 
-namespace devkit2
+namespace devkit2.Applications
 {
     internal sealed class CMake : BaseApplication
     {
