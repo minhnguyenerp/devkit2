@@ -389,6 +389,7 @@ namespace devkit2
                         List<ValueName> listEnv = new List<ValueName>();
                         if (proj["Environments"] != null)
                         {
+                            listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
                             foreach (var env in proj["Environments"] as JsonArray)
                             {
                                 if (env != null && env["Program"] != null && env["Version"] != null)
@@ -408,7 +409,6 @@ namespace devkit2
                                     }
                                 }
                             }
-                            listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
 
                             int guidBegin = 0;
                             foreach (var env in proj["Environments"] as JsonArray)
