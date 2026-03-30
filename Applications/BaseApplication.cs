@@ -106,7 +106,7 @@ namespace devkit2.Applications
             return false;
         }
 
-        public virtual bool Install(string version, IProgress<DownloadProgress>? progress = null) { return false; }
+        public virtual bool Install(string version, IProgress<InstallProgress>? progress = null) { return false; }
 
         public virtual bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "") { return false; }
 
@@ -289,7 +289,7 @@ namespace devkit2.Applications
             }
         }
 
-        protected virtual bool Download(string url, string file, IProgress<DownloadProgress>? progress)
+        protected virtual bool Download(string url, string file, IProgress<InstallProgress>? progress)
         {
             try
             {
@@ -297,7 +297,7 @@ namespace devkit2.Applications
                 {
                     var fileInfo = new FileInfo(file);
                     long size = fileInfo.Length;
-                    progress?.Report(new DownloadProgress
+                    progress?.Report(new InstallProgress
                     {
                         BytesReceived = size,
                         TotalBytes = size,
@@ -369,7 +369,7 @@ namespace devkit2.Applications
                     double avgSpeed = elapsed > 0 ? totalRead / elapsed : 0;
 
                     // report liên tục, hoặc có thể giới hạn theo thời gian
-                    progress?.Report(new DownloadProgress
+                    progress?.Report(new InstallProgress
                     {
                         BytesReceived = totalRead,
                         TotalBytes = totalBytes,
@@ -381,7 +381,7 @@ namespace devkit2.Applications
                 }
 
                 // report lần cuối để chắc chắn đủ 100%
-                progress?.Report(new DownloadProgress
+                progress?.Report(new InstallProgress
                 {
                     BytesReceived = totalRead,
                     TotalBytes = totalBytes,

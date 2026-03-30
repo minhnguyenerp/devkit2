@@ -136,18 +136,16 @@ namespace devkit2
                         }
                         else
                         {
-                            var progress = new Progress<DownloadProgress>(info =>
+                            var progress = new Progress<InstallProgress>(info =>
                             {
-                                string downloaded = Format.FormatSize(info.BytesReceived);
-                                string total = info.TotalBytes.HasValue ? Format.FormatSize(info.TotalBytes.Value) : "?";
-                                string speed = Format.FormatSpeed(info.SpeedBytesPerSecond);
                                 if (info.ProgressPercentage < 100)
                                 {
-                                    row.Cells[colProgram.Index].Value = $"{app.Name} [{info.ProgressPercentage:F2}% ({downloaded}/{total}) - {speed}]";
+
+                                    row.Cells[colProgram.Index].Value = $"{app.Name} [{info.ProgressText}]";
                                 }
                                 else
                                 {
-                                    row.Cells[colProgram.Index].Value = app.Name + " [Installing...]";
+                                    row.Cells[colProgram.Index].Value = app.Name + (string.IsNullOrEmpty(info.Message) ? " [Installing...]" : $" [{info.Message}]");
                                 }
                             });
 

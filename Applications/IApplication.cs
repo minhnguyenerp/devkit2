@@ -11,7 +11,7 @@ namespace devkit2.Applications
         ValueName[] AvailableVersions { get; }
         bool Valid { get; }
         bool IsInstalled(string version);
-        bool Install(string version, IProgress<DownloadProgress>? progress = null);
+        bool Install(string version, IProgress<InstallProgress>? progress = null);
         bool Uninstall(string version);
         ValueName[] GetEnvironments(string version);
         bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "");

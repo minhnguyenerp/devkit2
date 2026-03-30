@@ -17,7 +17,7 @@ Var InstallSizeKB
 ; App constants
 ; ---------------------------
 !define APP_NAME        "DevKit2"
-!define APP_VERSION     "1.0.22"
+!define APP_VERSION     "1.0.23"
 !define APP_PUBLISHER   "Minh Research"
 !define APP_URL         "https://github.com/minhnguyenerp/devkit2/"
 !define APP_EXE         "devkit2.exe"
