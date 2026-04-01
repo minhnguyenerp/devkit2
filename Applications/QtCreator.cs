@@ -1,19 +1,18 @@
 ﻿using devkit2.Common;
-using devkit2.Properties;
 using SharpCompress.Common;
-using SharpCompress.Readers;
 using System.Diagnostics;
 using System.Text.Json.Nodes;
+using SevenZipExtractor;
 
 namespace devkit2.Applications
 {
-    internal sealed class Rust : BaseApplication
+    internal sealed class QtCreator : BaseApplication
     {
-        public override string Name => "Rust";
+        public override string Name => "QtCreator";
 
-        public Rust()
+        public QtCreator()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rust");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "qtcreator");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -26,7 +25,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Resources.file_type_rust_icon_130185;
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "bin", "qtcreator.exe"));
             }
             catch { }
         }
@@ -47,7 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.94.0", "1.94.0"),
+                    new ValueName("19.0.0", "19.0.0"),
                 };
             }
         }
@@ -58,9 +57,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.94.0":
-                    url = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-gnu.tar.xz";
-                    file = Path.Combine(Path.GetTempPath(), "rust-1.94.0-x86_64-pc-windows-gnu.tar.xz");
+                case "19.0.0":
+                    url = "https://github.com/qt-creator/qt-creator/releases/download/v19.0.0/qtcreator-windows-x64-msvc-19.0.0.7z";
+                    file = Path.Combine(Path.GetTempPath(), "qtcreator-windows-x64-msvc-19.0.0.7z");
                     break;
             }
 
@@ -73,23 +72,11 @@ namespace devkit2.Applications
 
                 string extractPath = Path.Combine(appPath, version);
                 Directory.CreateDirectory(extractPath);
+
                 try
                 {
-                    using var stream = File.OpenRead(file);
-                    using var reader = ReaderFactory.OpenReader(stream);
-
-                    while (reader.MoveToNextEntry())
-                    {
-                        if (!reader.Entry.IsDirectory)
-                        {
-                            progress?.Report(new InstallProgress { Message = reader.Entry.Key ?? "" });
-                            reader.WriteEntryToDirectory(extractPath, new ExtractionOptions
-                            {
-                                ExtractFullPath = true,
-                                Overwrite = true
-                            });
-                        }
-                    }
+                    using var archive = new ArchiveFile(file);
+                    archive.Extract(extractPath, true);
                 }
                 catch (Exception ex)
                 {
@@ -108,23 +95,25 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin")),
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin")),
-                new ValueName("RUSTFLAGS", "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu")),
-                new ValueName("CARGO_HOME", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo")),
+                new ValueName("PATH", Path.Combine(appPath, version, "bin")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
-            psi.UseShellExecute = false;
+            psi.FileName = Path.Combine(appPath, version, "bin", "geany.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
                 psi.WorkingDirectory = workingDir;
             }
+            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
+            if (!string.IsNullOrEmpty(startupFile) && File.Exists(startupFile))
+            {
+                psi.ArgumentList.Add(startupFile);
+            }
+            psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments);
 
             try

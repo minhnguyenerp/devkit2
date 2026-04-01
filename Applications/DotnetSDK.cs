@@ -1,19 +1,17 @@
 ﻿using devkit2.Common;
-using devkit2.Properties;
-using SharpCompress.Common;
-using SharpCompress.Readers;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Rust : BaseApplication
+    internal sealed class DotnetSDK : BaseApplication
     {
-        public override string Name => "Rust";
+        public override string Name => "DotnetSDK";
 
-        public Rust()
+        public DotnetSDK()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rust");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "dotnetsdk");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -26,7 +24,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Resources.file_type_rust_icon_130185;
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "dotnet.exe"));
             }
             catch { }
         }
@@ -47,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.94.0", "1.94.0"),
+                    new ValueName("10.0.201", "10.0.201"),
                 };
             }
         }
@@ -58,9 +56,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.94.0":
-                    url = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-gnu.tar.xz";
-                    file = Path.Combine(Path.GetTempPath(), "rust-1.94.0-x86_64-pc-windows-gnu.tar.xz");
+                case "10.0.201":
+                    url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "dotnet-sdk-10.0.201-win-x64.zip");
                     break;
             }
 
@@ -73,23 +71,12 @@ namespace devkit2.Applications
 
                 string extractPath = Path.Combine(appPath, version);
                 Directory.CreateDirectory(extractPath);
+                Directory.CreateDirectory(Path.Combine(extractPath, "cli-home"));
+                Directory.CreateDirectory(Path.Combine(extractPath, "nuget-packages"));
+                Directory.CreateDirectory(Path.Combine(extractPath, "nuget-cache"));
                 try
                 {
-                    using var stream = File.OpenRead(file);
-                    using var reader = ReaderFactory.OpenReader(stream);
-
-                    while (reader.MoveToNextEntry())
-                    {
-                        if (!reader.Entry.IsDirectory)
-                        {
-                            progress?.Report(new InstallProgress { Message = reader.Entry.Key ?? "" });
-                            reader.WriteEntryToDirectory(extractPath, new ExtractionOptions
-                            {
-                                ExtractFullPath = true,
-                                Overwrite = true
-                            });
-                        }
-                    }
+                    ZipFile.ExtractToDirectory(file, extractPath, true);
                 }
                 catch (Exception ex)
                 {
@@ -108,10 +95,11 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin")),
-                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin")),
-                new ValueName("RUSTFLAGS", "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu")),
-                new ValueName("CARGO_HOME", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo")),
+                new ValueName("PATH", Path.Combine(appPath, version)),
+                new ValueName("DOTNET_ROOT", Path.Combine(appPath, version)),
+                new ValueName("DOTNET_CLI_HOME", Path.Combine(appPath, version, "cli-home")),
+                new ValueName("NUGET_PACKAGES", Path.Combine(appPath, version, "nuget-packages")),
+                new ValueName("NUGET_HTTP_CACHE_PATH", Path.Combine(appPath, version, "nuget-cache")),
             };
         }
 

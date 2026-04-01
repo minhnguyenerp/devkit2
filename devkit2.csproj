@@ -25,9 +25,10 @@
 
   <ItemGroup>
     <PackageReference Include="ini-parser-netstandard" Version="2.5.3" />
-    <PackageReference Include="Markdig" Version="1.1.1" />
+    <PackageReference Include="Markdig" Version="1.1.2" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3856.49" />
-    <PackageReference Include="SharpCompress" Version="0.47.0" />
+    <PackageReference Include="SevenZipExtractor" Version="1.0.19" />
+    <PackageReference Include="SharpCompress" Version="0.47.3" />
   </ItemGroup>
 
   <ItemGroup>
