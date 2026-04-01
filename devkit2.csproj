@@ -12,6 +12,9 @@
 	<Product>DevKit2</Product>
 	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
+	<AssemblyVersion>1.0.26.1</AssemblyVersion>
+	<FileVersion>$(AssemblyVersion)</FileVersion>
+	<InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -65,4 +68,7 @@
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
       <Exec Command="if $(Configuration) == Release (&#xD;&#xA;powershell -Command &quot;Remove-Item '$(TargetDir)*' -Recurse -Force&quot;&#xD;&#xA;)" />
     </Target>
+	<Target Name="GenerateInnoTimestamp" BeforeTargets="PreBuild">
+		<WriteLinesToFile File="Installer\include.nsi" Lines="!define OUT_FILE &quot;DevKit2-$(AssemblyVersion)-Setup&quot;&#xD;&#xA;!define APP_VERSION &quot;$(AssemblyVersion)&quot;" Overwrite="true" />
+	</Target>
 </Project>

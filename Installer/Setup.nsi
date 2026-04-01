@@ -10,6 +10,7 @@
 !include "LogicLib.nsh"
 !include "x64.nsh"
 !include "FileFunc.nsh"
+!include "include.nsi"
 
 Var InstallSizeKB
 
@@ -17,7 +18,6 @@ Var InstallSizeKB
 ; App constants
 ; ---------------------------
 !define APP_NAME        "DevKit2"
-!define APP_VERSION     "1.0.26"
 !define APP_PUBLISHER   "Minh Research"
 !define APP_URL         "https://github.com/minhnguyenerp/devkit2/"
 !define APP_EXE         "devkit2.exe"
@@ -30,7 +30,7 @@ Var InstallSizeKB
 ; General
 ; ---------------------------
 Name "${APP_NAME}"
-OutFile "Output\DevKit2-Setup.exe"
+OutFile "Output\${OUT_FILE}.exe"
 InstallDir "${INSTALL_DIR}"
 InstallDirRegKey HKLM "Software\Minh Research\${APP_NAME}" "InstallDir"
 RequestExecutionLevel admin

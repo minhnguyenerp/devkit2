@@ -16,6 +16,14 @@ namespace devkit2
             InitializeComponent();
             Icon = Resources.dev_23828;
             InitTray();
+            var entryAssembly = Assembly.GetEntryAssembly();
+            if (entryAssembly != null)
+            {
+                var titleAttr = entryAssembly?.GetCustomAttribute<AssemblyTitleAttribute>();
+                var title = titleAttr?.Title;
+                var version = entryAssembly?.GetName().Version?.ToString() ?? "";
+                this.Text = title + " - " + version;
+            }
         }
 
         private void InitTray()

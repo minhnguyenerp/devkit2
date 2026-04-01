@@ -2,3 +2,4 @@
 bin
 obj
 Properties/PublishProfiles/*.pubxml.user
+Installer/include.nsi
