@@ -102,7 +102,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "bin", "geany.exe");
+            psi.FileName = Path.Combine(appPath, version, "bin", "qtcreator.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {

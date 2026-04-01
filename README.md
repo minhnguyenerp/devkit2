@@ -11,3 +11,5 @@ With DevKit2, you can start coding immediately without worrying about broken PAT
 [DevKit2 - Overview](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Overview.md)
 
 [DevKit2 - WinMerge Notes](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Winmerge.md)
+
+[DevKit2 - Avalonia Project](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Avalonia.md)
