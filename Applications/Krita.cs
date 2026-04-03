@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("5.3.1", "5.3.1"),
                     new ValueName("5.2.16", "5.2.16"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "5.3.1":
+                    url = "https://download.kde.org/stable/krita/5.3.1/krita-x64-5.3.1.zip";
+                    file = Path.Combine(Path.GetTempPath(), "krita-x64-5.3.1.zip");
+                    break;
                 case "5.2.16":
                     url = "https://download.kde.org/stable/krita/5.2.16/krita-x64-5.2.16.zip";
                     file = Path.Combine(Path.GetTempPath(), "krita-x64-5.2.16.zip");

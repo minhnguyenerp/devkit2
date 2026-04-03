@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("15.2.0-14.0.0-r7", "15.2.0-14.0.0-r7"),
                     new ValueName("15.2.0-13.0.0-r6", "15.2.0-13.0.0-r6"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "15.2.0-14.0.0-r7":
+                    url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-14.0.0-ucrt-r7/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64ucrt-14.0.0-r7.zip";
+                    file = Path.Combine(Path.GetTempPath(), "winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64ucrt-14.0.0-r7.zip");
+                    break;
                 case "15.2.0-13.0.0-r6":
                     url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-ucrt-r6/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64ucrt-13.0.0-r6.zip";
                     file = Path.Combine(Path.GetTempPath(), "winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64ucrt-13.0.0-r6.zip");

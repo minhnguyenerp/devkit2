@@ -44,6 +44,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.53.0.2", "2.53.0.2"),
                     new ValueName("2.53.0", "2.53.0"),
                 };
             }
@@ -55,6 +56,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.53.0.2":
+                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.2/PortableGit-2.53.0.2-64-bit.7z.exe";
+                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0.2-64-bit.7z.exe");
+                    break;
                 case "2.53.0":
                     url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe";
                     file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0-64-bit.7z.exe");

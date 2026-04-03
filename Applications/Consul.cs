@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.22.6", "1.22.6"),
                     new ValueName("1.22.5", "1.22.5"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "1.22.6":
+                    url = "https://releases.hashicorp.com/consul/1.22.6/consul_1.22.6_windows_amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "consul_1.22.6_windows_amd64.zip");
+                    break;
                 case "1.22.5":
                     url = "https://releases.hashicorp.com/consul/1.22.5/consul_1.22.5_windows_amd64.zip";
                     file = Path.Combine(Path.GetTempPath(), "consul_1.22.5_windows_amd64.zip");

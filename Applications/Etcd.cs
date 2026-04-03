@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.6.10", "3.6.10"),
                     new ValueName("3.6.8", "3.6.8"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "3.6.10":
+                    url = "https://github.com/etcd-io/etcd/releases/download/v3.6.10/etcd-v3.6.10-windows-amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "etcd-v3.6.10-windows-amd64.zip");
+                    break;
                 case "3.6.8":
                     url = "https://github.com/etcd-io/etcd/releases/download/v3.6.8/etcd-v3.6.8-windows-amd64.zip";
                     file = Path.Combine(Path.GetTempPath(), "etcd-v3.6.8-windows-amd64.zip");

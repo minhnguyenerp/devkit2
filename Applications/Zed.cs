@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.230.1", "0.230.1"),
                     new ValueName("0.228.0", "0.228.0"),
                     new ValueName("0.227.1", "0.227.1"),
                 };
@@ -59,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "0.230.1":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.230.1.zip";
+                    file = Path.Combine(Path.GetTempPath(), "Zed-0.230.1.zip");
+                    break;
                 case "0.228.0":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.228.0.zip";
                     file = Path.Combine(Path.GetTempPath(), "Zed-0.228.0.zip");
