@@ -56,7 +56,6 @@ namespace devkit2.Applications
                     new ValueName("2026", "2026"),
                     new ValueName("2022", "2022"),
                     new ValueName("2019", "2019"),
-                    new ValueName("2017", "2017"),
                 };
             }
         }
