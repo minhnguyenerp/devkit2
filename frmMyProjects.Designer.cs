@@ -35,6 +35,7 @@
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonEditProject = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
+            toolStripButtonNewProjectFromTemplate = new ToolStripButton();
             tableLayoutPanel1.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -68,7 +69,7 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(28, 28);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProject, toolStripSeparator1, toolStripButtonEditProject, toolStripButtonDelete });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProjectFromTemplate, toolStripButtonNewProject, toolStripSeparator1, toolStripButtonEditProject, toolStripButtonDelete });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(820, 35);
@@ -112,6 +113,16 @@
             toolStripButtonDelete.ToolTipText = "Delete Project";
             toolStripButtonDelete.Click += toolStripButtonDelete_Click;
             // 
+            // toolStripButtonNewProjectFromTemplate
+            // 
+            toolStripButtonNewProjectFromTemplate.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonNewProjectFromTemplate.Image = Properties.Resources.new_project1;
+            toolStripButtonNewProjectFromTemplate.ImageTransparentColor = Color.Magenta;
+            toolStripButtonNewProjectFromTemplate.Name = "toolStripButtonNewProjectFromTemplate";
+            toolStripButtonNewProjectFromTemplate.Size = new Size(32, 32);
+            toolStripButtonNewProjectFromTemplate.Text = "New Project From Template";
+            toolStripButtonNewProjectFromTemplate.Click += toolStripButtonNewProjectFromTemplate_Click;
+            // 
             // frmMyProjects
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -137,5 +148,6 @@
         private ToolStripButton toolStripButtonEditProject;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButtonDelete;
+        private ToolStripButton toolStripButtonNewProjectFromTemplate;
     }
 }

@@ -76,7 +76,7 @@ namespace devkit2
                 else
                 {
                     comboCell.Value = null;
-                }    
+                }
             }
         }
 

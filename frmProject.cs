@@ -28,7 +28,7 @@ namespace devkit2
             int newRowIndex = -1;
             foreach (var app in Sysconf.Instance.Applications)
             {
-                if (app.InstalledVersions.Length > 0)
+                if (app.AvailableVersions.Length > 0)
                 {
                     comboBoxProgram.Items.Add(new ValueName(app.Name, app.Name) { Tag = app });
 
@@ -36,7 +36,7 @@ namespace devkit2
                     var newRow = dataGridView1.Rows[newRowIndex];
                     newRow.Cells[colProgram.Index].Value = app.Name;
                     var comboCell = (DataGridViewComboBoxCell)newRow.Cells[colEnvironment.Index];
-                    var list = app?.InstalledVersions?.ToList() ?? new List<ValueName>();
+                    var list = app?.AvailableVersions?.ToList() ?? new List<ValueName>();
                     list.Insert(0, new ValueName("", ""));
                     comboCell.DataSource = list;
                     comboCell.DisplayMember = "Name";
@@ -87,10 +87,19 @@ namespace devkit2
                             var app = row.Tag as IApplication;
                             if (app != null && env != null && app.Name == env["Program"]?.ToString())
                             {
-                                var cell = row.Cells[colEnvironment.Index];
+                                var cell = row.Cells[colEnvironment.Index] as DataGridViewComboBoxCell;
                                 if (cell != null)
                                 {
-                                    cell.Value = env["Version"]?.ToString();
+                                    var version = env["Version"]?.ToString();
+                                    var dataSource = cell.DataSource as IEnumerable<ValueName>;
+                                    if (!string.IsNullOrEmpty(version) && dataSource != null)
+                                    {
+                                        var item = dataSource.FirstOrDefault(x => x.Value == version);
+                                        if (item != null)
+                                        {
+                                            cell.Value = item.Value;
+                                        }
+                                    }
                                 }
                                 var cellRun = row.Cells[colRun.Index];
                                 if(cellRun != null)
@@ -119,7 +128,7 @@ namespace devkit2
                 IApplication? app = selected.Tag as IApplication;
                 if (app != null)
                 {
-                    foreach (var one in app.InstalledVersions)
+                    foreach (var one in app.AvailableVersions)
                     {
                         comboBoxVersion.Items.Add(one);
                     }

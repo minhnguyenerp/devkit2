@@ -53,9 +53,9 @@ namespace devkit2.Applications
             // 
             lblPort.AutoSize = true;
             lblPort.Dock = DockStyle.Fill;
-            lblPort.Location = new Point(3, 78);
+            lblPort.Location = new Point(3, 70);
             lblPort.Name = "lblPort";
-            lblPort.Size = new Size(145, 39);
+            lblPort.Size = new Size(145, 35);
             lblPort.TabIndex = 3;
             lblPort.Text = "Port";
             lblPort.TextAlign = ContentAlignment.MiddleRight;
@@ -63,7 +63,7 @@ namespace devkit2.Applications
             // txtPort
             // 
             txtPort.Dock = DockStyle.Fill;
-            txtPort.Location = new Point(154, 81);
+            txtPort.Location = new Point(154, 73);
             txtPort.Name = "txtPort";
             txtPort.Size = new Size(491, 29);
             txtPort.TabIndex = 4;
@@ -118,9 +118,9 @@ namespace devkit2.Applications
             tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(648, 173);
@@ -134,32 +134,30 @@ namespace devkit2.Applications
             tableLayoutPanel2.Controls.Add(txtDataDirectory, 0, 0);
             tableLayoutPanel2.Controls.Add(btnBrowseDataDirectory, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(151, 39);
+            tableLayoutPanel2.Location = new Point(151, 35);
             tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel2.Size = new Size(497, 39);
+            tableLayoutPanel2.Size = new Size(497, 35);
             tableLayoutPanel2.TabIndex = 12;
             // 
             // txtDataDirectory
             // 
             txtDataDirectory.BackColor = Color.White;
             txtDataDirectory.Dock = DockStyle.Fill;
-            txtDataDirectory.Location = new Point(5, 6);
-            txtDataDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtDataDirectory.Location = new Point(3, 3);
             txtDataDirectory.Name = "txtDataDirectory";
-            txtDataDirectory.Size = new Size(410, 29);
+            txtDataDirectory.Size = new Size(414, 29);
             txtDataDirectory.TabIndex = 0;
             // 
             // btnBrowseDataDirectory
             // 
             btnBrowseDataDirectory.Dock = DockStyle.Fill;
-            btnBrowseDataDirectory.Location = new Point(424, 4);
-            btnBrowseDataDirectory.Margin = new Padding(4);
+            btnBrowseDataDirectory.Location = new Point(423, 3);
             btnBrowseDataDirectory.Name = "btnBrowseDataDirectory";
-            btnBrowseDataDirectory.Size = new Size(69, 31);
+            btnBrowseDataDirectory.Size = new Size(71, 29);
             btnBrowseDataDirectory.TabIndex = 1;
             btnBrowseDataDirectory.Text = "...";
             btnBrowseDataDirectory.UseVisualStyleBackColor = true;
@@ -169,10 +167,10 @@ namespace devkit2.Applications
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(5, 39);
+            label1.Location = new Point(5, 35);
             label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(141, 39);
+            label1.Size = new Size(141, 35);
             label1.TabIndex = 11;
             label1.Text = "Data Directory";
             label1.TextAlign = ContentAlignment.MiddleRight;
@@ -184,7 +182,7 @@ namespace devkit2.Applications
             label4.Location = new Point(5, 0);
             label4.Margin = new Padding(5, 0, 5, 0);
             label4.Name = "label4";
-            label4.Size = new Size(141, 39);
+            label4.Size = new Size(141, 35);
             label4.TabIndex = 8;
             label4.Text = "Working Directory";
             label4.TextAlign = ContentAlignment.MiddleRight;
@@ -203,26 +201,24 @@ namespace devkit2.Applications
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel4.Size = new Size(497, 39);
+            tableLayoutPanel4.Size = new Size(497, 35);
             tableLayoutPanel4.TabIndex = 9;
             // 
             // txtWorkingDirectory
             // 
             txtWorkingDirectory.BackColor = Color.White;
             txtWorkingDirectory.Dock = DockStyle.Fill;
-            txtWorkingDirectory.Location = new Point(5, 6);
-            txtWorkingDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtWorkingDirectory.Location = new Point(3, 3);
             txtWorkingDirectory.Name = "txtWorkingDirectory";
-            txtWorkingDirectory.Size = new Size(410, 29);
+            txtWorkingDirectory.Size = new Size(414, 29);
             txtWorkingDirectory.TabIndex = 0;
             // 
             // btnBrowseWorkingDirectory
             // 
             btnBrowseWorkingDirectory.Dock = DockStyle.Fill;
-            btnBrowseWorkingDirectory.Location = new Point(424, 4);
-            btnBrowseWorkingDirectory.Margin = new Padding(4);
+            btnBrowseWorkingDirectory.Location = new Point(423, 3);
             btnBrowseWorkingDirectory.Name = "btnBrowseWorkingDirectory";
-            btnBrowseWorkingDirectory.Size = new Size(69, 31);
+            btnBrowseWorkingDirectory.Size = new Size(71, 29);
             btnBrowseWorkingDirectory.TabIndex = 1;
             btnBrowseWorkingDirectory.Text = "...";
             btnBrowseWorkingDirectory.UseVisualStyleBackColor = true;

@@ -62,8 +62,8 @@
             tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 4;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(648, 131);
@@ -77,32 +77,30 @@
             tableLayoutPanel2.Controls.Add(txtStartupFile, 0, 0);
             tableLayoutPanel2.Controls.Add(btnStartupFileBrowse, 1, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(151, 39);
+            tableLayoutPanel2.Location = new Point(151, 35);
             tableLayoutPanel2.Margin = new Padding(0);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel2.Size = new Size(497, 39);
+            tableLayoutPanel2.Size = new Size(497, 35);
             tableLayoutPanel2.TabIndex = 12;
             // 
             // txtStartupFile
             // 
             txtStartupFile.BackColor = Color.White;
             txtStartupFile.Dock = DockStyle.Fill;
-            txtStartupFile.Location = new Point(5, 6);
-            txtStartupFile.Margin = new Padding(5, 6, 5, 6);
+            txtStartupFile.Location = new Point(3, 3);
             txtStartupFile.Name = "txtStartupFile";
-            txtStartupFile.Size = new Size(410, 29);
+            txtStartupFile.Size = new Size(414, 29);
             txtStartupFile.TabIndex = 0;
             // 
             // btnStartupFileBrowse
             // 
             btnStartupFileBrowse.Dock = DockStyle.Fill;
-            btnStartupFileBrowse.Location = new Point(424, 4);
-            btnStartupFileBrowse.Margin = new Padding(4);
+            btnStartupFileBrowse.Location = new Point(423, 3);
             btnStartupFileBrowse.Name = "btnStartupFileBrowse";
-            btnStartupFileBrowse.Size = new Size(69, 31);
+            btnStartupFileBrowse.Size = new Size(71, 29);
             btnStartupFileBrowse.TabIndex = 1;
             btnStartupFileBrowse.Text = "...";
             btnStartupFileBrowse.UseVisualStyleBackColor = true;
@@ -112,10 +110,10 @@
             // 
             label1.AutoSize = true;
             label1.Dock = DockStyle.Fill;
-            label1.Location = new Point(5, 39);
+            label1.Location = new Point(5, 35);
             label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(141, 39);
+            label1.Size = new Size(141, 35);
             label1.TabIndex = 11;
             label1.Text = "Startup File";
             label1.TextAlign = ContentAlignment.MiddleRight;
@@ -127,7 +125,7 @@
             label4.Location = new Point(5, 0);
             label4.Margin = new Padding(5, 0, 5, 0);
             label4.Name = "label4";
-            label4.Size = new Size(141, 39);
+            label4.Size = new Size(141, 35);
             label4.TabIndex = 8;
             label4.Text = "Working Directory";
             label4.TextAlign = ContentAlignment.MiddleRight;
@@ -146,26 +144,24 @@
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel4.Size = new Size(497, 39);
+            tableLayoutPanel4.Size = new Size(497, 35);
             tableLayoutPanel4.TabIndex = 9;
             // 
             // txtWorkingDirectory
             // 
             txtWorkingDirectory.BackColor = Color.White;
             txtWorkingDirectory.Dock = DockStyle.Fill;
-            txtWorkingDirectory.Location = new Point(5, 6);
-            txtWorkingDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtWorkingDirectory.Location = new Point(3, 3);
             txtWorkingDirectory.Name = "txtWorkingDirectory";
-            txtWorkingDirectory.Size = new Size(410, 29);
+            txtWorkingDirectory.Size = new Size(414, 29);
             txtWorkingDirectory.TabIndex = 0;
             // 
             // btnWorkingDirectoryBrowse
             // 
             btnWorkingDirectoryBrowse.Dock = DockStyle.Fill;
-            btnWorkingDirectoryBrowse.Location = new Point(424, 4);
-            btnWorkingDirectoryBrowse.Margin = new Padding(4);
+            btnWorkingDirectoryBrowse.Location = new Point(423, 3);
             btnWorkingDirectoryBrowse.Name = "btnWorkingDirectoryBrowse";
-            btnWorkingDirectoryBrowse.Size = new Size(69, 31);
+            btnWorkingDirectoryBrowse.Size = new Size(71, 29);
             btnWorkingDirectoryBrowse.TabIndex = 1;
             btnWorkingDirectoryBrowse.Text = "...";
             btnWorkingDirectoryBrowse.UseVisualStyleBackColor = true;

@@ -22,6 +22,9 @@
     <Compile Update="frmDocument.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmInstall.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -29,6 +32,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmMyProjects.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmNewProject.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="frmPrograms.cs">

@@ -277,8 +277,92 @@ namespace devkit2
             return result;
         }
 
+        private void CheckInstallation(bool isCommandPrompt = false)
+        {
+            var item = listView1.SelectedItems[0];
+            string guid = item.Tag?.ToString() ?? string.Empty;
+            List<(string AppName, string AppVersion)> lstInstallation = new List<(string AppName, string AppVersion)>();
+            if (!string.IsNullOrEmpty(guid))
+            {
+                JsonObject? proj = null;
+                foreach (var one in projects)
+                {
+                    if (one != null && guid == (one["GUID"]?.ToString() ?? string.Empty))
+                    {
+                        proj = (JsonObject)one;
+                        break;
+                    }
+                }
+                if (proj != null)
+                {
+                    IApplication? primaryApplication = null;
+                    string primaryVersion = string.Empty;
+                    JsonObject? primaryProfile = null;
+                    foreach (var app in Sysconf.Instance.Applications)
+                    {
+                        if (app.Name == proj["Program"]?.ToString() && app.InstalledVersions.Any(v => v.Value == proj["Version"]?.ToString()))
+                        {
+                            primaryApplication = app;
+                            primaryVersion = proj["Version"]?.ToString() ?? string.Empty;
+                            primaryProfile = proj["Profile"] as JsonObject;
+                            break;
+                        }
+                    }
+
+                    if (isCommandPrompt)
+                    {
+                        foreach (var app in Sysconf.Instance.Applications)
+                        {
+                            if (app.Name == "Cmd")
+                            {
+                                primaryApplication = app;
+                                primaryVersion = app.InstalledVersions.FirstOrDefault()?.ToString() ?? "";
+                                break;
+                            }
+                        }
+                    }
+
+                    if (primaryApplication == null)
+                    {
+                        lstInstallation.Add((proj["Program"]?.ToString() ?? "", proj["Version"]?.ToString() ?? ""));
+                    }
+
+                    if (proj["Environments"] != null)
+                    {
+                        foreach (var env in proj["Environments"] as JsonArray)
+                        {
+                            if (env != null && env["Program"] != null && env["Version"] != null)
+                            {
+                                IApplication? subapp = null;
+                                foreach (var app in Sysconf.Instance.Applications)
+                                {
+                                    if (app.Name == env["Program"]?.ToString() && app.InstalledVersions.Any(v => v.Value == env["Version"]?.ToString()) && app.Name != primaryApplication.Name)
+                                    {
+                                        subapp = app;
+                                        break;
+                                    }
+                                }
+                                if (subapp == null)
+                                {
+                                    lstInstallation.Add((env["Program"]?.ToString() ?? "", env["Version"]?.ToString() ?? ""));
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+
+            if (lstInstallation.Count > 0)
+            {
+                frmInstall frm = new frmInstall(lstInstallation);
+                frm.ShowDialog();
+            }
+        }
+
         private void RunSelectedProject(bool isCommandPrompt = false)
         {
+            CheckInstallation(isCommandPrompt);
             var item = listView1.SelectedItems[0];
             string guid = item.Tag?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(guid))
@@ -309,7 +393,7 @@ namespace devkit2
                         }
                     }
 
-                    if(isCommandPrompt)
+                    if (isCommandPrompt)
                     {
                         foreach (var app in Sysconf.Instance.Applications)
                         {
@@ -358,9 +442,9 @@ namespace devkit2
                                         if (app.Name == env["Program"]?.ToString())
                                         {
                                             string strversion = env["Version"]?.ToString() ?? string.Empty;
-                                            if(!app.IsInstalled(strversion) && !string.IsNullOrEmpty(app.InstalledVersions?.FirstOrDefault()?.ToString()))
+                                            if (!app.IsInstalled(strversion) && !string.IsNullOrEmpty(app.InstalledVersions?.FirstOrDefault()?.ToString()))
                                             {
-                                                if(MessageBox.Show($"{app.Name} version {strversion} is no longer existed, do you want to switch to {app.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                                                if (MessageBox.Show($"{app.Name} version {strversion} is no longer existed, do you want to switch to {app.InstalledVersions?.FirstOrDefault()?.ToString()}", "DevKit2", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                                                 {
                                                     strversion = app.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                                     env["Version"] = strversion;
@@ -394,7 +478,7 @@ namespace devkit2
 
                         if (primaryApplication.IsInstalled(primaryVersion))
                         {
-                            if(isCommandPrompt)
+                            if (isCommandPrompt)
                             {
                                 primaryApplication.Start(primaryVersion, listEnv.ToArray(), primaryProfile, guid);
                             }
@@ -411,7 +495,7 @@ namespace devkit2
                             }
                         }
 
-                        if(needToSaveProjectConfig)
+                        if (needToSaveProjectConfig)
                         {
                             SaveProjects();
                         }
@@ -473,6 +557,17 @@ namespace devkit2
         private void toolStripButtonDelete_Click(object sender, EventArgs e)
         {
             DeleteSelectedProject();
+        }
+
+        private void toolStripButtonNewProjectFromTemplate_Click(object sender, EventArgs e)
+        {
+            frmNewProject project = new frmNewProject();
+            if (project.ShowDialog() == DialogResult.OK)
+            {
+                projects.Add(project.Project);
+                SaveProjects();
+                LoadProjects();
+            }
         }
     }
 }

@@ -87,6 +87,18 @@ namespace devkit2
             }
         }
 
+        public IApplication? GetApplication(string appName)
+        {
+            foreach (var app in applications)
+            {
+                if(app.Name == appName)
+                {
+                    return app;
+                }
+            }
+            return null;
+        }
+
         public RunningApplication? GetRunningApplication(string uniqueCode)
         {
             if(string.IsNullOrEmpty(uniqueCode)) { return null; }

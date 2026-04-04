@@ -79,10 +79,9 @@
             // txtProjectName
             // 
             txtProjectName.Dock = DockStyle.Fill;
-            txtProjectName.Location = new Point(131, 4);
-            txtProjectName.Margin = new Padding(4);
+            txtProjectName.Location = new Point(130, 3);
             txtProjectName.Name = "txtProjectName";
-            txtProjectName.Size = new Size(612, 29);
+            txtProjectName.Size = new Size(614, 29);
             txtProjectName.TabIndex = 0;
             // 
             // label1

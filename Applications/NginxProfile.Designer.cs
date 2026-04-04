@@ -66,9 +66,9 @@
             tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 5;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 39F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
             tableLayoutPanel1.Size = new Size(648, 169);
@@ -82,32 +82,30 @@
             tableLayoutPanel4.Controls.Add(txtWebRootDirectory, 0, 0);
             tableLayoutPanel4.Controls.Add(btnBrowseWebRootDirectory, 1, 0);
             tableLayoutPanel4.Dock = DockStyle.Fill;
-            tableLayoutPanel4.Location = new Point(159, 39);
+            tableLayoutPanel4.Location = new Point(159, 35);
             tableLayoutPanel4.Margin = new Padding(0);
             tableLayoutPanel4.Name = "tableLayoutPanel4";
             tableLayoutPanel4.RowCount = 1;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel4.Size = new Size(489, 39);
+            tableLayoutPanel4.Size = new Size(489, 35);
             tableLayoutPanel4.TabIndex = 16;
             // 
             // txtWebRootDirectory
             // 
             txtWebRootDirectory.BackColor = Color.White;
             txtWebRootDirectory.Dock = DockStyle.Fill;
-            txtWebRootDirectory.Location = new Point(5, 6);
-            txtWebRootDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtWebRootDirectory.Location = new Point(3, 3);
             txtWebRootDirectory.Name = "txtWebRootDirectory";
-            txtWebRootDirectory.Size = new Size(402, 29);
+            txtWebRootDirectory.Size = new Size(406, 29);
             txtWebRootDirectory.TabIndex = 0;
             // 
             // btnBrowseWebRootDirectory
             // 
             btnBrowseWebRootDirectory.Dock = DockStyle.Fill;
-            btnBrowseWebRootDirectory.Location = new Point(416, 4);
-            btnBrowseWebRootDirectory.Margin = new Padding(4);
+            btnBrowseWebRootDirectory.Location = new Point(415, 3);
             btnBrowseWebRootDirectory.Name = "btnBrowseWebRootDirectory";
-            btnBrowseWebRootDirectory.Size = new Size(69, 31);
+            btnBrowseWebRootDirectory.Size = new Size(71, 29);
             btnBrowseWebRootDirectory.TabIndex = 1;
             btnBrowseWebRootDirectory.Text = "...";
             btnBrowseWebRootDirectory.UseVisualStyleBackColor = true;
@@ -117,10 +115,10 @@
             // 
             label2.AutoSize = true;
             label2.Dock = DockStyle.Fill;
-            label2.Location = new Point(5, 39);
+            label2.Location = new Point(5, 35);
             label2.Margin = new Padding(5, 0, 5, 0);
             label2.Name = "label2";
-            label2.Size = new Size(149, 39);
+            label2.Size = new Size(149, 35);
             label2.TabIndex = 15;
             label2.Text = "Web Root Directory";
             label2.TextAlign = ContentAlignment.MiddleRight;
@@ -139,26 +137,24 @@
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
-            tableLayoutPanel2.Size = new Size(489, 39);
+            tableLayoutPanel2.Size = new Size(489, 35);
             tableLayoutPanel2.TabIndex = 12;
             // 
             // txtInstanceDirectory
             // 
             txtInstanceDirectory.BackColor = Color.White;
             txtInstanceDirectory.Dock = DockStyle.Fill;
-            txtInstanceDirectory.Location = new Point(5, 6);
-            txtInstanceDirectory.Margin = new Padding(5, 6, 5, 6);
+            txtInstanceDirectory.Location = new Point(3, 3);
             txtInstanceDirectory.Name = "txtInstanceDirectory";
-            txtInstanceDirectory.Size = new Size(402, 29);
+            txtInstanceDirectory.Size = new Size(406, 29);
             txtInstanceDirectory.TabIndex = 0;
             // 
             // btnBrowseInstanceDirectory
             // 
             btnBrowseInstanceDirectory.Dock = DockStyle.Fill;
-            btnBrowseInstanceDirectory.Location = new Point(416, 4);
-            btnBrowseInstanceDirectory.Margin = new Padding(4);
+            btnBrowseInstanceDirectory.Location = new Point(415, 3);
             btnBrowseInstanceDirectory.Name = "btnBrowseInstanceDirectory";
-            btnBrowseInstanceDirectory.Size = new Size(69, 31);
+            btnBrowseInstanceDirectory.Size = new Size(71, 29);
             btnBrowseInstanceDirectory.TabIndex = 1;
             btnBrowseInstanceDirectory.Text = "...";
             btnBrowseInstanceDirectory.UseVisualStyleBackColor = true;
@@ -171,7 +167,7 @@
             label1.Location = new Point(5, 0);
             label1.Margin = new Padding(5, 0, 5, 0);
             label1.Name = "label1";
-            label1.Size = new Size(149, 39);
+            label1.Size = new Size(149, 35);
             label1.TabIndex = 11;
             label1.Text = "Instance Directory";
             label1.TextAlign = ContentAlignment.MiddleRight;
@@ -180,9 +176,9 @@
             // 
             lblPort.AutoSize = true;
             lblPort.Dock = DockStyle.Fill;
-            lblPort.Location = new Point(3, 78);
+            lblPort.Location = new Point(3, 70);
             lblPort.Name = "lblPort";
-            lblPort.Size = new Size(153, 39);
+            lblPort.Size = new Size(153, 35);
             lblPort.TabIndex = 3;
             lblPort.Text = "Port";
             lblPort.TextAlign = ContentAlignment.MiddleRight;
@@ -190,7 +186,7 @@
             // txtPort
             // 
             txtPort.Dock = DockStyle.Fill;
-            txtPort.Location = new Point(162, 81);
+            txtPort.Location = new Point(162, 73);
             txtPort.Name = "txtPort";
             txtPort.Size = new Size(483, 29);
             txtPort.TabIndex = 4;
