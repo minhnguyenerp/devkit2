@@ -5,13 +5,13 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Arduino : BaseApplication
+    internal sealed class Pixieditor : BaseApplication
     {
-        public override string Name => "Arduino";
+        public override string Name => "Pixieditor";
 
-        public Arduino()
+        public Pixieditor()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "arduino");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "pixieditor");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -24,7 +24,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Arduino IDE.exe"));
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "PixiEditor", "PixiEditor.exe"));
             }
             catch { }
         }
@@ -45,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.3.8", "2.3.8"),
+                    new ValueName("2.0.1.19", "2.0.1.19"),
                 };
             }
         }
@@ -56,9 +56,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.3.8":
-                    url = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip";
-                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.8_Windows_64bit.zip");
+                case "2.0.1.19":
+                    url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.0.1.19/PixiEditor.2.0.1.19.x64-win.zip";
+                    file = Path.Combine(Path.GetTempPath(), "PixiEditor.2.0.1.19.x64-win.zip");
                     break;
             }
 
@@ -92,14 +92,14 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version)),
+                new ValueName("PATH", Path.Combine(appPath, version, "PixiEditor")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "Arduino IDE.exe");
+            psi.FileName = Path.Combine(appPath, version, "PixiEditor", "Pixieditor.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {

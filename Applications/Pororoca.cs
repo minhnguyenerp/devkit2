@@ -5,13 +5,13 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Arduino : BaseApplication
+    internal sealed class Pororoca : BaseApplication
     {
-        public override string Name => "Arduino";
+        public override string Name => "Pororoca";
 
-        public Arduino()
+        public Pororoca()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "arduino");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "pororoca");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -24,7 +24,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Arduino IDE.exe"));
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Pororoca.exe"));
             }
             catch { }
         }
@@ -45,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.3.8", "2.3.8"),
+                    new ValueName("3.9.1", "3.9.1"),
                 };
             }
         }
@@ -56,9 +56,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.3.8":
-                    url = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip";
-                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.8_Windows_64bit.zip");
+                case "3.9.1":
+                    url = "https://github.com/alexandrehtrb/Pororoca/releases/download/3.9.1/Pororoca_3.9.1_win-x64_portable.zip";
+                    file = Path.Combine(Path.GetTempPath(), "Pororoca_3.9.1_win-x64_portable.zip");
                     break;
             }
 
@@ -99,7 +99,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "Arduino IDE.exe");
+            psi.FileName = Path.Combine(appPath, version, "Pororoca.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {

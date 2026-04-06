@@ -5,13 +5,13 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Arduino : BaseApplication
+    internal sealed class Bruno : BaseApplication
     {
-        public override string Name => "Arduino";
+        public override string Name => "Bruno";
 
-        public Arduino()
+        public Bruno()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "arduino");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "bruno");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -24,7 +24,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Arduino IDE.exe"));
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "Bruno.exe"));
             }
             catch { }
         }
@@ -45,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.3.8", "2.3.8"),
+                    new ValueName("3.2.2", "3.2.2"),
                 };
             }
         }
@@ -56,9 +56,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.3.8":
-                    url = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip";
-                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.8_Windows_64bit.zip");
+                case "3.2.2":
+                    url = "https://github.com/usebruno/bruno/releases/download/v3.2.2/bruno_3.2.2_x64_win.zip";
+                    file = Path.Combine(Path.GetTempPath(), "bruno_3.2.2_x64_win.zip");
                     break;
             }
 
@@ -99,7 +99,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "Arduino IDE.exe");
+            psi.FileName = Path.Combine(appPath, version, "Bruno.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
