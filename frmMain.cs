@@ -151,6 +151,14 @@ namespace devkit2
             tabPageDocument.Controls.Add(document);
             document.Show();
             document.Dock = DockStyle.Fill;
+
+            tabControlContainer.TabPages.Remove(tabPageFileExplorer);
+            /*var explorer = new frmFileExplorer();
+            explorer.TopLevel = false;
+            explorer.FormBorderStyle = FormBorderStyle.None;
+            tabPageFileExplorer.Controls.Add(explorer);
+            explorer.Show();
+            explorer.Dock = DockStyle.Fill;*/
         }
 
         private void tabControlContainer_Selected(object sender, TabControlEventArgs e)

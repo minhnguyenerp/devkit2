@@ -322,9 +322,11 @@ namespace devkit2
                         }
                     }
 
+                    string strPrimaryAppName = primaryApplication?.Name ?? string.Empty;
                     if (primaryApplication == null)
                     {
                         lstInstallation.Add((proj["Program"]?.ToString() ?? "", proj["Version"]?.ToString() ?? ""));
+                        strPrimaryAppName = proj["Program"]?.ToString() ?? string.Empty;
                     }
 
                     if (proj["Environments"] != null)
@@ -336,7 +338,7 @@ namespace devkit2
                                 IApplication? subapp = null;
                                 foreach (var app in Sysconf.Instance.Applications)
                                 {
-                                    if (app.Name == env["Program"]?.ToString() && app.InstalledVersions.Any(v => v.Value == env["Version"]?.ToString()) && app.Name != primaryApplication.Name)
+                                    if (app.Name == env["Program"]?.ToString() && app.InstalledVersions.Any(v => v.Value == env["Version"]?.ToString()) && app.Name != strPrimaryAppName)
                                     {
                                         subapp = app;
                                         break;

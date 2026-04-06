@@ -33,6 +33,7 @@
             tabPageManualLaunch = new TabPage();
             tabPagePrograms = new TabPage();
             tabPageDocument = new TabPage();
+            tabPageFileExplorer = new TabPage();
             tabControlContainer.SuspendLayout();
             SuspendLayout();
             // 
@@ -40,6 +41,7 @@
             // 
             tabControlContainer.Alignment = TabAlignment.Bottom;
             tabControlContainer.Controls.Add(tabPageMyProjects);
+            tabControlContainer.Controls.Add(tabPageFileExplorer);
             tabControlContainer.Controls.Add(tabPageManualLaunch);
             tabControlContainer.Controls.Add(tabPagePrograms);
             tabControlContainer.Controls.Add(tabPageDocument);
@@ -91,6 +93,15 @@
             tabPageDocument.Text = "Document";
             tabPageDocument.UseVisualStyleBackColor = true;
             // 
+            // tabPageFileExplorer
+            // 
+            tabPageFileExplorer.Location = new Point(4, 4);
+            tabPageFileExplorer.Name = "tabPageFileExplorer";
+            tabPageFileExplorer.Size = new Size(888, 463);
+            tabPageFileExplorer.TabIndex = 4;
+            tabPageFileExplorer.Text = "File Explorer";
+            tabPageFileExplorer.UseVisualStyleBackColor = true;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -113,5 +124,6 @@
         private TabPage tabPagePrograms;
         private TabPage tabPageDocument;
         private TabPage tabPageMyProjects;
+        private TabPage tabPageFileExplorer;
     }
 }
