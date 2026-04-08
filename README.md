@@ -1,5 +1,8 @@
 # 🚀 DevKit2 – All-in-One Portable Development Environment
 
+> Stop wasting hours setting up development environments.  
+> DevKit2 gives you everything ready in one setup.
+
 ![Programs](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/Manual%20Launch.png)
 
 DevKit2 is a comprehensive, portable development toolkit for Windows that bundles everything you need to build modern applications — from web, backend, database, to game development and system programming.
