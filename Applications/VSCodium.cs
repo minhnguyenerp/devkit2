@@ -5,13 +5,13 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class VSCode : BaseApplication
+    internal sealed class VSCodium : BaseApplication
     {
-        public override string Name => "VSCode";
+        public override string Name => "VSCodium";
 
-        public VSCode()
+        public VSCodium()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "vscode");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "vscodium");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -25,7 +25,7 @@ namespace devkit2.Applications
             try
             {
                 base.Icon = Icon.ExtractAssociatedIcon(
-                    Path.Combine(appPath, InstalledVersions[0].Value, "Code.exe")
+                    Path.Combine(appPath, InstalledVersions[0].Value, "VSCodium.exe")
                 );
             }
             catch { }
@@ -47,9 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.114.0", "1.114.0"),
-                    new ValueName("1.112.0", "1.112.0"),
-                    new ValueName("1.111.0", "1.111.0"),
+                    new ValueName("1.112.01907", "1.112.01907"),
                 };
             }
         }
@@ -60,17 +58,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.114.0":
-                    url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/e7fb5e96c0730b9deb70b33781f98e2f35975036/VSCode-win32-x64-1.114.0.zip";
-                    file = Path.Combine(Path.GetTempPath(), "VSCode-win32-x64-1.114.0.zip");
-                    break;
-                case "1.112.0":
-                    url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/07ff9d6178ede9a1bd12ad3399074d726ebe6e43/VSCode-win32-x64-1.112.0.zip";
-                    file = Path.Combine(Path.GetTempPath(), "VSCode-win32-x64-1.112.0.zip");
-                    break;
-                case "1.111.0":
-                    url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/ce099c1ed25d9eb3076c11e4a280f3eb52b4fbeb/VSCode-win32-x64-1.111.0.zip";
-                    file = Path.Combine(Path.GetTempPath(), "VSCode-win32-x64-1.111.0.zip");
+                case "1.112.01907":
+                    url = "https://github.com/VSCodium/vscodium/releases/download/1.112.01907/VSCodium-win32-x64-1.112.01907.zip";
+                    file = Path.Combine(Path.GetTempPath(), "VSCodium-win32-x64-1.112.01907.zip");
                     break;
             }
 
@@ -145,9 +135,9 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, @"Code.exe");
+            psi.FileName = Path.Combine(appPath, version, @"VSCodium.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
-            if(!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
                 psi.WorkingDirectory = workingDir;
             }
