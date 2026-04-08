@@ -8,7 +8,6 @@ DevKit2 is a development toolkit for Windows designed to support modern polyglot
 * Node.js
 * Python
 * Go
-* Ruby
 * Rust
 * Zig
 * Nim
@@ -124,7 +123,7 @@ This tab provides built-in documentation and technical references.
 
 Supports multiple ecosystems in a single environment:
 
-* Backend: PHP, Node.js, Go, Python, Ruby
+* Backend: PHP, Node.js, Go, Python
 * Systems: Rust, Zig, Nim
 
 ### 4. Clean and Maintainable Setup
