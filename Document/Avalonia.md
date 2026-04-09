@@ -1,7 +1,5 @@
 ﻿# 🧰 Getting Started with Avalonia using DevKit2
 
----
-
 ## 🔹 Step 1: Install .NET SDK
 
 1. Open **DevKit2**
