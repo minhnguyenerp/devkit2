@@ -5,7 +5,7 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Python : BaseApplication
+    internal class Python : BaseApplication
     {
         public override string Name => "Python";
 
@@ -126,7 +126,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
+            psi.FileName = Path.Combine(appPath, version, $"python-{version}-embed-amd64", "python.exe");
             psi.UseShellExecute = false;
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))

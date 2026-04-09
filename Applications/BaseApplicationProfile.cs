@@ -1,6 +1,7 @@
 ﻿using devkit2.Properties;
 using System.ComponentModel;
 using System.Text.Json.Nodes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace devkit2.Applications
 {
@@ -64,13 +65,23 @@ namespace devkit2.Applications
         {
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
-                dialog.Title = "Select a File";
-                dialog.Filter = "All files (*.*)|*.*";
+                dialog.Title = "Select a File or Folder";
+                dialog.FileName = "[Folder]";
                 dialog.Multiselect = false;
+                dialog.CheckFileExists = false;
+                dialog.ValidateNames = false;
 
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    txtStartupFile.Text = dialog.FileName;
+                    string path = dialog.FileName;
+                    if (File.Exists(path))
+                    {
+                        txtStartupFile.Text = path;
+                    }
+                    else if (Directory.Exists(Path.GetDirectoryName(path)))
+                    {
+                        txtStartupFile.Text = Path.GetDirectoryName(path);
+                    }
                 }
             }
         }
