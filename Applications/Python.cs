@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.14.4", "3.14.4"),
                     new ValueName("3.14.3", "3.14.3"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "3.14.4":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.4-embed-amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "python-3.14.4-embed-amd64.zip");
+                    break;
                 case "3.14.3":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.3-embed-amd64.zip";
                     file = Path.Combine(Path.GetTempPath(), "python-3.14.3-embed-amd64.zip");

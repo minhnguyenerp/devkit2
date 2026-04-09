@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.115.0", "1.115.0"),
                     new ValueName("1.114.0", "1.114.0"),
                     new ValueName("1.112.0", "1.112.0"),
                     new ValueName("1.111.0", "1.111.0"),
@@ -60,6 +61,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "1.115.0":
+                    url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/41dd792b5e652393e7787322889ed5fdc58bd75b/VSCode-win32-x64-1.115.0.zip";
+                    file = Path.Combine(Path.GetTempPath(), "VSCode-win32-x64-1.115.0.zip");
+                    break;
                 case "1.114.0":
                     url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/e7fb5e96c0730b9deb70b33781f98e2f35975036/VSCode-win32-x64-1.114.0.zip";
                     file = Path.Combine(Path.GetTempPath(), "VSCode-win32-x64-1.114.0.zip");
