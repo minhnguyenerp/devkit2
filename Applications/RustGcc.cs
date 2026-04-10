@@ -7,13 +7,13 @@ using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Rust : BaseApplication
+    internal sealed class RustGcc : BaseApplication
     {
-        public override string Name => "Rust";
+        public override string Name => "RustGcc";
 
-        public Rust()
+        public RustGcc()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rust");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "rustgcc");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -26,7 +26,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Resources.file_type_rust_icon_130185;
+                base.Icon = Resources.rust_orange_icon;
             }
             catch { }
         }

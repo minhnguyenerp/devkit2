@@ -51,7 +51,8 @@ namespace devkit2
                     },
                 }
             });
-            comboBoxTemplate.Items.Add(new ValueName("Rust, VSCode", "Rust, VSCode") {
+            comboBoxTemplate.Items.Add(new ValueName("RustGcc, VSCode", "RustGcc, VSCode")
+            {
                 Tag = new JsonObject
                 {
                     ["ProjectName"] = "`ProjectName`",
@@ -73,8 +74,53 @@ namespace devkit2
                         },
                         new JsonObject
                         {
-                            ["Program"] = "Rust",
-                            ["Version"] = Sysconf.Instance.GetApplication("Rust")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Program"] = "RustGcc",
+                            ["Version"] = Sysconf.Instance.GetApplication("RustGcc")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                        new JsonObject
+                        {
+                            ["Program"] = "Winlibs",
+                            ["Version"] = Sysconf.Instance.GetApplication("Winlibs")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                    },
+                }
+            });
+            comboBoxTemplate.Items.Add(new ValueName("RustMsvc, VSCode", "RustMsvc, VSCode")
+            {
+                Tag = new JsonObject
+                {
+                    ["ProjectName"] = "`ProjectName`",
+                    ["Program"] = "VSCode",
+                    ["Version"] = Sysconf.Instance.GetApplication("VSCode")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                    ["Profile"] = new JsonObject
+                    {
+                        ["WorkingDirectory"] = "`WorkingDirectory`",
+                        ["StartupFile"] = "`WorkingDirectory`",
+                    },
+                    ["Environments"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["Program"] = "Git",
+                            ["Version"] = Sysconf.Instance.GetApplication("Git")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                        new JsonObject
+                        {
+                            ["Program"] = "RustMsvc",
+                            ["Version"] = Sysconf.Instance.GetApplication("RustMsvc")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                        new JsonObject
+                        {
+                            ["Program"] = "Msvc",
+                            ["Version"] = Sysconf.Instance.GetApplication("Msvc")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
                             ["Profile"] = null,
                             ["Run"] = false,
                         },

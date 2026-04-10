@@ -384,6 +384,8 @@ namespace devkit2
                     string primaryVersion = string.Empty;
                     JsonObject? primaryProfile = null;
                     bool needToSaveProjectConfig = false;
+                    List<ValueName> listEnv = new List<ValueName>();
+
                     foreach (var app in Sysconf.Instance.Applications)
                     {
                         if (app.Name == proj["Program"]?.ToString())
@@ -391,6 +393,7 @@ namespace devkit2
                             primaryApplication = app;
                             primaryVersion = proj["Version"]?.ToString() ?? string.Empty;
                             primaryProfile = proj["Profile"] as JsonObject;
+                            listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
                             break;
                         }
                     }
@@ -410,10 +413,8 @@ namespace devkit2
 
                     if (primaryApplication != null && !string.IsNullOrEmpty(primaryVersion))
                     {
-                        List<ValueName> listEnv = new List<ValueName>();
                         if (proj["Environments"] != null)
                         {
-                            listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
                             foreach (var env in proj["Environments"] as JsonArray)
                             {
                                 if (env != null && env["Program"] != null && env["Version"] != null)
