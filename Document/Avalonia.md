@@ -67,4 +67,26 @@ You have:
 
 ---
 
+```bash
+Note 04/10/2026:
+warning NU1903: Package 'Tmds.DBus.Protocol' 0.90.3 has a known high severity vulnerability, https://github.com/advisories/GHSA-xrw6-gwf8-vvr9
+dotnet nuget why Tmds.DBus.Protocol
+  [net10.0]
+  └── Avalonia.Desktop (v12.0.0)
+      └── Avalonia.X11 (v12.0.0)
+          └── Avalonia.FreeDesktop (v12.0.0)
+              └── Tmds.DBus.Protocol (v0.90.3)
+
+Add <PackageReference Include="Tmds.DBus.Protocol" Version="0.92.0" /> to the .csproj file
+dotnet nuget why Tmds.DBus.Protocol
+  [net10.0]
+  ├── Avalonia.Desktop (v12.0.0)
+  │   └── Avalonia.X11 (v12.0.0)
+  │       └── Avalonia.FreeDesktop (v12.0.0)
+  │           └── Tmds.DBus.Protocol (v0.92.0)
+  └── Tmds.DBus.Protocol (v0.92.0)
+```
+
+---
+
 [Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)
