@@ -48,3 +48,5 @@ Setting up a development environment can take hours or even days. DevKit2 elimin
 [DevKit2 - Avalonia Project](https://github.com/minhnguyenerp/devkit2/blob/main/Document/Avalonia.md)
 
 [DevKit2 - Go Gin Getting Started](https://github.com/minhnguyenerp/devkit2/blob/main/Document/GoGin.md)
+
+[DevKit2 - Rust Axum Getting Started](https://github.com/minhnguyenerp/devkit2/blob/main/Document/RustAxum.md)
