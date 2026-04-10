@@ -2,118 +2,68 @@
 
 [Go Back](https://github.com/minhnguyenerp/devkit2/blob/main/README.md)
 
-## 🔹 Step 1: Install .NET SDK
+## 🧩 Step 1: Create a New Project
 
 1. Open **DevKit2**
-2. Go to the **Programs** tab
-3. Locate **DotnetSDK**
-4. Select the desired version
-5. Click **Install**
+2. Click **New Project From Template**
+3. Select the template: **Avalonia, VSCode**
+4. Enter a project name (e.g., `Avalonia Test`)
+5. Choose the project location (create new folder if needed)
+6. Click **OK**
 
-![DotNet SDK](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/devkit2_install_dotnetsdk.png)
+After creating the project:
 
-👉 After installation, the portable .NET SDK environment will be available.
-
----
-
-## 🔹 Step 2: Launch the DotnetSDK Environment
-
-1. Go to the **Manual Launch** tab
-2. Double-click **DotnetSDK**
-
-![Run DotNet SDK](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/devkit2_run_DotnetSDK.png)
-
-👉 A **Command Prompt** window will open
-👉 This environment is pre-configured with:
-
-* `PATH`
-* `DOTNET_ROOT`
-* other necessary portable environment variables
+* Go to **My Projects**
+* Double-click your project to open it in **VSCode**
 
 ---
 
-## 🔹 Step 3: Install Avalonia Templates and create project
+## ⚙️ Step 2: Initialize Avalonia project and install needed packages
 
-In the command prompt, run:
+In VSCode:
+
+1. Open the Terminal:
+
+   * Menu **Terminal → New Terminal**
+
+2. Run the following commands:
 
 ```bash
 dotnet new install Avalonia.Templates
+dotnet new avalonia.mvvm
 ```
-
-![Install Avalonia Template](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/install_avalonia_template.png)
-
-👉 Purpose:
-
-* Installs Avalonia project templates
-* This step is required **only once**
-
-⚠️ Note:
-
-* If you see warnings like *"No project was found..."*, you can safely ignore them
-
-After installing the templates, you can create a new project anytime using:
-
-```bash
-dotnet new avalonia.mvvm -o "C:\Projects\MyApp"
-```
-
-![Create mvvm](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/avalonia_create_mvvm.png)
-
-Run the application
-
-```bash
-cd /d C:\Projects\MyApp
-dotnet run
-```
-
-👉 The Avalonia application will launch
-
-![Avalonia window](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/avalonia_window.png)
+And Avalonia created and happy Avalonia coding.
 
 ---
 
-## 🔹 Step 4: Create a DevKit2 Project for VS Code
+## ▶️ Step 3: Run the Application
 
-1. Go to the **My Project** tab in **DevKit2**
-2. Click **New Project**
-3. Set the following:
-
-   * **Project Name**: `My App`
-   * **Application**: `VSCode`
-   * Select environments:
-     * ✅ **DotnetSDK**
-     * ✅ **Git**
-4. Click **OK**
-
-![Avalonia vscode](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/devkit2_project_avalonia_vscode.png)
-
-Then configure the application profile:
-
-* **Working Directory**: `C:\Projects\MyApp`
-* **Startup File**: `C:\Projects\MyApp`
-
-![Application profile](https://raw.githubusercontent.com/minhnguyenerp/devkit2/main/Document/Images/devkit2_project_avalonia_vscode_working_dir.png)
-
-👉 After creating the project:
-
-* Simply **double-click** the project in DevKit2
-* VS Code will open your Avalonia project
-
----
-
-## 🔹 Step 6: Run and Develop the Application
-
-Inside **VS Code**:
-
-* Open the integrated terminal
-* Run:
+In the Terminal, run:
 
 ```bash
-dotnet build
 dotnet run
 ```
 
-👉 The Avalonia application will start
+👉 You should see the avalonia window showing up
+
+---
+
+## 📦 Build the Executable (Release)
+
+To build the application:
+
+```bash
+dotnet build -c Release
+```
+
+---
+
+## ✅ Summary
+
+You have:
+
+* Created an Avalonia project using DevKit2
+* Run and compiled the application
 
 ---
 

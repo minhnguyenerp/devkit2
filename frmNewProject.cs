@@ -127,6 +127,37 @@ namespace devkit2
                     },
                 }
             });
+            comboBoxTemplate.Items.Add(new ValueName("Avalonia, VSCode", "Avalonia, VSCode")
+            {
+                Tag = new JsonObject
+                {
+                    ["ProjectName"] = "`ProjectName`",
+                    ["Program"] = "VSCode",
+                    ["Version"] = Sysconf.Instance.GetApplication("VSCode")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                    ["Profile"] = new JsonObject
+                    {
+                        ["WorkingDirectory"] = "`WorkingDirectory`",
+                        ["StartupFile"] = "`WorkingDirectory`",
+                    },
+                    ["Environments"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["Program"] = "Git",
+                            ["Version"] = Sysconf.Instance.GetApplication("Git")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                        new JsonObject
+                        {
+                            ["Program"] = "DotnetSDK",
+                            ["Version"] = Sysconf.Instance.GetApplication("DotnetSDK")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                    },
+                }
+            });
         }
 
         private void btnOK_Click(object sender, EventArgs e)
