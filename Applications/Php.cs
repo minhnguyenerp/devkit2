@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("8.5.5", "8.5.5"),
                     new ValueName("8.5.4", "8.5.4"),
                     new ValueName("7.4.33", "7.4.33"),
                 };
@@ -61,6 +62,16 @@ namespace devkit2.Applications
             List<(string Url, string File, string[] Extracts)> extensions = new List<(string Url, string File, string[] Extracts)>();
             switch (version)
             {
+                case "8.5.5":
+                    url = "https://downloads.php.net/~windows/releases/archives/php-8.5.5-Win32-vs17-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "php-8.5.5-Win32-vs17-x64.zip");
+                    iniUrl = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php.ini-8.5.4"; // Use the same php.ini with the 8.5.4 version
+                    extensions.Add((
+                        Url: "https://downloads.php.net/~windows/pecl/releases/apcu/5.1.28/php_apcu-5.1.28-8.5-ts-vs17-x64.zip",
+                        File: Path.Combine(Path.GetTempPath(), "php_apcu-5.1.28-8.5-ts-vs17-x64.zip"),
+                        Extracts: new string[] { "php_apcu.dll" }
+                    ));
+                    break;
                 case "8.5.4":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/php-8.5.4-Win32-vs17-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "php-8.5.4-Win32-vs17-x64.zip");

@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("10.0", "10.0"),
                     new ValueName("9.1", "9.1"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "10.0":
+                    url = "https://github.com/icsharpcode/ILSpy/releases/download/v10.0/ILSpy_selfcontained_10.0.0.8330-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "ILSpy_selfcontained_10.0.0.8330-x64.zip");
+                    break;
                 case "9.1":
                     url = "https://github.com/icsharpcode/ILSpy/releases/download/v9.1/ILSpy_selfcontained_9.1.0.7988-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "ILSpy_selfcontained_9.1.0.7988-x64.zip");
