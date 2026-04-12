@@ -158,6 +158,37 @@ namespace devkit2
                     },
                 }
             });
+            comboBoxTemplate.Items.Add(new ValueName("NodeJs, VSCode", "NodeJs, VSCode")
+            {
+                Tag = new JsonObject
+                {
+                    ["ProjectName"] = "`ProjectName`",
+                    ["Program"] = "VSCode",
+                    ["Version"] = Sysconf.Instance.GetApplication("VSCode")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                    ["Profile"] = new JsonObject
+                    {
+                        ["WorkingDirectory"] = "`WorkingDirectory`",
+                        ["StartupFile"] = "`WorkingDirectory`",
+                    },
+                    ["Environments"] = new JsonArray
+                    {
+                        new JsonObject
+                        {
+                            ["Program"] = "Git",
+                            ["Version"] = Sysconf.Instance.GetApplication("Git")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                        new JsonObject
+                        {
+                            ["Program"] = "Node",
+                            ["Version"] = Sysconf.Instance.GetApplication("Node")?.AvailableVersions?.FirstOrDefault()?.Value ?? "",
+                            ["Profile"] = null,
+                            ["Run"] = false,
+                        },
+                    },
+                }
+            });
         }
 
         private void btnOK_Click(object sender, EventArgs e)
