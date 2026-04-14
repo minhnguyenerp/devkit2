@@ -123,7 +123,6 @@ lua55.exe %*");
                         ProcessName = proc.ProcessName,
                         StartTime = proc.StartTime,
                         ApplicationName = Name,
-                        RuntimeDirectory = workingDir,
                         ApplicationVersion = version,
                         Profile = profile,
                     });

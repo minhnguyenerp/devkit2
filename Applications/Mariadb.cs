@@ -184,7 +184,6 @@ namespace devkit2.Applications
                 StartTime = proc.StartTime,
                 ApplicationName = Name,
                 ApplicationVersion = version,
-                RuntimeDirectory = dataDir,
                 Profile = profile,
             });
             return true;
@@ -210,8 +209,8 @@ namespace devkit2.Applications
             string mariadbdApp = Path.Combine(binDir, "mariadb-admin.exe");
             var stopPsi = new ProcessStartInfo();
             stopPsi.FileName = mariadbdApp;
-            stopPsi.Arguments = $"--defaults-file=\"{Path.Combine(runningApplication.RuntimeDirectory, "my.ini")}\" shutdown";
-            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.Arguments = $"--defaults-file=\"{Path.Combine(runningApplication.Profile?["DataDirectory"]?.ToString() ?? "", "my.ini")}\" shutdown";
+            stopPsi.WorkingDirectory = runningApplication.Profile?["DataDirectory"]?.ToString();
             stopPsi.UseShellExecute = false;
             stopPsi.CreateNoWindow = true;
             stopPsi.RedirectStandardOutput = true;

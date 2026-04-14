@@ -408,7 +408,6 @@ http {{
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
                 ApplicationName = Name,
-                RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
                 Profile = profile,
             };
@@ -437,11 +436,11 @@ http {{
         {
             string nginxDirSvRoot = Path.Combine(appPath, runningApplication.ApplicationVersion, $"nginx-{runningApplication.ApplicationVersion}");
             string nginxApp = Path.Combine(nginxDirSvRoot, "nginx.exe");
-            string confFile = Path.Combine(runningApplication.RuntimeDirectory, "nginx.conf");
+            string confFile = Path.Combine(runningApplication.Profile?["InstanceDirectory"]?.ToString() ?? "", "nginx.conf");
             var stopPsi = new ProcessStartInfo();
             stopPsi.FileName = nginxApp;
-            stopPsi.Arguments = $"-s stop -c \"{confFile}\" -p \"{runningApplication.RuntimeDirectory}\"";
-            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.Arguments = $"-s stop -c \"{confFile}\" -p \"{runningApplication.Profile?["InstanceDirectory"]?.ToString()}\"";
+            stopPsi.WorkingDirectory = runningApplication.Profile?["InstanceDirectory"]?.ToString();
             stopPsi.UseShellExecute = false;
             stopPsi.CreateNoWindow = true;
             stopPsi.RedirectStandardOutput = true;

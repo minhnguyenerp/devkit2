@@ -169,7 +169,6 @@ namespace devkit2.Applications
                 StartTime = proc.StartTime,
                 ApplicationName = Name,
                 ApplicationVersion = version,
-                RuntimeDirectory = dataDir,
                 Profile = profile,
             });
             return true;
@@ -195,8 +194,8 @@ namespace devkit2.Applications
             string postgresApp = Path.Combine(binDir, "pg_ctl.exe");
             var stopPsi = new ProcessStartInfo();
             stopPsi.FileName = postgresApp;
-            stopPsi.Arguments = $"-D \"{runningApplication.RuntimeDirectory}\" stop";
-            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.Arguments = $"-D \"{runningApplication.Profile?["DataDirectory"]?.ToString()}\" stop";
+            stopPsi.WorkingDirectory = runningApplication.Profile?["DataDirectory"]?.ToString();
             stopPsi.UseShellExecute = false;
             stopPsi.CreateNoWindow = true;
             stopPsi.RedirectStandardOutput = true;

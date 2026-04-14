@@ -170,7 +170,6 @@ searchd
                             ProcessName = proc.ProcessName,
                             StartTime = proc.StartTime,
                             ApplicationName = Name,
-                            RuntimeDirectory = configDir,
                             ApplicationVersion = version,
                             Profile = profile,
                         });
@@ -202,8 +201,8 @@ searchd
             string sphinxApp = Path.Combine(binDir, "searchd.exe");
             var stopPsi = new ProcessStartInfo();
             stopPsi.FileName = sphinxApp;
-            stopPsi.Arguments = $"--stop --config \"{Path.Combine(runningApplication.RuntimeDirectory, "sphinx.conf")}\"";
-            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.Arguments = $"--stop --config \"{Path.Combine(runningApplication.Profile?["ConfigDirectory"]?.ToString() ?? "", "sphinx.conf")}\"";
+            stopPsi.WorkingDirectory = runningApplication.Profile?["ConfigDirectory"]?.ToString();
             stopPsi.UseShellExecute = false;
             stopPsi.CreateNoWindow = true;
             stopPsi.RedirectStandardOutput = true;

@@ -342,7 +342,6 @@ CustomLog ""{logsDir.Replace('\\', '/')}/apache-access.log"" common
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
                 ApplicationName = Name,
-                RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
                 Profile = profile,
             });

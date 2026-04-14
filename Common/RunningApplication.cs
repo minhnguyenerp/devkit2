@@ -11,7 +11,6 @@ namespace devkit2.Common
         public string UniqueCode { get; set; } = string.Empty;
         public List<RunningApplication> Childs { get; set; } = new List<RunningApplication>();
         public string ApplicationName { get; set; } = string.Empty;
-        public string RuntimeDirectory { get; set; } = string.Empty;
         public string ApplicationVersion { get; set; } = string.Empty;
         public JsonObject? Profile { get; set; } = null;
 

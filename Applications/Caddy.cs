@@ -251,7 +251,6 @@ namespace devkit2.Applications
                 ProcessName = proc.ProcessName,
                 StartTime = proc.StartTime,
                 ApplicationName = Name,
-                RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
                 Profile = profile,
             };
