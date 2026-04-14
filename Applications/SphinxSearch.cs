@@ -1,6 +1,7 @@
 ﻿using devkit2.Common;
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -100,36 +101,119 @@ namespace devkit2.Applications
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
-            var psi = new ProcessStartInfo();
-            psi.FileName = "cmd.exe";
-            psi.UseShellExecute = false;
-            string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
-            if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
+            if (Sysconf.Instance.GetRunningApplication(uniqueCode) != null)
             {
-                psi.WorkingDirectory = workingDir;
+                MessageBox.Show("SphinxSearch is already running.", "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return true;
             }
-            LoadEnvironments(ref psi, environments);
 
-            try
+            string configDir = profile?["ConfigDirectory"]?.ToString() ?? "";
+            string dataDir = profile?["DataDirectory"]?.ToString() ?? "";
+            int port = 9312;
+            if (profile != null && profile["Port"] != null)
             {
-                var proc = Process.Start(psi);
-                if (proc != null)
-                {
-                    Sysconf.Instance.AddRunningApplication(new RunningApplication
-                    {
-                        UniqueCode = uniqueCode,
-                        Pid = proc.Id,
-                        Sessionid = proc.SessionId,
-                        ProcessName = proc.ProcessName,
-                        StartTime = proc.StartTime,
-                        ApplicationName = Name,
-                        ApplicationVersion = version,
-                    });
-                    return true;
-                }
+                int.TryParse(profile["Port"].ToString(), out port);
             }
-            catch { return false; }
+
+            if (!string.IsNullOrEmpty(configDir) && !string.IsNullOrEmpty(dataDir))
+            {
+                Directory.CreateDirectory(configDir);
+                Directory.CreateDirectory(dataDir);
+                string confFile = Path.Combine(configDir, "sphinx.conf");
+                if (!File.Exists(confFile))
+                {
+                    string config = $@"
+searchd
+{{
+    #begin port
+    listen = {port}:mysql41
+    #end port
+}}
+";
+                    File.WriteAllText(confFile, config, Encoding.ASCII);
+                }
+                else
+                {
+                    string config = File.ReadAllText(confFile, Encoding.ASCII);
+                    int nBeginPort = config.IndexOf("#begin port");
+                    int nEndPort = config.IndexOf("#end port");
+                    if (nBeginPort > 0 && nEndPort > 0)
+                    {
+                        config = config.Substring(0, nBeginPort) +
+                            $"#begin port\r\nlisten = {port}:mysql41\r\n#end port" +
+                            config.Substring(nEndPort + "#end port".Length);
+                    }
+                    File.WriteAllText(confFile, config, Encoding.ASCII);
+                }
+
+                var psi = new ProcessStartInfo();
+                psi.FileName = Path.Combine(appPath, version, $"sphinx-{version}", "bin", "searchd.exe");
+                psi.Arguments = $"--config \"{confFile}\" --datadir \"{dataDir}\"";
+                psi.WorkingDirectory = configDir;
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+               
+                LoadEnvironments(ref psi, environments);
+
+                try
+                {
+                    var proc = Process.Start(psi);
+                    if (proc != null)
+                    {
+                        Sysconf.Instance.AddRunningApplication(new RunningApplication
+                        {
+                            UniqueCode = uniqueCode,
+                            Pid = proc.Id,
+                            Sessionid = proc.SessionId,
+                            ProcessName = proc.ProcessName,
+                            StartTime = proc.StartTime,
+                            ApplicationName = Name,
+                            RuntimeDirectory = configDir,
+                            ApplicationVersion = version,
+                            Profile = profile,
+                        });
+                        return true;
+                    }
+                }
+                catch { return false; }
+            }
             return false;
+        }
+
+        public override JsonObject? ProfileEdit(JsonObject? init = null)
+        {
+            using (var dlg = new SphinxSearchProfile())
+            {
+                dlg.Profile = init;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    return dlg.Profile;
+                }
+                return init;
+            }
+        }
+
+        public override bool Stop(RunningApplication runningApplication)
+        {
+            string baseDir = Path.Combine(appPath, runningApplication.ApplicationVersion, $"sphinx-{runningApplication.ApplicationVersion}");
+            string binDir = Path.Combine(baseDir, "bin");
+            string sphinxApp = Path.Combine(binDir, "searchd.exe");
+            var stopPsi = new ProcessStartInfo();
+            stopPsi.FileName = sphinxApp;
+            stopPsi.Arguments = $"--stop --config \"{Path.Combine(runningApplication.RuntimeDirectory, "sphinx.conf")}\"";
+            stopPsi.WorkingDirectory = runningApplication.RuntimeDirectory;
+            stopPsi.UseShellExecute = false;
+            stopPsi.CreateNoWindow = true;
+            stopPsi.RedirectStandardOutput = true;
+            stopPsi.RedirectStandardError = true;
+            var proc = Process.Start(stopPsi);
+            proc?.WaitForExit(5000);
+            base.Stop(runningApplication);
+            if (proc == null)
+                return false;
+            return true;
         }
     }
 }

@@ -410,6 +410,7 @@ http {{
                 ApplicationName = Name,
                 RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
+                Profile = profile,
             };
             if (runningCgi != null)
             {

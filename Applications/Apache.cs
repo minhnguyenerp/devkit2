@@ -344,6 +344,7 @@ CustomLog ""{logsDir.Replace('\\', '/')}/apache-access.log"" common
                 ApplicationName = Name,
                 RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
+                Profile = profile,
             });
             return true;
         }

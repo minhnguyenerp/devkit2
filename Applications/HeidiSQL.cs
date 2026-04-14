@@ -117,6 +117,7 @@ namespace devkit2.Applications
                         StartTime = proc.StartTime,
                         ApplicationName = Name,
                         ApplicationVersion = version,
+                        Profile = profile,
                     });
                     return true;
                 }

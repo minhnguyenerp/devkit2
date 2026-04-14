@@ -253,6 +253,7 @@ namespace devkit2.Applications
                 ApplicationName = Name,
                 RuntimeDirectory = instanceDir,
                 ApplicationVersion = version,
+                Profile = profile,
             };
             if (runningCgi != null)
             {

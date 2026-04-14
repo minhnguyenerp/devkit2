@@ -125,6 +125,7 @@ lua55.exe %*");
                         ApplicationName = Name,
                         RuntimeDirectory = workingDir,
                         ApplicationVersion = version,
+                        Profile = profile,
                     });
                     return true;
                 }

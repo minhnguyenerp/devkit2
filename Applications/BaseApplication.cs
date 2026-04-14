@@ -115,34 +115,10 @@ namespace devkit2.Applications
             bool bResult = true;
             foreach (var child in app.Childs)
             {
-                try
+                IApplication? childApp = Sysconf.Instance.GetApplication(app.ApplicationName);
+                if (childApp != null)
                 {
-                    var proc = Process.GetProcessById(child.Pid);
-                    if (proc != null && !proc.HasExited)
-                    {
-                        if (proc.HasExited)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            // 1. nếu có window → đóng nhẹ
-                            if (proc.MainWindowHandle != IntPtr.Zero)
-                            {
-                                if (proc.CloseMainWindow())
-                                {
-                                    if (proc.WaitForExit(5000))
-                                        continue;
-                                }
-                            }
-                            proc.Kill();
-                            bResult = proc.WaitForExit(5000);
-                        }
-                    }
-                }
-                catch
-                {
-                    continue;
+                    bResult = childApp.Stop(child);
                 }
             }
             return bResult;

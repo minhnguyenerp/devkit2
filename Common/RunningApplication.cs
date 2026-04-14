@@ -1,4 +1,6 @@
-﻿namespace devkit2.Common
+﻿using System.Text.Json.Nodes;
+
+namespace devkit2.Common
 {
     public class RunningApplication
     {
@@ -11,6 +13,7 @@
         public string ApplicationName { get; set; } = string.Empty;
         public string RuntimeDirectory { get; set; } = string.Empty;
         public string ApplicationVersion { get; set; } = string.Empty;
+        public JsonObject? Profile { get; set; } = null;
 
         public override bool Equals(object obj)
         {

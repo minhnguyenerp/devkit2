@@ -185,6 +185,7 @@ namespace devkit2.Applications
                 ApplicationName = Name,
                 ApplicationVersion = version,
                 RuntimeDirectory = dataDir,
+                Profile = profile,
             });
             return true;
         }

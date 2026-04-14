@@ -12,7 +12,7 @@
 	<Product>DevKit2</Product>
 	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-	<AssemblyVersion>1.0.26.14</AssemblyVersion>
+	<AssemblyVersion>1.0.26.15</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>
@@ -35,6 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Applications\SphinxSearchProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Applications\NginxProfile.cs">
       <SubType>Form</SubType>
     </Compile>

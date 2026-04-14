@@ -113,6 +113,7 @@ php.exe ""%~dp0composer.phar"" %*");
                         StartTime = proc.StartTime,
                         ApplicationName = Name,
                         ApplicationVersion = version,
+                        Profile = profile,
                     });
                     return true;
                 }
