@@ -287,7 +287,17 @@ namespace devkit2.Applications
                     AllowAutoRedirect = true,
                     ConnectCallback = async (context, cancellationToken) =>
                     {
-                        var addresses = await Dns.GetHostAddressesAsync(context.DnsEndPoint.Host);
+                        IPAddress[] addresses;
+                        try
+                        {
+                            addresses = await Dns.GetHostAddressesAsync(context.DnsEndPoint.Host);
+                        }
+                        catch (SocketException ex)
+                        {
+                            throw new HttpRequestException(
+                                $"DNS lookup failed for host '{context.DnsEndPoint.Host}'",
+                                ex);
+                        }
 
                         // IPv4 trước, IPv6 sau
                         var ordered = addresses
@@ -368,8 +378,12 @@ namespace devkit2.Applications
 
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+                Application.OpenForms[0]?.Invoke(new Action(() =>
+                {
+                    MessageBox.Show("Cannot download. " + ex.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }));
                 if (File.Exists(file))
                 {
                     try
