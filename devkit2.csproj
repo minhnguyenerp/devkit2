@@ -12,7 +12,7 @@
 	<Product>DevKit2</Product>
 	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-	<AssemblyVersion>1.0.26.18</AssemblyVersion>
+	<AssemblyVersion>1.0.26.19</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>
@@ -65,9 +65,21 @@
   <ItemGroup>
     <Folder Include="Installer\" />
   </ItemGroup>
+	<PropertyGroup>
+		<GitHubRepo>minhnguyenerp/devkit2</GitHubRepo>
+		<ReleaseTag>v$(Version)</ReleaseTag>
+		<ReleaseTitle>DevKit2 $(ReleaseTag)</ReleaseTitle>
+		<InstallerOutput>$(ProjectDir)Installer\Output\DevKit2-$(Version)-Setup.exe</InstallerOutput>
+		<ReleaseNotesFile>$(ProjectDir)CHANGELOG.md</ReleaseNotesFile>
+	</PropertyGroup>
     <Target Name="BuildInstaller" AfterTargets="Publish" Condition="'$(Configuration)'=='Release'">
         <Exec Command="$(SolutionDir)Installer\nsis-3.11\makensis.exe $(ProjectDir)Installer\Setup.nsi" />
     </Target>
+	<Target Name="PublishGitHubRelease" AfterTargets="BuildInstaller" Condition="'$(Configuration)'=='Release'">
+		<Exec IgnoreExitCode="true" Command="gh release view &quot;$(ReleaseTag)&quot; --repo &quot;$(GitHubRepo)&quot; || gh release create &quot;$(ReleaseTag)&quot; &quot;$(InstallerOutput)&quot; --repo &quot;$(GitHubRepo)&quot; --title &quot;$(ReleaseTitle)&quot; --notes-file &quot;$(ReleaseNotesFile)&quot;"
+            EnvironmentVariables="GH_TOKEN=$(GH_TOKEN)" />
+		<Message Text="GitHub published: $(ReleaseTitle)" Importance="High" />
+	</Target>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
       <Exec Command="if $(Configuration) == Release (&#xD;&#xA;powershell -Command &quot;Remove-Item '$(TargetDir)*' -Recurse -Force&quot;&#xD;&#xA;)" />
     </Target>
