@@ -159,6 +159,13 @@ namespace devkit2
             tabPageFileExplorer.Controls.Add(explorer);
             explorer.Show();
             explorer.Dock = DockStyle.Fill;*/
+
+            Task.Run(async () =>
+            {
+                await Task.Delay(3000);
+                var updater = new Updater();
+                await updater.CheckForUpdate();
+            });
         }
 
         private void tabControlContainer_Selected(object sender, TabControlEventArgs e)
