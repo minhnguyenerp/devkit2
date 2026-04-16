@@ -148,7 +148,7 @@ SectionEnd
 ; ============================================================
 
 Function LaunchApp
-  Exec '"$INSTDIR\${APP_EXE}"'
+  ExecShell "" "$INSTDIR\${APP_EXE}"
 FunctionEnd
 
 ; ---- Uninstaller-only function: delete everything except $INSTDIR\UserData
