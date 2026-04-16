@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.9.7", "2.9.7"),
                     new ValueName("2.9.5", "2.9.5"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.9.7":
+                    url = "https://getcomposer.org/download/2.9.7/composer.phar";
+                    file = Path.Combine(appPath, version, "composer.phar");
+                    break;
                 case "2.9.5":
                     url = "https://getcomposer.org/download/2.9.5/composer.phar";
                     file = Path.Combine(appPath, version, "composer.phar");

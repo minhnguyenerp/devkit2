@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("24.15.0", "24.15.0"),
                     new ValueName("24.14.1", "24.14.1"),
                     new ValueName("24.14.0", "24.14.0"),
                 };
@@ -59,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "24.15.0":
+                    url = "https://nodejs.org/dist/v24.15.0/node-v24.15.0-win-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "node-v24.15.0-win-x64.zip");
+                    break;
                 case "24.14.1":
                     url = "https://nodejs.org/dist/v24.14.1/node-v24.14.1-win-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "node-v24.14.1-win-x64.zip");

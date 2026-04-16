@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("8.19.0_6", "8.19.0_6"),
                     new ValueName("8.19.0_5", "8.19.0_5"),
                     new ValueName("8.19.0_1", "8.19.0_1"),
                 };
@@ -57,6 +58,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "8.19.0_6":
+                    url = "https://curl.se/windows/dl-8.19.0_6/curl-8.19.0_6-win64-mingw.zip";
+                    file = Path.Combine(Path.GetTempPath(), "curl-8.19.0_6-win64-mingw.zip");
+                    break;
                 case "8.19.0_5":
                     url = "https://curl.se/windows/dl-8.19.0_5/curl-8.19.0_5-win64-mingw.zip";
                     file = Path.Combine(Path.GetTempPath(), "curl-8.19.0_5-win64-mingw.zip");

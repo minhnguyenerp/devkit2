@@ -12,7 +12,7 @@
 	<Product>DevKit2</Product>
 	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-	<AssemblyVersion>1.0.26.16</AssemblyVersion>
+	<AssemblyVersion>1.0.26.17</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>

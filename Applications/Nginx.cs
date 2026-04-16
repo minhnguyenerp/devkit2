@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.30.0", "1.30.0"),
                     new ValueName("1.28.2", "1.28.2"),
                 };
             }
@@ -57,6 +58,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "1.30.0":
+                    url = "https://nginx.org/download/nginx-1.30.0.zip";
+                    file = Path.Combine(Path.GetTempPath(), "nginx-1.30.0.zip");
+                    break;
                 case "1.28.2":
                     url = "https://nginx.org/download/nginx-1.28.2.zip";
                     file = Path.Combine(Path.GetTempPath(), "nginx-1.28.2.zip");

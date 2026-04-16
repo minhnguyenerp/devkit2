@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.16.0-dev.3153+d6f43caad", "0.16.0-dev.3153+d6f43caad"),
                     new ValueName("0.16.0-dev.3133+5ec8e45f3", "0.16.0-dev.3133+5ec8e45f3"),
                     new ValueName("0.16.0-dev.3070+b22eb176b", "0.16.0-dev.3070+b22eb176b"),
                     new ValueName("0.16.0-dev.2973+06b85a4fd", "0.16.0-dev.2973+06b85a4fd"),
@@ -61,6 +62,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "0.16.0-dev.3153+d6f43caad":
+                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip";
+                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip");
+                    break;
                 case "0.16.0-dev.3133+5ec8e45f3":
                     url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip";
                     file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip");

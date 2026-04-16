@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.6.1", "3.6.1"),
                     new ValueName("3.6", "3.6"),
                     new ValueName("3.5.2", "3.5.2"),
                 };
@@ -59,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "3.6.1":
+                    url = "https://www.sumatrapdfreader.org/dl/rel/3.6.1/SumatraPDF-3.6.1-64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "SumatraPDF-3.6.1-64.zip");
+                    break;
                 case "3.6":
                     url = "https://www.sumatrapdfreader.org/dl/rel/3.6/SumatraPDF-3.6-64.zip";
                     file = Path.Combine(Path.GetTempPath(), "SumatraPDF-3.6-64.zip");

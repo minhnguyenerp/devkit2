@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("12.17", "12.17"),
                     new ValueName("12.16", "12.16"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "12.17":
+                    url = "https://github.com/HeidiSQL/HeidiSQL/releases/download/12.17/HeidiSQL_12.17_64_Portable.zip";
+                    file = Path.Combine(Path.GetTempPath(), "HeidiSQL_12.17_64_Portable.zip");
+                    break;
                 case "12.16":
                     url = "https://github.com/HeidiSQL/HeidiSQL/releases/download/v12.16/HeidiSQL_12.16_64_Portable.zip";
                     file = Path.Combine(Path.GetTempPath(), "HeidiSQL_12.16_64_Portable.zip");

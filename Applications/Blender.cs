@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("5.1.1", "5.1.1"),
                     new ValueName("5.1.0", "5.1.0"),
                     new ValueName("5.0.1", "5.0.1"),
                 };
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "5.1.1":
+                    url = "https://download.blender.org/release/Blender5.1/blender-5.1.1-windows-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.1-windows-x64.zip");
+                    break;
                 case "5.1.0":
                     url = "https://download.blender.org/release/Blender5.1/blender-5.1.0-windows-x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "blender-5.1.0-windows-x64.zip");
