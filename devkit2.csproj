@@ -67,9 +67,9 @@
   </ItemGroup>
 	<PropertyGroup>
 		<GitHubRepo>minhnguyenerp/devkit2</GitHubRepo>
-		<ReleaseTag>v$(Version)</ReleaseTag>
+		<ReleaseTag>v$(AssemblyVersion)</ReleaseTag>
 		<ReleaseTitle>DevKit2 $(ReleaseTag)</ReleaseTitle>
-		<InstallerOutput>$(ProjectDir)Installer\Output\DevKit2-$(Version)-Setup.exe</InstallerOutput>
+		<InstallerOutput>$(ProjectDir)Installer\Output\DevKit2-$(AssemblyVersion)-Setup.exe</InstallerOutput>
 		<ReleaseNotesFile>$(ProjectDir)CHANGELOG.md</ReleaseNotesFile>
 	</PropertyGroup>
     <Target Name="BuildInstaller" AfterTargets="Publish" Condition="'$(Configuration)'=='Release'">
