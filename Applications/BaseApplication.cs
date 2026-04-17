@@ -1,5 +1,6 @@
 ﻿using devkit2.Common;
 using devkit2.Properties;
+using Microsoft.Win32;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
@@ -486,6 +487,38 @@ namespace devkit2.Applications
             }
             Config["InstalledVersions"] = sortedVersion;
             SaveConfig(Config, appPath);
+        }
+
+        protected void RegisterContextMenu(string exePath, bool isForFolder = false)
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\{Name}"))
+            {
+                key.SetValue("", $"DevKit2 {Name}");
+                key.SetValue("Icon", exePath);
+            }
+            using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\{Name}\command"))
+            {
+                cmd.SetValue("", $"\"{exePath}\" \"%1\"");
+            }
+
+            if(isForFolder)
+            {
+                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\{Name}"))
+                {
+                    key.SetValue("", $"DevKit2 {Name}");
+                    key.SetValue("Icon", exePath);
+                }
+                using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\{Name}\command"))
+                {
+                    cmd.SetValue("", $"\"{exePath}\" \"%1\"");
+                }
+            }
+        }
+
+        protected void UnregisterContextMenu()
+        {
+            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\*\shell\{Name}", false);
+            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\Directory\shell\{Name}", false);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿Add Inkscape 1.4.3.
+﻿Add windows explorer context menu for Notepad++.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
