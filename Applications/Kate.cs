@@ -1,17 +1,18 @@
 ﻿using devkit2.Common;
+using SevenZipExtractor;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Zed : BaseApplication
+    internal sealed class Kate : BaseApplication
     {
-        public override string Name => "Zed";
+        public override string Name => "Kate";
 
-        public Zed()
+        public Kate()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "zed");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "kate");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -24,9 +25,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(
-                    Path.Combine(appPath, InstalledVersions[0].Value, "Zed.exe")
-                );
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "bin", "kate.exe"));
             }
             catch { }
         }
@@ -47,10 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("0.232.2", "0.232.2"),
-                    new ValueName("0.230.1", "0.230.1"),
-                    new ValueName("0.228.0", "0.228.0"),
-                    new ValueName("0.227.1", "0.227.1"),
+                    new ValueName("master-11499", "master-11499"),
                 };
             }
         }
@@ -61,21 +57,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "0.232.2":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.232.2.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.232.2.zip");
-                    break;
-                case "0.230.1":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.230.1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.230.1.zip");
-                    break;
-                case "0.228.0":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.228.0.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.228.0.zip");
-                    break;
-                case "0.227.1":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.227.1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.227.1.zip");
+                case "master-11499":
+                    url = "https://cdn.kde.org/ci-builds/utilities/kate/master/windows/kate-master-11499-windows-cl-msvc2022-x86_64.7z";
+                    file = Path.Combine(Path.GetTempPath(), "kate-master-11499-windows-cl-msvc2022-x86_64.7z");
                     break;
             }
 
@@ -90,7 +74,8 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(extractPath);
                 try
                 {
-                    ZipFile.ExtractToDirectory(file, extractPath, true);
+                    using var archive = new ArchiveFile(file);
+                    archive.Extract(extractPath, true);
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +89,7 @@ namespace devkit2.Applications
                 var installed = InstalledVersions;
                 if (installed.Length > 0)
                 {
-                    string exePath = Path.Combine(appPath, installed[0].Value, "Zed.exe");
+                    string exePath = Path.Combine(appPath, installed[0].Value, "bin", "kate.exe");
                     base.RegisterContextMenu(exePath);
                 }
 
@@ -119,7 +104,7 @@ namespace devkit2.Applications
             var installed = InstalledVersions;
             if (installed.Length > 0)
             {
-                string exePath = Path.Combine(appPath, installed[0].Value, "Zed.exe");
+                string exePath = Path.Combine(appPath, installed[0].Value, "bin", "kate.exe");
                 base.RegisterContextMenu(exePath);
             }
             else
@@ -132,14 +117,14 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version)),
+                new ValueName("PATH", Path.Combine(appPath, version, "bin")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, "Zed.exe");
+            psi.FileName = Path.Combine(appPath, version, "bin", "kate.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {

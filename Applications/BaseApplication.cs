@@ -489,36 +489,44 @@ namespace devkit2.Applications
             SaveConfig(Config, appPath);
         }
 
-        protected void RegisterContextMenu(string exePath, bool isForFolder = false)
+        protected void RegisterContextMenu(string exePath, bool passFolderParam = true)
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\{Name}"))
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\DevKit2{Name}"))
             {
                 key.SetValue("", $"DevKit2 {Name}");
                 key.SetValue("Icon", exePath);
             }
-            using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\{Name}\command"))
+            using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\*\shell\DevKit2{Name}\command"))
             {
                 cmd.SetValue("", $"\"{exePath}\" \"%1\"");
             }
 
-            if(isForFolder)
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\DevKit2{Name}"))
             {
-                using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\{Name}"))
-                {
-                    key.SetValue("", $"DevKit2 {Name}");
-                    key.SetValue("Icon", exePath);
-                }
-                using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\{Name}\command"))
-                {
-                    cmd.SetValue("", $"\"{exePath}\" \"%1\"");
-                }
+                key.SetValue("", $"DevKit2 {Name}");
+                key.SetValue("Icon", exePath);
+            }
+            using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\shell\DevKit2{Name}\command"))
+            {
+                cmd.SetValue("", $"\"{exePath}\"{(passFolderParam ? " \"%1\"" : "")}");
+            }
+
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\Background\shell\DevKit2{Name}"))
+            {
+                key.SetValue("", $"DevKit2 {Name}");
+                key.SetValue("Icon", exePath);
+            }
+            using (RegistryKey cmd = Registry.CurrentUser.CreateSubKey(@$"Software\Classes\Directory\Background\shell\DevKit2{Name}\command"))
+            {
+                cmd.SetValue("", $"\"{exePath}\"{(passFolderParam ? " \"%V\"" : "")}");
             }
         }
 
         protected void UnregisterContextMenu()
         {
-            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\*\shell\{Name}", false);
-            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\Directory\shell\{Name}", false);
+            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\*\shell\DevKit2{Name}", false);
+            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\Directory\shell\DevKit2{Name}", false);
+            Registry.CurrentUser.DeleteSubKeyTree(@$"Software\Classes\Directory\Background\shell\DevKit2{Name}", false);
         }
     }
 }

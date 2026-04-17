@@ -1,4 +1,5 @@
-﻿Add windows explorer context menu for Notepad++.
+﻿Add Kate IDE, Tea CLI.
+Add windows explorer context menu for Notepad++, VsCode, VSCodium, Zed, Kate.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)

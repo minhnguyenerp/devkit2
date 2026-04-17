@@ -95,7 +95,7 @@ namespace devkit2.Applications
                 if (installed.Length > 0)
                 {
                     string exePath = Path.Combine(appPath, installed[0].Value, "notepad++.exe");
-                    base.RegisterContextMenu(exePath);
+                    base.RegisterContextMenu(exePath, false);
                 }
 
                 return true;
@@ -110,7 +110,7 @@ namespace devkit2.Applications
             if (installed.Length > 0)
             {
                 string exePath = Path.Combine(appPath, installed[0].Value, "notepad++.exe");
-                base.RegisterContextMenu(exePath);
+                base.RegisterContextMenu(exePath, false);
             }
             else
             {

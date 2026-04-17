@@ -140,9 +140,32 @@ namespace devkit2.Applications
 
                 base.SaveNewVersion(version);
 
+                var installed = InstalledVersions;
+                if (installed.Length > 0)
+                {
+                    string exePath = Path.Combine(appPath, installed[0].Value, "Code.exe");
+                    base.RegisterContextMenu(exePath);
+                }
+
                 return true;
             }
             return false;
+        }
+
+        public override bool Uninstall(string version)
+        {
+            bool bResult = base.Uninstall(version);
+            var installed = InstalledVersions;
+            if (installed.Length > 0)
+            {
+                string exePath = Path.Combine(appPath, installed[0].Value, "Code.exe");
+                base.RegisterContextMenu(exePath);
+            }
+            else
+            {
+                base.UnregisterContextMenu();
+            }
+            return bResult;
         }
 
         public override ValueName[] GetEnvironments(string version)

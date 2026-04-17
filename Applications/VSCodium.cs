@@ -120,9 +120,32 @@ namespace devkit2.Applications
 
                 base.SaveNewVersion(version);
 
+                var installed = InstalledVersions;
+                if (installed.Length > 0)
+                {
+                    string exePath = Path.Combine(appPath, installed[0].Value, "VSCodium.exe");
+                    base.RegisterContextMenu(exePath);
+                }
+
                 return true;
             }
             return false;
+        }
+
+        public override bool Uninstall(string version)
+        {
+            bool bResult = base.Uninstall(version);
+            var installed = InstalledVersions;
+            if (installed.Length > 0)
+            {
+                string exePath = Path.Combine(appPath, installed[0].Value, "VSCodium.exe");
+                base.RegisterContextMenu(exePath);
+            }
+            else
+            {
+                base.UnregisterContextMenu();
+            }
+            return bResult;
         }
 
         public override ValueName[] GetEnvironments(string version)
@@ -135,7 +158,7 @@ namespace devkit2.Applications
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, @"VSCodium.exe");
+            psi.FileName = Path.Combine(appPath, version, "VSCodium.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
