@@ -95,14 +95,36 @@ namespace devkit2
 
         private async Task DownloadFileAsync(string url, string savePath)
         {
+            var tempDir = Path.GetTempPath();
+            var tempFile = Path.Combine(tempDir, "DevKit2.tmp");
+
             using var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("DevKit2-Updater");
 
-            using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
-            response.EnsureSuccessStatusCode();
+            try
+            {
+                using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead);
+                response.EnsureSuccessStatusCode();
 
-            await using var fs = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            await response.Content.CopyToAsync(fs);
+                await using (var fs = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    await response.Content.CopyToAsync(fs);
+                }
+
+                if (File.Exists(savePath))
+                {
+                    File.Delete(savePath);
+                }
+
+                File.Copy(tempFile, savePath);
+            }
+            finally
+            {
+                if (File.Exists(tempFile))
+                {
+                    File.Delete(tempFile);
+                }
+            }
         }
 
         private void RunInstallerAndExit(string installerPath)

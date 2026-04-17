@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.95.0", "1.95.0"),
                     new ValueName("1.94.1", "1.94.1"),
                     new ValueName("1.94.0", "1.94.0"),
                 };
@@ -59,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "1.95.0":
+                    url = "https://static.rust-lang.org/dist/rust-1.95.0-x86_64-pc-windows-gnu.tar.xz";
+                    file = Path.Combine(Path.GetTempPath(), "rust-1.95.0-x86_64-pc-windows-gnu.tar.xz");
+                    break;
                 case "1.94.1":
                     url = "https://static.rust-lang.org/dist/rust-1.94.1-x86_64-pc-windows-gnu.tar.xz";
                     file = Path.Combine(Path.GetTempPath(), "rust-1.94.1-x86_64-pc-windows-gnu.tar.xz");

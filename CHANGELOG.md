@@ -1,5 +1,4 @@
-﻿Add Kate IDE, Tea CLI.
-Add windows explorer context menu for Notepad++, VsCode, VSCodium, Zed, Kate.
+﻿Update Rust 1.95.0.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -44,7 +43,7 @@ Add windows explorer context menu for Notepad++, VsCode, VSCodium, Zed, Kate.
 [python-3.14.4-embed-amd64](https://www.python.org/downloads/windows/)
 [qtcreator-windows-x64-msvc-19.0.0.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
-[rust-1.94.1-x86_64-pc-windows-gnu](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
+[rust-1.95.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
 [ShareX 19.0.2](https://getsharex.com/downloads)
 [Shotcut-26.2.26](https://github.com/mltframework/shotcut/releases)
 [SphinxSearch 3.9.1](https://sphinxsearch.com/downloads/current/)
