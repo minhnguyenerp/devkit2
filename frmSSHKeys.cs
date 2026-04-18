@@ -66,8 +66,23 @@ namespace devkit2
             string fileName = listViewKeys.SelectedItems[0].Text;
             string credentialsPath = Path.Combine(BaseApplication.LocalApplicationData, "credentials");
             string fullPath = Path.Combine(credentialsPath, fileName);
-            string gitCommand = $"For Powershell:\r\ngit config --global core.sshCommand 'ssh -i \"{fullPath}\" -p 22'";
-            gitCommand += ("\r\n\r\nFor Bash/Cmd:\r\n" + $"git config --global core.sshCommand \"ssh -i \\\"{fullPath}\\\" -p 22\"");
+            string normalizedPath = fullPath.Replace("\\", "/");
+            string gitCommand =
+                "=== Setup SSH for Git ===\r\n\r\n" +
+
+                "[PowerShell]\r\n" +
+                $"git config --global core.sshCommand 'ssh -i \"{normalizedPath}\" -p 22'\r\n\r\n" +
+
+                "[CMD / Bash]\r\n" +
+                $"git config --global core.sshCommand \"ssh -i \\\"{normalizedPath}\\\" -p 22\"\r\n\r\n" +
+
+                "=== Useful Commands ===\r\n\r\n" +
+
+                "# Check current remote URL\r\n" +
+                "git remote -v\r\n\r\n" +
+
+                "# Change remote to SSH (example)\r\n" +
+                "git remote set-url origin git@github.com:username/repo.git\r\n";
             textBox1.Text = gitCommand;
         }
 
