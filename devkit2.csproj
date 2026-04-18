@@ -12,7 +12,7 @@
 	<Product>DevKit2</Product>
 	<ApplicationHighDpiMode>DpiUnawareGdiScaled</ApplicationHighDpiMode>
 	<ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
-	<AssemblyVersion>1.0.26.25</AssemblyVersion>
+	<AssemblyVersion>1.0.26.26</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<InformationalVersion>$(AssemblyVersion)</InformationalVersion>
   </PropertyGroup>
@@ -39,6 +39,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Applications\NginxProfile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmSSHImport.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
@@ -76,8 +79,7 @@
         <Exec Command="$(SolutionDir)Installer\nsis-3.11\makensis.exe $(ProjectDir)Installer\Setup.nsi" />
     </Target>
 	<Target Name="PublishGitHubRelease" AfterTargets="BuildInstaller" Condition="'$(Configuration)'=='Release'">
-		<Exec IgnoreExitCode="true" Command="gh release view &quot;$(ReleaseTag)&quot; --repo &quot;$(GitHubRepo)&quot; || gh release create &quot;$(ReleaseTag)&quot; &quot;$(InstallerOutput)&quot; --repo &quot;$(GitHubRepo)&quot; --title &quot;$(ReleaseTitle)&quot; --notes-file &quot;$(ReleaseNotesFile)&quot;"
-            EnvironmentVariables="GH_TOKEN=$(GH_TOKEN)" />
+		<Exec IgnoreExitCode="true" Command="gh release view &quot;$(ReleaseTag)&quot; --repo &quot;$(GitHubRepo)&quot; || gh release create &quot;$(ReleaseTag)&quot; &quot;$(InstallerOutput)&quot; --repo &quot;$(GitHubRepo)&quot; --title &quot;$(ReleaseTitle)&quot; --notes-file &quot;$(ReleaseNotesFile)&quot;" EnvironmentVariables="GH_TOKEN=$(GH_TOKEN)" />
 		<Message Text="GitHub published: $(ReleaseTitle)" Importance="High" />
 	</Target>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

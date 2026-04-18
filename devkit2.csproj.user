@@ -49,6 +49,12 @@
     <Compile Update="frmProject.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="frmSSHExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="frmSSHKeys.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmStart.cs">
       <SubType>Form</SubType>
     </Compile>

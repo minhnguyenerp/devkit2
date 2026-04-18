@@ -31,11 +31,13 @@
             listView1 = new ListView();
             tableLayoutPanel1 = new TableLayoutPanel();
             toolStrip1 = new ToolStrip();
+            toolStripButtonNewProjectFromTemplate = new ToolStripButton();
             toolStripButtonNewProject = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonEditProject = new ToolStripButton();
             toolStripButtonDelete = new ToolStripButton();
-            toolStripButtonNewProjectFromTemplate = new ToolStripButton();
+            toolStripSeparator2 = new ToolStripSeparator();
+            toolStripButtonSSHKeys = new ToolStripButton();
             tableLayoutPanel1.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -69,12 +71,22 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(28, 28);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProjectFromTemplate, toolStripButtonNewProject, toolStripSeparator1, toolStripButtonEditProject, toolStripButtonDelete });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonNewProjectFromTemplate, toolStripButtonNewProject, toolStripSeparator1, toolStripButtonEditProject, toolStripButtonDelete, toolStripSeparator2, toolStripButtonSSHKeys });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(820, 35);
             toolStrip1.TabIndex = 1;
             toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButtonNewProjectFromTemplate
+            // 
+            toolStripButtonNewProjectFromTemplate.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonNewProjectFromTemplate.Image = Properties.Resources.new_project1;
+            toolStripButtonNewProjectFromTemplate.ImageTransparentColor = Color.Magenta;
+            toolStripButtonNewProjectFromTemplate.Name = "toolStripButtonNewProjectFromTemplate";
+            toolStripButtonNewProjectFromTemplate.Size = new Size(32, 32);
+            toolStripButtonNewProjectFromTemplate.Text = "New Project From Template";
+            toolStripButtonNewProjectFromTemplate.Click += toolStripButtonNewProjectFromTemplate_Click;
             // 
             // toolStripButtonNewProject
             // 
@@ -113,15 +125,21 @@
             toolStripButtonDelete.ToolTipText = "Delete Project";
             toolStripButtonDelete.Click += toolStripButtonDelete_Click;
             // 
-            // toolStripButtonNewProjectFromTemplate
+            // toolStripSeparator2
             // 
-            toolStripButtonNewProjectFromTemplate.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonNewProjectFromTemplate.Image = Properties.Resources.new_project1;
-            toolStripButtonNewProjectFromTemplate.ImageTransparentColor = Color.Magenta;
-            toolStripButtonNewProjectFromTemplate.Name = "toolStripButtonNewProjectFromTemplate";
-            toolStripButtonNewProjectFromTemplate.Size = new Size(32, 32);
-            toolStripButtonNewProjectFromTemplate.Text = "New Project From Template";
-            toolStripButtonNewProjectFromTemplate.Click += toolStripButtonNewProjectFromTemplate_Click;
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 35);
+            // 
+            // toolStripButtonSSHKeys
+            // 
+            toolStripButtonSSHKeys.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSSHKeys.Image = Properties.Resources.key;
+            toolStripButtonSSHKeys.ImageTransparentColor = Color.Magenta;
+            toolStripButtonSSHKeys.Name = "toolStripButtonSSHKeys";
+            toolStripButtonSSHKeys.Size = new Size(32, 32);
+            toolStripButtonSSHKeys.Text = "SSH Keys";
+            toolStripButtonSSHKeys.ToolTipText = "SSH Keys";
+            toolStripButtonSSHKeys.Click += toolStripButtonSSHKeys_Click;
             // 
             // frmMyProjects
             // 
@@ -149,5 +167,7 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButtonDelete;
         private ToolStripButton toolStripButtonNewProjectFromTemplate;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripButton toolStripButtonSSHKeys;
     }
 }

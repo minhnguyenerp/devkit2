@@ -572,5 +572,11 @@ namespace devkit2
                 LoadProjects();
             }
         }
+
+        private void toolStripButtonSSHKeys_Click(object sender, EventArgs e)
+        {
+            frmSSHKeys keys = new frmSSHKeys();
+            keys.ShowDialog();
+        }
     }
 }
