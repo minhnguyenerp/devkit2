@@ -46,7 +46,7 @@ namespace devkit2.Applications
                 return new ValueName[]
                 {
                     new ValueName("26", "26"),
-                    new ValueName("25.0.2", "25.0.2"),
+                    new ValueName("25", "25"),
                 };
             }
         }
@@ -58,12 +58,12 @@ namespace devkit2.Applications
             switch (version)
             {
                 case "26":
-                    url = "https://download.oracle.com/java/26/latest/jdk-26_windows-x64_bin.zip";
-                    file = Path.Combine(Path.GetTempPath(), "jdk-26_windows-x64_bin.zip");
+                    url = "https://download.java.net/openjdk/jdk26/ri/openjdk-26+35_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "openjdk-26+35_windows-x64_bin.zip");
                     break;
-                case "25.0.2":
-                    url = "https://download.oracle.com/java/25/latest/jdk-25_windows-x64_bin.zip";
-                    file = Path.Combine(Path.GetTempPath(), "jdk-25_windows-x64_bin.zip");
+                case "25":
+                    url = "https://download.java.net/openjdk/jdk25/ri/openjdk-25+36_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "openjdk-25+36_windows-x64_bin.zip");
                     break;
             }
 

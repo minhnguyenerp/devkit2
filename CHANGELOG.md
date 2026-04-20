@@ -1,4 +1,4 @@
-﻿Add FreeCAD 1.1.1 and SolveSpace 3.2.
+﻿Use java open jdk.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
