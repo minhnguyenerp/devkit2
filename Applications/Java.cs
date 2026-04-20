@@ -46,7 +46,8 @@ namespace devkit2.Applications
                 return new ValueName[]
                 {
                     new ValueName("26", "26"),
-                    new ValueName("25", "25"),
+                    new ValueName("25.0.2", "25.0.2"),
+                    new ValueName("24.0.2", "24.0.2"),
                 };
             }
         }
@@ -58,12 +59,16 @@ namespace devkit2.Applications
             switch (version)
             {
                 case "26":
-                    url = "https://download.java.net/openjdk/jdk26/ri/openjdk-26+35_windows-x64_bin.zip";
-                    file = Path.Combine(Path.GetTempPath(), "openjdk-26+35_windows-x64_bin.zip");
+                    url = "https://download.java.net/java/GA/jdk26/c3cc523845074aa0af4f5e1e1ed4151d/35/GPL/openjdk-26_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "openjdk-26_windows-x64_bin.zip");
                     break;
-                case "25":
-                    url = "https://download.java.net/openjdk/jdk25/ri/openjdk-25+36_windows-x64_bin.zip";
-                    file = Path.Combine(Path.GetTempPath(), "openjdk-25+36_windows-x64_bin.zip");
+                case "25.0.2":
+                    url = "https://download.java.net/java/GA/jdk25.0.2/b1e0dfa218384cb9959bdcb897162d4e/10/GPL/openjdk-25.0.2_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "openjdk-25.0.2_windows-x64_bin.zip");
+                    break;
+                case "24.0.2":
+                    url = "https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_windows-x64_bin.zip";
+                    file = Path.Combine(Path.GetTempPath(), "openjdk-24.0.2_windows-x64_bin.zip");
                     break;
             }
 

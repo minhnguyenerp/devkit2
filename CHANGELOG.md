@@ -1,4 +1,4 @@
-﻿Use java open jdk.
+﻿Update openjdk.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -25,7 +25,7 @@
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
 [ILSpy-10.0](https://github.com/icsharpcode/ILSpy/releases)
 [Inkscape-1.4.3](https://inkscape.org/release/)
-[jdk-26](https://www.oracle.com/asean/java/technologies/downloads/)
+[jdk-26](https://jdk.java.net/archive/)
 [Krita-5.3.1](https://krita.org/en/download/)
 [Lua-5.5.0](https://www.lua.org/download.html)
 [mariadb-12.2.2-winx64](https://mariadb.org/download)

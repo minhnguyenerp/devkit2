@@ -451,6 +451,7 @@ namespace devkit2
                                                 {
                                                     strversion = app.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                                     env["Version"] = strversion;
+                                                    listEnv.AddRange(app.GetEnvironments(strversion));
                                                     needToSaveProjectConfig = true;
                                                 }
                                             }
@@ -475,6 +476,7 @@ namespace devkit2
                             {
                                 primaryVersion = primaryApplication.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                 proj["Version"] = primaryVersion;
+                                listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
                                 needToSaveProjectConfig = true;
                             }
                         }

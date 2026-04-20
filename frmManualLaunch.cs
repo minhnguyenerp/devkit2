@@ -2,6 +2,7 @@
 using devkit2.Common;
 using devkit2.Properties;
 using System.Diagnostics;
+using System.Globalization;
 using System.Security.Policy;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -427,6 +428,7 @@ namespace devkit2
                                                 {
                                                     strversion = app.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                                     env["Version"] = strversion;
+                                                    listEnv.AddRange(app.GetEnvironments(strversion));
                                                     needToSaveProjectConfig = true;
                                                 }
                                             }
@@ -451,6 +453,7 @@ namespace devkit2
                             {
                                 primaryVersion = primaryApplication.InstalledVersions?.FirstOrDefault()?.ToString() ?? string.Empty;
                                 proj["Version"] = primaryVersion;
+                                listEnv.AddRange(primaryApplication.GetEnvironments(primaryVersion));
                                 needToSaveProjectConfig = true;
                             }
                         }
