@@ -1,4 +1,4 @@
-﻿Add SSH Keys instruction.
+﻿Add FreeCAD 1.1.1 and SolveSpace 3.2.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -15,6 +15,7 @@
 [dotnet-10.0.202](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 [etcd-v3.6.10-windows-amd64](https://github.com/etcd-io/etcd/releases)
 [fd-10.4.2](https://github.com/sharkdp/fd/releases)
+[FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
 [fzf-0.71.0](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
 [PortableGit-2.53.0.3](https://git-scm.com/install/windows)
@@ -46,6 +47,7 @@
 [rust-1.95.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
 [ShareX 19.0.2](https://getsharex.com/downloads)
 [Shotcut-26.2.26](https://github.com/mltframework/shotcut/releases)
+[SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
 [SphinxSearch 3.9.1](https://sphinxsearch.com/downloads/current/)
 [SQLiteStudio-3.4.21](https://github.com/pawelsalawa/sqlitestudio/releases)
 [SumatraPDF-3.6.1-64](https://www.sumatrapdfreader.org/free-pdf-reader)

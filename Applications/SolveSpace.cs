@@ -1,17 +1,17 @@
 ﻿using devkit2.Common;
+using SevenZipExtractor;
 using System.Diagnostics;
-using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class Blender : BaseApplication
+    internal sealed class SolveSpace : BaseApplication
     {
-        public override string Name => "Blender";
+        public override string Name => "SolveSpace";
 
-        public Blender()
+        public SolveSpace()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "blender");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "solvespace");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -24,7 +24,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"blender-{InstalledVersions[0].Value}-windows-x64", "blender.exe"));
+                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, "solvespace_x64.exe"));
             }
             catch { }
         }
@@ -45,9 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("5.1.1", "5.1.1"),
-                    new ValueName("5.1.0", "5.1.0"),
-                    new ValueName("5.0.1", "5.0.1"),
+                    new ValueName("3.2", "3.2"),
                 };
             }
         }
@@ -58,17 +56,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "5.1.1":
-                    url = "https://download.blender.org/release/Blender5.1/blender-5.1.1-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.1-windows-x64.zip");
-                    break;
-                case "5.1.0":
-                    url = "https://download.blender.org/release/Blender5.1/blender-5.1.0-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.0-windows-x64.zip");
-                    break;
-                case "5.0.1":
-                    url = "https://ftp.halifax.rwth-aachen.de/blender/release/Blender5.0/blender-5.0.1-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.0.1-windows-x64.zip");
+                case "3.2":
+                    url = "https://github.com/solvespace/solvespace/releases/download/v3.2/solvespace_x64.exe";
+                    string installPath = Path.Combine(appPath, version);
+                    Directory.CreateDirectory(installPath);
+                    file = Path.Combine(installPath, "solvespace_x64.exe");
                     break;
             }
 
@@ -76,19 +68,6 @@ namespace devkit2.Applications
             {
                 if (!base.Download(url, file, progress))
                 {
-                    return false;
-                }
-
-                string extractPath = Path.Combine(appPath, version);
-                Directory.CreateDirectory(extractPath);
-                try
-                {
-                    ZipFile.ExtractToDirectory(file, extractPath, true);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "DevKit2", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    File.Delete(file);
                     return false;
                 }
 
@@ -102,14 +81,14 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"blender-{version}-windows-x64")),
+                new ValueName("PATH", Path.Combine(appPath, version)),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, $"blender-{version}-windows-x64", "blender.exe");
+            psi.FileName = Path.Combine(appPath, version, "solvespace_x64.exe");
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
