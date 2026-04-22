@@ -1,7 +1,8 @@
-﻿Update openjdk.
+﻿Add Bitwarden desktop client 2026.3.1.
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
+[Bitwarden-2026.3.1](https://github.com/bitwarden/clients/releases)
 [blender-5.1.1](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
 [bombardier 2.0.2](https://github.com/codesenberg/bombardier/releases) <code>bombardier -d 120s https://localhost:8080</code>
 [Bruno-3.2.2](https://github.com/usebruno/bruno/releases)

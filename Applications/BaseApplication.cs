@@ -283,6 +283,19 @@ namespace devkit2.Applications
                     return true;
                 }
 
+                string tempFile = file + ".tmp";
+                if (File.Exists(tempFile))
+                {
+                    try
+                    {
+                        File.Delete(tempFile);
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+
                 var handler = new SocketsHttpHandler
                 {
                     AllowAutoRedirect = true,
@@ -337,15 +350,14 @@ namespace devkit2.Applications
                 var totalBytes = response.Content.Headers.ContentLength;
 
                 using var input = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
-                using var output = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None);
+                //using var output = new FileStream(file, FileMode.Create, FileAccess.Write, FileShare.None);
+                using var output = new FileStream(tempFile, FileMode.Create, FileAccess.Write, FileShare.None);
 
                 byte[] buffer = new byte[81920];
                 int bytesRead;
                 long totalRead = 0;
 
                 var stopwatch = Stopwatch.StartNew();
-                long lastReportedBytes = 0;
-                var lastReportTime = stopwatch.Elapsed;
 
                 while ((bytesRead = input.Read(buffer, 0, buffer.Length)) > 0)
                 {
@@ -362,10 +374,12 @@ namespace devkit2.Applications
                         TotalBytes = totalBytes,
                         SpeedBytesPerSecond = avgSpeed
                     });
-
-                    lastReportedBytes = totalRead;
-                    lastReportTime = stopwatch.Elapsed;
                 }
+
+                output.Flush(true);
+                output.Close();
+                // Chỉ rename khi tải hoàn tất
+                File.Move(tempFile, file);
 
                 // report lần cuối để chắc chắn đủ 100%
                 progress?.Report(new InstallProgress
