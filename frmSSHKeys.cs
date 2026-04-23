@@ -1,6 +1,8 @@
 ﻿using devkit2.Applications;
 using devkit2.Properties;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Runtime;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace devkit2
 {
@@ -10,6 +12,19 @@ namespace devkit2
         {
             InitializeComponent();
             Icon = Resources.dev_23828;
+            LoadConfig();
+        }
+
+        private void LoadConfig()
+        {
+            string settingPath = Path.Combine(BaseApplication.LocalApplicationData, "settings");
+            Directory.CreateDirectory(settingPath);
+            string settingFile = Path.Combine(settingPath, "ssh-settings.json");
+            if (File.Exists(settingFile))
+            {
+                string strContent = File.ReadAllText(settingFile);
+                _settings = JsonSerializer.Deserialize<JsonObject>(strContent);
+            }
         }
 
         private void toolStripButtonImport_Click(object sender, EventArgs e)
@@ -58,6 +73,7 @@ namespace devkit2
             }
         }
 
+        private JsonObject? _settings = null;
         private void listViewKeys_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewKeys.SelectedItems.Count == 0)
@@ -67,16 +83,33 @@ namespace devkit2
             string credentialsPath = Path.Combine(BaseApplication.LocalApplicationData, "credentials");
             string fullPath = Path.Combine(credentialsPath, fileName);
             string normalizedPath = fullPath.Replace("\\", "/");
+            int nSshPort = 22;
+            if(_settings != null && _settings["ssh-port"] != null)
+            {
+                int.TryParse(_settings["ssh-port"]?.ToString(), out nSshPort);
+            }
+            string sshGlobal = "";
+            if (_settings != null && _settings["ssh-global"] != null)
+            {
+                bool isGlobal = (bool)_settings["ssh-global"];
+                if(isGlobal)
+                {
+                    sshGlobal = "--global ";
+                }
+            }
             string gitCommand =
                 "=== Setup SSH for Git ===\r\n\r\n" +
 
                 "[PowerShell]\r\n" +
-                $"git config --global core.sshCommand 'ssh -i \"{normalizedPath}\" -p 22'\r\n\r\n" +
+                $"git config {sshGlobal}core.sshCommand 'ssh -i \"{normalizedPath}\" -p {nSshPort}'\r\n\r\n" +
 
                 "[CMD / Bash]\r\n" +
-                $"git config --global core.sshCommand \"ssh -i \\\"{normalizedPath}\\\" -p 22\"\r\n\r\n" +
+                $"git config {sshGlobal}core.sshCommand \"ssh -i \\\"{normalizedPath}\\\" -p {nSshPort}\"\r\n\r\n" +
 
                 "=== Useful Commands ===\r\n\r\n" +
+
+                "# Check current core.sshCommand\r\n" +
+                $"git config {sshGlobal}--get core.sshCommand\r\n\r\n" +
 
                 "# Check current remote URL\r\n" +
                 "git remote -v\r\n\r\n" +
@@ -108,6 +141,24 @@ namespace devkit2
                     File.Delete(fullPath);
                     LoadKeysToListView();
                 }
+            }
+        }
+
+        private void toolStripButtonImportRawKey_Click(object sender, EventArgs e)
+        {
+            frmSSHImportRawKey dlg = new frmSSHImportRawKey();
+            dlg.ShowDialog();
+            LoadKeysToListView();
+        }
+
+        private void toolStripButtonSettings_Click(object sender, EventArgs e)
+        {
+            frmSSHSettings dlg = new frmSSHSettings();
+            dlg.ShowDialog();
+            if(dlg.DialogResult == DialogResult.OK)
+            {
+                _settings = null;
+                LoadConfig();
             }
         }
     }

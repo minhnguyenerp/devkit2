@@ -1,6 +1,6 @@
 ﻿namespace devkit2
 {
-    partial class frmSSHImport
+    partial class frmSSHImportRawKey
     {
         /// <summary>
         /// Required designer variable.
@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
-            txtBase64 = new TextBox();
+            textBoxKeyName = new TextBox();
+            textBoxPrivateKey = new TextBox();
             tableLayoutPanel2 = new TableLayoutPanel();
-            txtPassword = new TextBox();
             btnImport = new Button();
+            btnCancel = new Button();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
@@ -41,89 +42,101 @@
             // 
             tableLayoutPanel1.ColumnCount = 1;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.Controls.Add(txtBase64, 0, 0);
-            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Controls.Add(textBoxKeyName, 0, 0);
+            tableLayoutPanel1.Controls.Add(textBoxPrivateKey, 0, 1);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowCount = 3;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 34F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 41F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(698, 356);
+            tableLayoutPanel1.Size = new Size(779, 406);
             tableLayoutPanel1.TabIndex = 0;
             // 
-            // txtBase64
+            // textBoxKeyName
             // 
-            txtBase64.Dock = DockStyle.Fill;
-            txtBase64.Location = new Point(3, 3);
-            txtBase64.Multiline = true;
-            txtBase64.Name = "txtBase64";
-            txtBase64.ScrollBars = ScrollBars.Vertical;
-            txtBase64.Size = new Size(692, 309);
-            txtBase64.TabIndex = 1;
+            textBoxKeyName.Dock = DockStyle.Fill;
+            textBoxKeyName.Location = new Point(3, 3);
+            textBoxKeyName.Name = "textBoxKeyName";
+            textBoxKeyName.PlaceholderText = "Put the name here";
+            textBoxKeyName.Size = new Size(773, 29);
+            textBoxKeyName.TabIndex = 0;
+            // 
+            // textBoxPrivateKey
+            // 
+            textBoxPrivateKey.Dock = DockStyle.Fill;
+            textBoxPrivateKey.Location = new Point(3, 37);
+            textBoxPrivateKey.Multiline = true;
+            textBoxPrivateKey.Name = "textBoxPrivateKey";
+            textBoxPrivateKey.PlaceholderText = "Private key";
+            textBoxPrivateKey.Size = new Size(773, 325);
+            textBoxPrivateKey.TabIndex = 1;
             // 
             // tableLayoutPanel2
             // 
-            tableLayoutPanel2.ColumnCount = 2;
+            tableLayoutPanel2.ColumnCount = 3;
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
-            tableLayoutPanel2.Controls.Add(txtPassword, 0, 0);
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 100F));
             tableLayoutPanel2.Controls.Add(btnImport, 1, 0);
+            tableLayoutPanel2.Controls.Add(btnCancel, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
-            tableLayoutPanel2.Location = new Point(3, 318);
+            tableLayoutPanel2.Location = new Point(3, 368);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
             tableLayoutPanel2.RowCount = 1;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel2.Size = new Size(692, 35);
-            tableLayoutPanel2.TabIndex = 0;
-            // 
-            // txtPassword
-            // 
-            txtPassword.Dock = DockStyle.Fill;
-            txtPassword.Location = new Point(3, 3);
-            txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(586, 29);
-            txtPassword.TabIndex = 0;
-            txtPassword.UseSystemPasswordChar = true;
+            tableLayoutPanel2.Size = new Size(773, 35);
+            tableLayoutPanel2.TabIndex = 2;
             // 
             // btnImport
             // 
             btnImport.Dock = DockStyle.Fill;
-            btnImport.Location = new Point(595, 3);
+            btnImport.Location = new Point(576, 3);
             btnImport.Name = "btnImport";
             btnImport.Size = new Size(94, 29);
-            btnImport.TabIndex = 1;
+            btnImport.TabIndex = 0;
             btnImport.Text = "Import";
             btnImport.UseVisualStyleBackColor = true;
             btnImport.Click += btnImport_Click;
             // 
-            // frmSSHImport
+            // btnCancel
+            // 
+            btnCancel.Dock = DockStyle.Fill;
+            btnCancel.Location = new Point(676, 3);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(94, 29);
+            btnCancel.TabIndex = 1;
+            btnCancel.Text = "Cancel";
+            btnCancel.UseVisualStyleBackColor = true;
+            btnCancel.Click += btnCancel_Click;
+            // 
+            // frmSSHImportRawKey
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(698, 356);
+            ClientSize = new Size(779, 406);
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
-            Name = "frmSSHImport";
+            Name = "frmSSHImportRawKey";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "frmSSHExport";
+            Text = "Import Raw Key";
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             tableLayoutPanel2.ResumeLayout(false);
-            tableLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
         private TableLayoutPanel tableLayoutPanel1;
+        private TextBox textBoxKeyName;
+        private TextBox textBoxPrivateKey;
         private TableLayoutPanel tableLayoutPanel2;
-        private TextBox txtPassword;
         private Button btnImport;
-        private TextBox txtBase64;
+        private Button btnCancel;
     }
 }

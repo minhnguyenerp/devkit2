@@ -29,10 +29,13 @@
         private void InitializeComponent()
         {
             toolStrip1 = new ToolStrip();
+            toolStripButtonImportRawKey = new ToolStripButton();
+            toolStripSeparator2 = new ToolStripSeparator();
             toolStripButtonImport = new ToolStripButton();
             toolStripButtonExport = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonDelete = new ToolStripButton();
+            toolStripButtonSettings = new ToolStripButton();
             tableLayoutPanel1 = new TableLayoutPanel();
             textBox1 = new TextBox();
             listViewKeys = new ListView();
@@ -43,12 +46,27 @@
             // toolStrip1
             // 
             toolStrip1.ImageScalingSize = new Size(28, 28);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonImport, toolStripButtonExport, toolStripSeparator1, toolStripButtonDelete });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripButtonImportRawKey, toolStripSeparator2, toolStripButtonImport, toolStripButtonExport, toolStripSeparator1, toolStripButtonDelete, toolStripButtonSettings });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(722, 35);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButtonImportRawKey
+            // 
+            toolStripButtonImportRawKey.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonImportRawKey.Image = Properties.Resources.import;
+            toolStripButtonImportRawKey.ImageTransparentColor = Color.Magenta;
+            toolStripButtonImportRawKey.Name = "toolStripButtonImportRawKey";
+            toolStripButtonImportRawKey.Size = new Size(32, 32);
+            toolStripButtonImportRawKey.Text = "Import Raw Key";
+            toolStripButtonImportRawKey.Click += toolStripButtonImportRawKey_Click;
+            // 
+            // toolStripSeparator2
+            // 
+            toolStripSeparator2.Name = "toolStripSeparator2";
+            toolStripSeparator2.Size = new Size(6, 35);
             // 
             // toolStripButtonImport
             // 
@@ -85,6 +103,17 @@
             toolStripButtonDelete.Text = "Delete";
             toolStripButtonDelete.Click += toolStripButtonDelete_Click;
             // 
+            // toolStripButtonSettings
+            // 
+            toolStripButtonSettings.Alignment = ToolStripItemAlignment.Right;
+            toolStripButtonSettings.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSettings.Image = Properties.Resources.cogwheel;
+            toolStripButtonSettings.ImageTransparentColor = Color.Magenta;
+            toolStripButtonSettings.Name = "toolStripButtonSettings";
+            toolStripButtonSettings.Size = new Size(32, 32);
+            toolStripButtonSettings.Text = "Settings";
+            toolStripButtonSettings.Click += toolStripButtonSettings_Click;
+            // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 1;
@@ -96,20 +125,20 @@
             tableLayoutPanel1.Margin = new Padding(4);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 40F));
-            tableLayoutPanel1.Size = new Size(722, 333);
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 60F));
+            tableLayoutPanel1.Size = new Size(722, 415);
             tableLayoutPanel1.TabIndex = 1;
             // 
             // textBox1
             // 
             textBox1.Dock = DockStyle.Fill;
-            textBox1.Location = new Point(4, 203);
+            textBox1.Location = new Point(4, 170);
             textBox1.Margin = new Padding(4);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(714, 126);
+            textBox1.Size = new Size(714, 241);
             textBox1.TabIndex = 0;
             // 
             // listViewKeys
@@ -118,7 +147,7 @@
             listViewKeys.Location = new Point(4, 4);
             listViewKeys.Margin = new Padding(4);
             listViewKeys.Name = "listViewKeys";
-            listViewKeys.Size = new Size(714, 191);
+            listViewKeys.Size = new Size(714, 158);
             listViewKeys.TabIndex = 1;
             listViewKeys.UseCompatibleStateImageBehavior = false;
             listViewKeys.View = View.Details;
@@ -128,7 +157,7 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(722, 368);
+            ClientSize = new Size(722, 450);
             Controls.Add(tableLayoutPanel1);
             Controls.Add(toolStrip1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -155,5 +184,8 @@
         private ToolStripButton toolStripButtonExport;
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButtonDelete;
+        private ToolStripButton toolStripButtonImportRawKey;
+        private ToolStripSeparator toolStripSeparator2;
+        private ToolStripButton toolStripButtonSettings;
     }
 }
