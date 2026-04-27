@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.16.56", "2.16.56"),
                     new ValueName("2.16.54.2", "2.16.54.2"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.16.56":
+                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/winmerge-2.16.56-x64-exe.zip";
+                    file = Path.Combine(Path.GetTempPath(), "winmerge-2.16.56-x64-exe.zip");
+                    break;
                 case "2.16.54.2":
                     url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/winmerge-2.16.54.2-x64-exe.zip";
                     file = Path.Combine(Path.GetTempPath(), "winmerge-2.16.54.2-x64-exe.zip");

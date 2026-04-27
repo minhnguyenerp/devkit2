@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.3.0", "3.3.0"),
                     new ValueName("3.2.2", "3.2.2"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "3.3.0":
+                    url = "https://github.com/usebruno/bruno/releases/download/v3.3.0/bruno_3.3.0_x64_win.zip";
+                    file = Path.Combine(Path.GetTempPath(), "bruno_3.3.0_x64_win.zip");
+                    break;
                 case "3.2.2":
                     url = "https://github.com/usebruno/bruno/releases/download/v3.2.2/bruno_3.2.2_x64_win.zip";
                     file = Path.Combine(Path.GetTempPath(), "bruno_3.2.2_x64_win.zip");

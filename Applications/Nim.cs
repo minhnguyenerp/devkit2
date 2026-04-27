@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.2.10", "2.2.10"),
                     new ValueName("2.2.8", "2.2.8"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.2.10":
+                    url = "https://nim-lang.org/download/nim-2.2.10_x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "nim-2.2.10_x64.zip");
+                    break;
                 case "2.2.8":
                     url = "https://nim-lang.org/download/nim-2.2.8_x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "nim-2.2.8_x64.zip");

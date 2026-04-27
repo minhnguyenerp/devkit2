@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("19.0.1", "19.0.1"),
                     new ValueName("19.0.0", "19.0.0"),
                 };
             }
@@ -57,6 +58,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "19.0.1":
+                    url = "https://github.com/qt-creator/qt-creator/releases/download/v19.0.1/qtcreator-windows-x64-msvc-19.0.1.7z";
+                    file = Path.Combine(Path.GetTempPath(), "qtcreator-windows-x64-msvc-19.0.1.7z");
+                    break;
                 case "19.0.0":
                     url = "https://github.com/qt-creator/qt-creator/releases/download/v19.0.0/qtcreator-windows-x64-msvc-19.0.0.7z";
                     file = Path.Combine(Path.GetTempPath(), "qtcreator-windows-x64-msvc-19.0.0.7z");

@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("5.0.0", "5.0.0"),
                     new ValueName("4.1.7", "4.1.7"),
                 };
             }
@@ -58,6 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "5.0.0":
+                    url = "https://github.com/thonny/thonny/releases/download/v5.0.0/thonny-5.0.0-windows-portable-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "thonny-5.0.0-windows-portable-x64.zip");
+                    break;
                 case "4.1.7":
                     url = "https://github.com/thonny/thonny/releases/download/v4.1.7/thonny-4.1.7-windows-portable.zip";
                     file = Path.Combine(Path.GetTempPath(), "thonny-4.1.7-windows-portable.zip");

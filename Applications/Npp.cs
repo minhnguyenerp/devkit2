@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("8.9.4", "8.9.4"),
                     new ValueName("8.9.3", "8.9.3"),
                     new ValueName("8.9.2", "8.9.2"),
                 };
@@ -59,6 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "8.9.4":
+                    url = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.4/npp.8.9.4.portable.x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "npp.8.9.4.portable.x64.zip");
+                    break;
                 case "8.9.3":
                     url = "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.3/npp.8.9.3.portable.x64.zip";
                     file = Path.Combine(Path.GetTempPath(), "npp.8.9.3.portable.x64.zip");

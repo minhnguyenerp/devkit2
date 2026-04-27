@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.72.0", "0.72.0"),
                     new ValueName("0.71.0", "0.71.0"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "0.72.0":
+                    url = "https://github.com/junegunn/fzf/releases/download/v0.72.0/fzf-0.72.0-windows_amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "fzf-0.72.0-windows_amd64.zip");
+                    break;
                 case "0.71.0":
                     url = "https://github.com/junegunn/fzf/releases/download/v0.71.0/fzf-0.71.0-windows_amd64.zip";
                     file = Path.Combine(Path.GetTempPath(), "fzf-0.71.0-windows_amd64.zip");
