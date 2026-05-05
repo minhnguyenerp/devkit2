@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("20.0.4", "20.0.4"),
                     new ValueName("19.0.2", "19.0.2"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "20.0.4":
+                    url = "https://github.com/ShareX/ShareX/releases/download/v20.0.4/ShareX-20.0.4-portable-x64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "ShareX-20.0.4-portable-x64.zip");
+                    break;
                 case "19.0.2":
                     url = "https://github.com/ShareX/ShareX/releases/download/v19.0.2/ShareX-19.0.2-portable.zip";
                     file = Path.Combine(Path.GetTempPath(), "ShareX-19.0.2-portable.zip");

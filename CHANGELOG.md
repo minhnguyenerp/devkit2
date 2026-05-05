@@ -1,4 +1,4 @@
-﻿Update vscodium 1.116.02821, nim 2.2.10, Bruno 3.3.0, CMake 4.3.2, Consul 1.22.7, Curl 8.19.0_8, DotnetSDK 10.0.203, fzf 0.72.0, Git 2.54.0, Notepad++ 8.9.4, PixiEditor 2.1.0.22, QtCreator 19.0.1, Thonny 5.0.0, VSCode 1.117.0, Winmerge 2.16.56, Zed 0.233.10, Zig 0.17.0-dev.135+9df02121d.
+﻿Update Winlibs 16.1.0-14.0.0-r1, Zed 1.0.1, Zig 0.17.0-dev.248+95507faf1, VSCode 1.118.1, Shotcut 26.4.30, ShareX 20.0.4, ILSpy 10.0.1
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -24,7 +24,7 @@
 [godot-4.6.2](https://github.com/godotengine/godot/releases)
 [godotsharp-4.6.2](https://github.com/godotengine/godot/releases)
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
-[ILSpy-10.0](https://github.com/icsharpcode/ILSpy/releases)
+[ILSpy-10.0.1](https://github.com/icsharpcode/ILSpy/releases)
 [Inkscape-1.4.3](https://inkscape.org/release/)
 [jdk-26](https://jdk.java.net/archive/)
 [Krita-5.3.1](https://krita.org/en/download/)
@@ -46,17 +46,17 @@
 [qtcreator-windows-x64-msvc-19.0.1.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
 [rust-1.95.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
-[ShareX 19.0.2](https://getsharex.com/downloads)
-[Shotcut-26.2.26](https://github.com/mltframework/shotcut/releases)
+[ShareX 20.0.4](https://getsharex.com/downloads)
+[Shotcut-26.4.30](https://github.com/mltframework/shotcut/releases)
 [SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
 [SphinxSearch 3.9.1](https://sphinxsearch.com/downloads/current/)
 [SQLiteStudio-3.4.21](https://github.com/pawelsalawa/sqlitestudio/releases)
 [SumatraPDF-3.6.1-64](https://www.sumatrapdfreader.org/free-pdf-reader)
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
 [Thonny 5.0.0](https://thonny.org/)
-[VSCode-win32-x64-1.117.0](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
+[VSCode-win32-x64-1.118.1.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.116.02821](https://github.com/VSCodium/vscodium/releases)
-[winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64ucrt-14.0.0-r7](https://winlibs.com/)
+[winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r1](https://winlibs.com/)
 [WinMerge-2.16.56](https://winmerge.org/downloads/?lang=en)
-[Zed 0.233.10](https://zed.dev/download)
-[zig-x86_64-windows-0.17.0-dev.135+9df02121d](https://ziglang.org/download/)
+[Zed 1.0.1](https://zed.dev/download)
+[zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip](https://ziglang.org/download/)

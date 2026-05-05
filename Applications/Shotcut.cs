@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("26.4.30", "26.4.30"),
                     new ValueName("26.2.26", "26.2.26"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "26.4.30":
+                    url = "https://github.com/mltframework/shotcut/releases/download/v26.4.30/shotcut-win64-26.4.30.zip";
+                    file = Path.Combine(Path.GetTempPath(), "shotcut-win64-26.4.30.zip");
+                    break;
                 case "26.2.26":
                     url = "https://github.com/mltframework/shotcut/releases/download/v26.2.26/shotcut-win64-26.2.26.zip";
                     file = Path.Combine(Path.GetTempPath(), "shotcut-win64-26.2.26.zip");
