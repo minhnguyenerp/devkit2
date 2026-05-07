@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.92.0", "2.92.0"),
                     new ValueName("2.89.0", "2.89.0"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.92.0":
+                    url = "https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_windows_amd64.zip";
+                    file = Path.Combine(Path.GetTempPath(), "gh_2.92.0_windows_amd64.zip");
+                    break;
                 case "2.89.0":
                     url = "https://github.com/cli/cli/releases/download/v2.89.0/gh_2.89.0_windows_amd64.zip";
                     file = Path.Combine(Path.GetTempPath(), "gh_2.89.0_windows_amd64.zip");

@@ -1,4 +1,4 @@
-﻿Update Winlibs 16.1.0-14.0.0-r1, Zed 1.0.1, Zig 0.17.0-dev.248+95507faf1, VSCode 1.118.1, Shotcut 26.4.30, ShareX 20.0.4, ILSpy 10.0.1
+﻿Update Github CLI 2.92.0
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -19,7 +19,7 @@
 [FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
 [fzf-0.72.0](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
-[Github CLI 2.89.0](https://github.com/cli/cli/releases)
+[Github CLI 2.92.0](https://github.com/cli/cli/releases)
 [PortableGit-2.54.0](https://git-scm.com/install/windows)
 [go1.26.2.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
 [godot-4.6.2](https://github.com/godotengine/godot/releases)
