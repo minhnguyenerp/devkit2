@@ -1,4 +1,4 @@
-﻿Update Github CLI 2.92.0
+﻿Update Kate 26.04, TeaCLI 0.14.0
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -28,6 +28,7 @@
 [ILSpy-10.0.1](https://github.com/icsharpcode/ILSpy/releases)
 [Inkscape-1.4.3](https://inkscape.org/release/)
 [jdk-26](https://jdk.java.net/archive/)
+[Kate-26.04](https://kate-editor.org/get-it/)
 [Krita-5.3.1](https://krita.org/en/download/)
 [Lua-5.5.0](https://www.lua.org/download.html)
 [mariadb-12.2.2-winx64](https://mariadb.org/download)
@@ -54,6 +55,7 @@
 [SQLiteStudio-3.4.21](https://github.com/pawelsalawa/sqlitestudio/releases)
 [SumatraPDF-3.6.1-64](https://www.sumatrapdfreader.org/free-pdf-reader)
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
+[TeaCLI 0.14.0](https://gitea.com/gitea/tea/releases)
 [Thonny 5.0.0](https://thonny.org/)
 [VSCode-win32-x64-1.118.1.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.116.02821](https://github.com/VSCodium/vscodium/releases)

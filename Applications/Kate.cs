@@ -1,7 +1,6 @@
 ﻿using devkit2.Common;
 using SevenZipExtractor;
 using System.Diagnostics;
-using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
@@ -46,7 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("master-11499", "master-11499"),
+                    new ValueName("26.04", "26.04"),
                 };
             }
         }
@@ -57,9 +56,9 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "master-11499":
-                    url = "https://cdn.kde.org/ci-builds/utilities/kate/master/windows/kate-master-11499-windows-cl-msvc2022-x86_64.7z";
-                    file = Path.Combine(Path.GetTempPath(), "kate-master-11499-windows-cl-msvc2022-x86_64.7z");
+                case "26.04":
+                    url = "https://cdn.kde.org/ci-builds/utilities/kate/release-26.04/windows/kate-release_26.04-11597-windows-cl-msvc2022-x86_64.7z";
+                    file = Path.Combine(Path.GetTempPath(), "kate-release_26.04-11597-windows-cl-msvc2022-x86_64.7z");
                     break;
             }
 
