@@ -21,7 +21,7 @@
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
 [Github CLI 2.92.0](https://github.com/cli/cli/releases)
 [PortableGit-2.54.0](https://git-scm.com/install/windows)
-[go1.26.2.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
+[go1.26.3.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
 [godot-4.6.2](https://github.com/godotengine/godot/releases)
 [godotsharp-4.6.2](https://github.com/godotengine/godot/releases)
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
