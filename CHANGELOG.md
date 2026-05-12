@@ -1,4 +1,4 @@
-﻿Update Kate 26.04, TeaCLI 0.14.0
+﻿Update VSCode 1.119.0, ShareX 20.1.0, Python 3.14.5, Zig 0.17.0-dev.292+fc1c83a36, Zed 1.1.7
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
@@ -44,11 +44,11 @@
 [postgresql-18.3-3](https://www.enterprisedb.com/download-postgresql-binaries) <sub>[*Release Notes*](https://www.postgresql.org/docs/release/)</sub>
 [Processing 4.5.3](https://github.com/processing/processing4/releases)
 [Putty 0.83](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
-[python-3.14.4-embed-amd64](https://www.python.org/downloads/windows/)
+[python-3.14.5-embed-amd64](https://www.python.org/downloads/windows/)
 [qtcreator-windows-x64-msvc-19.0.1.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
 [rust-1.95.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
-[ShareX 20.0.4](https://getsharex.com/downloads)
+[ShareX 20.1.0](https://getsharex.com/downloads)
 [Shotcut-26.4.30](https://github.com/mltframework/shotcut/releases)
 [SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
 [SphinxSearch 3.9.1](https://sphinxsearch.com/downloads/current/)
@@ -57,9 +57,9 @@
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
 [TeaCLI 0.14.0](https://gitea.com/gitea/tea/releases)
 [Thonny 5.0.0](https://thonny.org/)
-[VSCode-win32-x64-1.118.1.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
+[VSCode-win32-x64-1.119.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.116.02821](https://github.com/VSCodium/vscodium/releases)
 [winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r1](https://winlibs.com/)
 [WinMerge-2.16.56](https://winmerge.org/downloads/?lang=en)
-[Zed 1.0.1](https://zed.dev/download)
-[zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip](https://ziglang.org/download/)
+[Zed 1.1.7](https://zed.dev/download)
+[zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip](https://ziglang.org/download/)
