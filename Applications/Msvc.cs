@@ -10,6 +10,7 @@ namespace devkit2.Applications
 {
     internal sealed class Msvc : BaseApplication
     {
+        // https://gist.github.com/mmozeiko/7f3162ec2988e81e56d5c4e22cde9977
         public override string Name => "Msvc";
 
         public Msvc()

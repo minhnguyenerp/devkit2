@@ -1,4 +1,4 @@
-﻿Update VSCode 1.119.0, ShareX 20.1.0, Python 3.14.5, Zig 0.17.0-dev.292+fc1c83a36, Zed 1.1.7
+﻿Update DevKit2 installer
 
 [httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
