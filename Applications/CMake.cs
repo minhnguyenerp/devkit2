@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("4.3.3", "4.3.3"),
                     new ValueName("4.3.2", "4.3.2"),
                     new ValueName("4.3.1", "4.3.1"),
                 };
@@ -57,15 +58,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "4.3.2":
-                    url = "https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-windows-x86_64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "cmake-4.3.2-windows-x86_64.zip");
-                    break;
-                case "4.3.1":
-                    url = "https://github.com/Kitware/CMake/releases/download/v4.3.1/cmake-4.3.1-windows-x86_64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "cmake-4.3.1-windows-x86_64.zip");
-                    break;
+                case "4.3.3": url = "https://github.com/Kitware/CMake/releases/download/v4.3.3/cmake-4.3.3-windows-x86_64.zip"; break;
+                case "4.3.2": url = "https://github.com/Kitware/CMake/releases/download/v4.3.2/cmake-4.3.2-windows-x86_64.zip"; break;
+                case "4.3.1": url = "https://github.com/Kitware/CMake/releases/download/v4.3.1/cmake-4.3.1-windows-x86_64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"cmake-{version}-windows-x86_64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

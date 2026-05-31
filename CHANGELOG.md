@@ -1,31 +1,31 @@
-﻿Update DevKit2 installer
+﻿Update Winlibs 16.1.0-14.0.0-r2, Arduino 2.3.9, Apache 2.4.67-260504, Bitwarden 2026.4.0, Blender 5.1.2, Bruno 3.4.2, Caddy 2.11.3, CMake 4.3.3, Composer 2.10.0, Consul 2.0.0, Curl 8.20.0_4, Dotnet 10.0.300, Etcd 3.6.11, Fzf 0.73.1, Github CLI 2.93.0, Godot 4.6.3, GodotSharp 4.6.3, ILSpy 10.1, RustGCC 1.96.0
 
-[httpd-2.4.66-260223](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
-[arduino-2.3.8](https://github.com/arduino/arduino-ide/releases)
-[Bitwarden-2026.3.1](https://github.com/bitwarden/clients/releases)
-[blender-5.1.1](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
+[httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
+[arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)
+[Bitwarden-2026.4.0](https://github.com/bitwarden/clients/releases)
+[blender-5.1.2](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
 [bombardier 2.0.2](https://github.com/codesenberg/bombardier/releases) <code>bombardier -d 120s https://localhost:8080</code>
-[Bruno-3.3.0](https://github.com/usebruno/bruno/releases)
-[caddy_2.11.2_windows_amd64](https://github.com/caddyserver/caddy/releases) <code>start-caddy dir port</code>
-[CMake 4.3.2](https://cmake.org/download/)
+[Bruno-3.4.2](https://github.com/usebruno/bruno/releases)
+[caddy_2.11.3_windows_amd64](https://github.com/caddyserver/caddy/releases) <code>start-caddy dir port</code>
+[CMake 4.3.3](https://cmake.org/download/)
 [codeblocks-25.03-nosetup](https://www.codeblocks.org/downloads/binaries/) <sub>[*Release Notes*](https://www.codeblocks.org/changelogs/)</sub>
 [CodeLite 18.3.0](https://downloads.codelite.org)
-[composer-2.9.7](https://getcomposer.org/download/)
-[consul_1.22.7_windows_amd64](https://developer.hashicorp.com/consul/install)
-[curl-8.19.0_8-win64-mingw](https://curl.se/windows/)
-[dotnet-10.0.203](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-[etcd-v3.6.10-windows-amd64](https://github.com/etcd-io/etcd/releases)
+[composer-2.10.0](https://getcomposer.org/download/)
+[consul_2.0.0_windows_amd64](https://developer.hashicorp.com/consul/install)
+[curl-8.20.0_4-win64-mingw](https://curl.se/windows/)
+[dotnet-10.0.300](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+[etcd-v3.6.11-windows-amd64](https://github.com/etcd-io/etcd/releases)
 [fd-10.4.2](https://github.com/sharkdp/fd/releases)
 [FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
-[fzf-0.72.0](https://github.com/junegunn/fzf/releases)
+[fzf-0.73.1](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
-[Github CLI 2.92.0](https://github.com/cli/cli/releases)
+[Github CLI 2.93.0](https://github.com/cli/cli/releases)
 [PortableGit-2.54.0](https://git-scm.com/install/windows)
 [go1.26.3.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
-[godot-4.6.2](https://github.com/godotengine/godot/releases)
-[godotsharp-4.6.2](https://github.com/godotengine/godot/releases)
+[godot-4.6.3](https://github.com/godotengine/godot/releases)
+[godotsharp-4.6.3](https://github.com/godotengine/godot/releases)
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
-[ILSpy-10.0.1](https://github.com/icsharpcode/ILSpy/releases)
+[ILSpy-10.1](https://github.com/icsharpcode/ILSpy/releases)
 [Inkscape-1.4.3](https://inkscape.org/release/)
 [jdk-26](https://jdk.java.net/archive/)
 [Kate-26.04](https://kate-editor.org/get-it/)
@@ -47,7 +47,7 @@
 [python-3.14.5-embed-amd64](https://www.python.org/downloads/windows/)
 [qtcreator-windows-x64-msvc-19.0.1.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
-[rust-1.95.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
+[rust-1.96.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
 [ShareX 20.1.0](https://getsharex.com/downloads)
 [Shotcut-26.4.30](https://github.com/mltframework/shotcut/releases)
 [SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
@@ -59,7 +59,7 @@
 [Thonny 5.0.0](https://thonny.org/)
 [VSCode-win32-x64-1.119.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.116.02821](https://github.com/VSCodium/vscodium/releases)
-[winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r1](https://winlibs.com/)
+[winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2](https://winlibs.com/)
 [WinMerge-2.16.56](https://winmerge.org/downloads/?lang=en)
 [Zed 1.1.7](https://zed.dev/download)
 [zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip](https://ziglang.org/download/)

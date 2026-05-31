@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("4.6.3", "4.6.3"),
                     new ValueName("4.6.2", "4.6.2"),
                     new ValueName("4.6.1", "4.6.1"),
                 };
@@ -57,15 +58,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "4.6.2":
-                    url = "https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_mono_win64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Godot_v4.6.2-stable_mono_win64.zip");
-                    break;
-                case "4.6.1":
-                    url = "https://github.com/godotengine/godot/releases/download/4.6.1-stable/Godot_v4.6.1-stable_mono_win64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Godot_v4.6.1-stable_mono_win64.zip");
-                    break;
+                case "4.6.3": url = "https://github.com/godotengine/godot/releases/download/4.6.3-stable/Godot_v4.6.3-stable_mono_win64.zip"; break;
+                case "4.6.2": url = "https://github.com/godotengine/godot/releases/download/4.6.2-stable/Godot_v4.6.2-stable_mono_win64.zip"; break;
+                case "4.6.1": url = "https://github.com/godotengine/godot/releases/download/4.6.1-stable/Godot_v4.6.1-stable_mono_win64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"Godot_v{version}-stable_mono_win64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

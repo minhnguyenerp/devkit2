@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("10.0.300", "10.0.300"),
                     new ValueName("10.0.203", "10.0.203"),
                     new ValueName("10.0.202", "10.0.202"),
                     new ValueName("10.0.201", "10.0.201"),
@@ -58,19 +59,12 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "10.0.203":
-                    url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.203/dotnet-sdk-10.0.203-win-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "dotnet-sdk-10.0.203-win-x64.zip");
-                    break;
-                case "10.0.202":
-                    url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.202/dotnet-sdk-10.0.202-win-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "dotnet-sdk-10.0.202-win-x64.zip");
-                    break;
-                case "10.0.201":
-                    url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "dotnet-sdk-10.0.201-win-x64.zip");
-                    break;
+                case "10.0.300": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.300/dotnet-sdk-10.0.300-win-x64.zip"; break;
+                case "10.0.203": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.203/dotnet-sdk-10.0.203-win-x64.zip"; break;
+                case "10.0.202": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.202/dotnet-sdk-10.0.202-win-x64.zip"; break;
+                case "10.0.201": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"dotnet-sdk-{version}-win-x64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

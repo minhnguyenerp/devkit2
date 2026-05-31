@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.3.9", "2.3.9"),
                     new ValueName("2.3.8", "2.3.8"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2.3.9":
+                    url = "https://github.com/arduino/arduino-ide/releases/download/2.3.9/arduino-ide_2.3.9_Windows_64bit.zip";
+                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.9_Windows_64bit.zip");
+                    break;
                 case "2.3.8":
                     url = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip";
                     file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.8_Windows_64bit.zip");

@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.4.67-260504", "2.4.67-260504"),
                     new ValueName("2.4.66-260223", "2.4.66-260223"),
                 };
             }
@@ -56,6 +57,56 @@ namespace devkit2.Applications
             List<(string Url, string File)> list = new List<(string Url, string File)>();
             switch (version)
             {
+                case "2.4.67-260504":
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/binaries/httpd-2.4.67-260504-Win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "httpd-2.4.67-260504-Win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_jk-1.2.50-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_jk-1.2.50-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_qos-11.78-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_qos-11.78-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_fcgid-2.3.10-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_fcgid-2.3.10-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_security-2.9.13-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_security-2.9.13-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_xsendfile-1.0-P1-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_xsendfile-1.0-P1-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_log_rotate-1.0.2-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_log_rotate-1.0.2-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/dbd_modules-1.0.6-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "dbd_modules-1.0.6-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_bw-0.92-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_bw-0.92-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_view-2.2-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_view-2.2-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_watch-4.3-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_watch-4.3-win64-VS18.zip")
+                    ));
+                    list.Add((
+                        "https://www.apachelounge.com/download/VS18/modules/mod_evasive-2.4.0-win64-VS18.zip",
+                        Path.Combine(Path.GetTempPath(), "mod_evasive-2.4.0-win64-VS18.zip")
+                    ));
+                    break;
                 case "2.4.66-260223":
                     list.Add((
                         "https://www.apachelounge.com/download/VS18/binaries/httpd-2.4.66-260223-Win64-VS18.zip",

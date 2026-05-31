@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.11.3", "2.11.3"),
                     new ValueName("2.11.2", "2.11.2"),
                 };
             }
@@ -57,11 +58,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.11.2":
-                    url = "https://github.com/caddyserver/caddy/releases/download/v2.11.2/caddy_2.11.2_windows_amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "caddy_2.11.2_windows_amd64.zip");
-                    break;
+                case "2.11.3": url = "https://github.com/caddyserver/caddy/releases/download/v2.11.3/caddy_2.11.3_windows_amd64.zip"; break;
+                case "2.11.2": url = "https://github.com/caddyserver/caddy/releases/download/v2.11.2/caddy_2.11.2_windows_amd64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"caddy_{version}_windows_amd64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

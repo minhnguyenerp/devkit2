@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2026.4.0", "2026.4.0"),
                     new ValueName("2026.3.1", "2026.3.1"),
                 };
             }
@@ -56,6 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "2026.4.0":
+                    url = "https://github.com/bitwarden/clients/releases/download/desktop-v2026.4.0/Bitwarden-Portable-2026.4.0.exe";
+                    file = Path.Combine(Path.GetTempPath(), "Bitwarden-Portable-2026.4.0.exe");
+                    break;
                 case "2026.3.1":
                     url = "https://github.com/bitwarden/clients/releases/download/desktop-v2026.3.1/Bitwarden-Portable-2026.3.1.exe";
                     file = Path.Combine(Path.GetTempPath(), "Bitwarden-Portable-2026.3.1.exe");
