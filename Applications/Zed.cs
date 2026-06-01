@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.4.4", "1.4.4"),
                     new ValueName("1.1.7", "1.1.7"),
                     new ValueName("1.0.1", "1.0.1"),
                     new ValueName("0.233.10", "0.233.10"),
@@ -64,35 +65,16 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.1.7":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.1.7.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-1.1.7.zip");
-                    break;
-                case "1.0.1":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.0.1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-1.0.1.zip");
-                    break;
-                case "0.233.10":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.233.10.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.233.10.zip");
-                    break;
-                case "0.232.2":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.232.2.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.232.2.zip");
-                    break;
-                case "0.230.1":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.230.1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.230.1.zip");
-                    break;
-                case "0.228.0":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.228.0.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.228.0.zip");
-                    break;
-                case "0.227.1":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.227.1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Zed-0.227.1.zip");
-                    break;
+                case "1.4.4": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.4.4.zip"; break;
+                case "1.1.7": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.1.7.zip"; break;
+                case "1.0.1": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.0.1.zip"; break;
+                case "0.233.10": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.233.10.zip"; break;
+                case "0.232.2": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.232.2.zip"; break;
+                case "0.230.1": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.230.1.zip"; break;
+                case "0.228.0": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.228.0.zip"; break;
+                case "0.227.1": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-0.227.1.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"Zed-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

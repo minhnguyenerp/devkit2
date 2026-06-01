@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.14.1", "0.14.1"),
                     new ValueName("0.14.0", "0.14.0"),
                     new ValueName("0.13.0", "0.13.0"),
                 };
@@ -57,15 +58,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "0.14.0":
-                    url = "https://gitea.com/gitea/tea/releases/download/v0.14.0/tea-0.14.0-windows-amd64.exe.xz";
-                    file = Path.Combine(Path.GetTempPath(), "tea-0.14.0-windows-amd64.exe.xz");
-                    break;
-                case "0.13.0":
-                    url = "https://gitea.com/gitea/tea/releases/download/v0.13.0/tea-0.13.0-windows-amd64.exe.xz";
-                    file = Path.Combine(Path.GetTempPath(), "tea-0.13.0-windows-amd64.exe.xz");
-                    break;
+                case "0.14.1": url = "https://gitea.com/gitea/tea/releases/download/v0.14.1/tea-0.14.1-windows-amd64.exe.xz"; break;
+                case "0.14.0": url = "https://gitea.com/gitea/tea/releases/download/v0.14.0/tea-0.14.0-windows-amd64.exe.xz"; break;
+                case "0.13.0": url = "https://gitea.com/gitea/tea/releases/download/v0.13.0/tea-0.13.0-windows-amd64.exe.xz"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"tea-{version}-windows-amd64.exe.xz");
 
             if (url != string.Empty && file != string.Empty)
             {

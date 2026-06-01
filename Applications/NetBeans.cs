@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("30", "30"),
                     new ValueName("29", "29"),
                 };
             }
@@ -56,11 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "29":
-                    url = "https://www.apache.org/dyn/closer.lua/netbeans/netbeans/29/netbeans-29-bin.zip?action=download";
-                    file = Path.Combine(Path.GetTempPath(), "netbeans-29-bin.zip");
-                    break;
+                case "30": url = "https://www.apache.org/dyn/closer.lua/netbeans/netbeans/30/netbeans-30-bin.zip?action=download"; break;
+                case "29": url = "https://www.apache.org/dyn/closer.lua/netbeans/netbeans/29/netbeans-29-bin.zip?action=download"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"netbeans-{version}-bin.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

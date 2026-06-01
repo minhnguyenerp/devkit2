@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.17.0-dev.633+9c5655093", "0.17.0-dev.633+9c5655093"),
                     new ValueName("0.17.0-dev.292+fc1c83a36", "0.17.0-dev.292+fc1c83a36"),
                     new ValueName("0.17.0-dev.248+95507faf1", "0.17.0-dev.248+95507faf1"),
                     new ValueName("0.17.0-dev.135+9df02121d", "0.17.0-dev.135+9df02121d"),
@@ -65,39 +66,17 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "0.17.0-dev.292+fc1c83a36":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip");
-                    break;
-                case "0.17.0-dev.248+95507faf1":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip");
-                    break;
-                case "0.17.0-dev.135+9df02121d":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.135+9df02121d.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.17.0-dev.135+9df02121d.zip");
-                    break;
-                case "0.16.0-dev.3153+d6f43caad":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip");
-                    break;
-                case "0.16.0-dev.3133+5ec8e45f3":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip");
-                    break;
-                case "0.16.0-dev.3070+b22eb176b":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3070+b22eb176b.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.3070+b22eb176b.zip");
-                    break;
-                case "0.16.0-dev.2973+06b85a4fd":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2973+06b85a4fd.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.2973+06b85a4fd.zip");
-                    break;
-                case "0.16.0-dev.2736+3b515fbed":
-                    url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2736+3b515fbed.zip";
-                    file = Path.Combine(Path.GetTempPath(), "zig-x86_64-windows-0.16.0-dev.2736+3b515fbed.zip");
-                    break;
+                case "0.17.0-dev.633+9c5655093": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.633+9c5655093.zip"; break;
+                case "0.17.0-dev.292+fc1c83a36": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip"; break;
+                case "0.17.0-dev.248+95507faf1": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip"; break;
+                case "0.17.0-dev.135+9df02121d": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.135+9df02121d.zip"; break;
+                case "0.16.0-dev.3153+d6f43caad": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip"; break;
+                case "0.16.0-dev.3133+5ec8e45f3": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip"; break;
+                case "0.16.0-dev.3070+b22eb176b": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3070+b22eb176b.zip"; break;
+                case "0.16.0-dev.2973+06b85a4fd": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2973+06b85a4fd.zip"; break;
+                case "0.16.0-dev.2736+3b515fbed": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2736+3b515fbed.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"zig-x86_64-windows-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

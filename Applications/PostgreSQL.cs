@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("18.4-1", "18.4-1"),
                     new ValueName("18.3-3", "18.3-3"),
                     new ValueName("18.3-2", "18.3-2"),
                 };
@@ -57,15 +58,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "18.3-3":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/postgresql-18.3-3-windows-x64-binaries.zip";
-                    file = Path.Combine(Path.GetTempPath(), "postgresql-18.3-3-windows-x64-binaries.zip");
-                    break;
-                case "18.3-2":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/postgresql-18.3-2-windows-x64-binaries.zip";
-                    file = Path.Combine(Path.GetTempPath(), "postgresql-18.3-2-windows-x64-binaries.zip");
-                    break;
+                case "18.4-1": url = "https://get.enterprisedb.com/postgresql/postgresql-18.4-1-windows-x64-binaries.zip"; break;
+                case "18.3-3": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/postgresql-18.3-3-windows-x64-binaries.zip"; break;
+                case "18.3-2": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/postgresql-18.3-2-windows-x64-binaries.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"postgresql-{version}-windows-x64-binaries.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

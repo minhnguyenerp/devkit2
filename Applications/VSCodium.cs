@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.121.03429", "1.121.03429"),
                     new ValueName("1.116.02821", "1.116.02821"),
                     new ValueName("1.112.01907", "1.112.01907"),
                 };
@@ -59,15 +60,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.116.02821":
-                    url = "https://github.com/VSCodium/vscodium/releases/download/1.116.02821/VSCodium-win32-x64-1.116.02821.zip";
-                    file = Path.Combine(Path.GetTempPath(), "VSCodium-win32-x64-1.116.02821.zip");
-                    break;
-                case "1.112.01907":
-                    url = "https://github.com/VSCodium/vscodium/releases/download/1.112.01907/VSCodium-win32-x64-1.112.01907.zip";
-                    file = Path.Combine(Path.GetTempPath(), "VSCodium-win32-x64-1.112.01907.zip");
-                    break;
+                case "1.121.03429": url = "https://github.com/VSCodium/vscodium/releases/download/1.121.03429/VSCodium-win32-x64-1.121.03429.zip"; break;
+                case "1.116.02821": url = "https://github.com/VSCodium/vscodium/releases/download/1.116.02821/VSCodium-win32-x64-1.116.02821.zip"; break;
+                case "1.112.01907": url = "https://github.com/VSCodium/vscodium/releases/download/1.112.01907/VSCodium-win32-x64-1.112.01907.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"VSCodium-win32-x64-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

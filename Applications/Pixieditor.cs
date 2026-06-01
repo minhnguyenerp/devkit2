@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("2.1.1.4", "2.1.1.4"),
                     new ValueName("2.1.0.22", "2.1.0.22"),
                     new ValueName("2.0.1.19", "2.0.1.19"),
                 };
@@ -57,15 +58,11 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "2.1.0.22":
-                    url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.1.0.22/PixiEditor.2.1.0.22.x64-win.zip";
-                    file = Path.Combine(Path.GetTempPath(), "PixiEditor.2.1.0.22.x64-win.zip");
-                    break;
-                case "2.0.1.19":
-                    url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.0.1.19/PixiEditor.2.0.1.19.x64-win.zip";
-                    file = Path.Combine(Path.GetTempPath(), "PixiEditor.2.0.1.19.x64-win.zip");
-                    break;
+                case "2.1.1.4": url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.1.1.4/PixiEditor.2.1.1.4.x64-win.zip"; break;
+                case "2.1.0.22": url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.1.0.22/PixiEditor.2.1.0.22.x64-win.zip"; break;
+                case "2.0.1.19": url = "https://github.com/PixiEditor/PixiEditor/releases/download/2.0.1.19/PixiEditor.2.0.1.19.x64-win.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"PixiEditor.{version}.x64-win.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

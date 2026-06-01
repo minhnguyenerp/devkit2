@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("0.84", "0.84"),
                     new ValueName("0.83", "0.83"),
                 };
             }
@@ -58,11 +59,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "0.83":
-                    url = "https://the.earth.li/~sgtatham/putty/latest/w64/putty.zip";
-                    file = Path.Combine(Path.GetTempPath(), "putty-0.83.zip");
-                    break;
+                case "0.84": url = "https://the.earth.li/~sgtatham/putty/0.84/w64/putty.zip"; break;
+                case "0.83": url = "https://the.earth.li/~sgtatham/putty/0.83/w64/putty.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"putty-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

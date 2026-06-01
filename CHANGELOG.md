@@ -1,4 +1,4 @@
-﻿Update Winlibs 16.1.0-14.0.0-r2, Arduino 2.3.9, Apache 2.4.67-260504, Bitwarden 2026.4.0, Blender 5.1.2, Bruno 3.4.2, Caddy 2.11.3, CMake 4.3.3, Composer 2.10.0, Consul 2.0.0, Curl 8.20.0_4, Dotnet 10.0.300, Etcd 3.6.11, Fzf 0.73.1, Github CLI 2.93.0, Godot 4.6.3, GodotSharp 4.6.3, ILSpy 10.1, RustGCC 1.96.0
+﻿Update Kate Latest, Mariadb 12.3.2, Netbeans 30, Nginx 1.30.2, Node 24.16.0, Notepad++ 8.9.6.2, Php 8.5.6, Pixieditor 2.1.1.4, Pororoca 3.10.0, PostgreSQL 18.4-1, Putty 0.84, QtCreator 19.0.2, ShareX 20.2.0, TeaCLI 0.14.1, VSCode 1.122.1, VSCodium 1.121.03429, Winmerge 2.16.56.2, Zed 1.4.4, Zig 0.17.0-dev.633+9c5655093
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)
@@ -31,35 +31,35 @@
 [Kate-26.04](https://kate-editor.org/get-it/)
 [Krita-5.3.1](https://krita.org/en/download/)
 [Lua-5.5.0](https://www.lua.org/download.html)
-[mariadb-12.2.2-winx64](https://mariadb.org/download)
+[mariadb-12.3.2-winx64](https://mariadb.org/download)
 [MSVC 2026](https://devblogs.microsoft.com/cppblog)
-[Netbeans 29](https://netbeans.apache.org/front/main/download/)
-[Nginx 1.30.0](https://nginx.org/en/download.html)
+[Netbeans 30](https://netbeans.apache.org/front/main/download/)
+[Nginx 1.30.2](https://nginx.org/en/download.html)
 [nim-2.2.10](https://nim-lang.org/install_windows.html) <sub>[*Release Notes*](https://nim-lang.org/blog.html)</sub>
-[node-v24.15.0-win-x64](https://nodejs.org/en/download)
-[notepad++.8.9.4.portable.x64](https://notepad-plus-plus.org/downloads/)
-[php-8.5.5-Win32-vs17-x64](https://www.php.net/downloads.php)
-[PixiEditor-2.1.0.22](https://github.com/PixiEditor/PixiEditor/releases)
-[Pororoca-3.9.1](https://github.com/alexandrehtrb/Pororoca/releases)
-[postgresql-18.3-3](https://www.enterprisedb.com/download-postgresql-binaries) <sub>[*Release Notes*](https://www.postgresql.org/docs/release/)</sub>
+[node-v24.16.0-win-x64](https://nodejs.org/en/download)
+[notepad++.8.9.6.2.portable.x64](https://notepad-plus-plus.org/downloads/)
+[php-8.5.6-Win32-vs17-x64](https://www.php.net/downloads.php)
+[PixiEditor-2.1.1.4](https://github.com/PixiEditor/PixiEditor/releases)
+[Pororoca-3.10.0](https://github.com/alexandrehtrb/Pororoca/releases)
+[postgresql-18.4-1](https://www.enterprisedb.com/download-postgresql-binaries) <sub>[*Release Notes*](https://www.postgresql.org/docs/release/)</sub>
 [Processing 4.5.3](https://github.com/processing/processing4/releases)
-[Putty 0.83](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+[Putty 0.84](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
 [python-3.14.5-embed-amd64](https://www.python.org/downloads/windows/)
-[qtcreator-windows-x64-msvc-19.0.1.7z ](https://github.com/qt-creator/qt-creator/releases)
+[qtcreator-windows-x64-msvc-19.0.2.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
 [rust-1.96.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
-[ShareX 20.1.0](https://getsharex.com/downloads)
+[ShareX 20.2.0](https://getsharex.com/downloads)
 [Shotcut-26.4.30](https://github.com/mltframework/shotcut/releases)
 [SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
 [SphinxSearch 3.9.1](https://sphinxsearch.com/downloads/current/)
 [SQLiteStudio-3.4.21](https://github.com/pawelsalawa/sqlitestudio/releases)
 [SumatraPDF-3.6.1-64](https://www.sumatrapdfreader.org/free-pdf-reader)
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
-[TeaCLI 0.14.0](https://gitea.com/gitea/tea/releases)
+[TeaCLI 0.14.1](https://gitea.com/gitea/tea/releases)
 [Thonny 5.0.0](https://thonny.org/)
-[VSCode-win32-x64-1.119.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
-[VSCodium-win32-x64-1.116.02821](https://github.com/VSCodium/vscodium/releases)
+[VSCode-win32-x64-1.122.1.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
+[VSCodium-win32-x64-1.121.03429](https://github.com/VSCodium/vscodium/releases)
 [winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2](https://winlibs.com/)
-[WinMerge-2.16.56](https://winmerge.org/downloads/?lang=en)
-[Zed 1.1.7](https://zed.dev/download)
-[zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip](https://ziglang.org/download/)
+[WinMerge-2.16.56.2](https://winmerge.org/downloads/?lang=en)
+[Zed 1.4.4](https://zed.dev/download)
+[zig-x86_64-windows-0.17.0-dev.633+9c5655093.zip](https://ziglang.org/download/)

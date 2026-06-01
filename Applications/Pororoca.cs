@@ -45,6 +45,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("3.10.0", "3.10.0"),
                     new ValueName("3.9.1", "3.9.1"),
                 };
             }
@@ -56,11 +57,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "3.9.1":
-                    url = "https://github.com/alexandrehtrb/Pororoca/releases/download/3.9.1/Pororoca_3.9.1_win-x64_portable.zip";
-                    file = Path.Combine(Path.GetTempPath(), "Pororoca_3.9.1_win-x64_portable.zip");
-                    break;
+                case "3.10.0": url = "https://github.com/alexandrehtrb/Pororoca/releases/download/3.10.0/Pororoca_3.10.0_win-x64_portable.zip"; break;
+                case "3.9.1": url = "https://github.com/alexandrehtrb/Pororoca/releases/download/3.9.1/Pororoca_3.9.1_win-x64_portable.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"Pororoca_{version}_win-x64_portable.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

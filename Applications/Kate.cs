@@ -2,6 +2,7 @@
 using SevenZipExtractor;
 using System.Diagnostics;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace devkit2.Applications
 {
@@ -45,8 +46,41 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("Latest", "Latest"),
                     new ValueName("26.04", "26.04"),
                 };
+            }
+        }
+
+        private string GetLatestDownloadUrl()
+        {
+            const string pageUrl = "https://cdn.kde.org/ci-builds/utilities/kate/master/windows/";
+
+            using (var client = new HttpClient())
+            {
+                string html = client.GetStringAsync(pageUrl)
+                                    .GetAwaiter()
+                                    .GetResult();
+
+                var files = Regex.Matches(html, @"href=""([^""]+\.7z)""", RegexOptions.IgnoreCase)
+                                 .Cast<Match>()
+                                 .Select(m => m.Groups[1].Value)
+                                 .ToList();
+
+                if (files.Count == 0)
+                {
+                    return string.Empty;
+                }    
+
+                string newestFile = files
+                    .OrderByDescending(f =>
+                    {
+                        var m = Regex.Match(f, @"-(\d+)-windows");
+                        return m.Success ? int.Parse(m.Groups[1].Value) : 0;
+                    })
+                    .First();
+
+                return new Uri(new Uri(pageUrl), newestFile).ToString();
             }
         }
 
@@ -56,6 +90,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "Latest":
+                    url = GetLatestDownloadUrl();
+                    file = Path.GetFileName(url);
+                    break;
                 case "26.04":
                     url = "https://cdn.kde.org/ci-builds/utilities/kate/release-26.04/windows/kate-release_26.04-11597-windows-cl-msvc2022-x86_64.7z";
                     file = Path.Combine(Path.GetTempPath(), "kate-release_26.04-11597-windows-cl-msvc2022-x86_64.7z");

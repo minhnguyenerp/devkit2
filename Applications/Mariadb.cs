@@ -48,6 +48,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("12.3.2", "12.3.2"),
                     new ValueName("12.2.2", "12.2.2"),
                 };
             }
@@ -59,11 +60,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "12.2.2":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/mariadb-12.2.2-winx64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "mariadb-12.2.2-winx64.zip");
-                    break;
+                case "12.3.2": url = "https://mirror.sg.mariadb.org/mariadb-12.3.2/winx64-packages/mariadb-12.3.2-winx64.zip"; break;
+                case "12.2.2": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/mariadb-12.2.2-winx64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"mariadb-{version}-winx64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {
