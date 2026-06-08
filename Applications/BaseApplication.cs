@@ -412,7 +412,7 @@ namespace devkit2.Applications
             }
         }
 
-        protected void LoadEnvironments(ref ProcessStartInfo processStartInfo, ValueName[] environments)
+        protected void LoadEnvironments(ref ProcessStartInfo processStartInfo, ValueName[] environments, JsonObject? profile)
         {
             Dictionary<string, string> distinc = new Dictionary<string, string>();
             foreach (var env in environments)
@@ -424,6 +424,28 @@ namespace devkit2.Applications
                 else
                 {
                     distinc[env.Value] = env.Name;
+                }
+            }
+
+            if (profile != null && profile["Paths"] != null)
+            {
+                string paths = profile["Paths"]?.ToString() ?? string.Empty;
+                string[] items = paths
+                    .Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.Trim())
+                    .Where(x => !string.IsNullOrWhiteSpace(x))
+                    .ToArray();
+                string pathValue = string.Join(";", paths);
+                if (!string.IsNullOrEmpty(pathValue))
+                {
+                    if (distinc.ContainsKey("PATH"))
+                    {
+                        distinc["PATH"] = distinc["PATH"] + ";" + pathValue;
+                    }
+                    else
+                    {
+                        distinc["PATH"] = pathValue;
+                    }
                 }
             }
 

@@ -140,7 +140,7 @@ namespace devkit2.Applications
                 psi.ArgumentList.Add(startupFile);
             }
             psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

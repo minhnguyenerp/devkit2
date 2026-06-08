@@ -155,7 +155,7 @@ searchd
                 psi.RedirectStandardOutput = true;
                 psi.RedirectStandardError = true;
                
-                LoadEnvironments(ref psi, environments);
+                LoadEnvironments(ref psi, environments, profile);
 
                 try
                 {

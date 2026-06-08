@@ -158,7 +158,7 @@ namespace devkit2.Applications
             {
                 runPsi.WorkingDirectory = workingDir;
             }
-            LoadEnvironments(ref runPsi, environments);
+            LoadEnvironments(ref runPsi, environments, profile);
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;

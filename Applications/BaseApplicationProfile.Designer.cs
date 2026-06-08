@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             tableLayoutPanel1 = new TableLayoutPanel();
+            label2 = new Label();
             tableLayoutPanel2 = new TableLayoutPanel();
             txtStartupFile = new TextBox();
             btnStartupFileBrowse = new Button();
@@ -41,6 +42,7 @@
             btnOK = new Button();
             btnCancel = new Button();
             btnClear = new Button();
+            textBoxPaths = new TextBox();
             tableLayoutPanel1.SuspendLayout();
             tableLayoutPanel2.SuspendLayout();
             tableLayoutPanel4.SuspendLayout();
@@ -52,11 +54,13 @@
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 151F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(label2, 0, 2);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 1, 1);
             tableLayoutPanel1.Controls.Add(label1, 0, 1);
             tableLayoutPanel1.Controls.Add(label4, 0, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel4, 1, 0);
             tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 1, 3);
+            tableLayoutPanel1.Controls.Add(textBoxPaths, 1, 2);
             tableLayoutPanel1.Dock = DockStyle.Fill;
             tableLayoutPanel1.Location = new Point(0, 0);
             tableLayoutPanel1.Margin = new Padding(4);
@@ -66,8 +70,20 @@
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 35F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 50F));
-            tableLayoutPanel1.Size = new Size(648, 131);
+            tableLayoutPanel1.Size = new Size(648, 320);
             tableLayoutPanel1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Dock = DockStyle.Fill;
+            label2.Location = new Point(5, 70);
+            label2.Margin = new Padding(5, 0, 5, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(141, 200);
+            label2.TabIndex = 13;
+            label2.Text = "Custom Paths";
+            label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // tableLayoutPanel2
             // 
@@ -177,7 +193,7 @@
             tableLayoutPanel3.Controls.Add(btnCancel, 2, 0);
             tableLayoutPanel3.Controls.Add(btnClear, 1, 0);
             tableLayoutPanel3.Dock = DockStyle.Right;
-            tableLayoutPanel3.Location = new Point(317, 84);
+            tableLayoutPanel3.Location = new Point(317, 273);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
@@ -217,11 +233,21 @@
             btnClear.UseVisualStyleBackColor = true;
             btnClear.Click += btnClear_Click;
             // 
+            // textBoxPaths
+            // 
+            textBoxPaths.Dock = DockStyle.Fill;
+            textBoxPaths.Location = new Point(154, 73);
+            textBoxPaths.Multiline = true;
+            textBoxPaths.Name = "textBoxPaths";
+            textBoxPaths.ScrollBars = ScrollBars.Both;
+            textBoxPaths.Size = new Size(491, 194);
+            textBoxPaths.TabIndex = 14;
+            // 
             // BaseApplicationProfile
             // 
             AutoScaleDimensions = new SizeF(9F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(648, 131);
+            ClientSize = new Size(648, 320);
             Controls.Add(tableLayoutPanel1);
             Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             Margin = new Padding(4);
@@ -254,5 +280,7 @@
         private TableLayoutPanel tableLayoutPanel2;
         private TextBox txtStartupFile;
         private Button btnStartupFileBrowse;
+        private Label label2;
+        private TextBox textBoxPaths;
     }
 }

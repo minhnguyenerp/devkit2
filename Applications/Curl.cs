@@ -112,7 +112,7 @@ namespace devkit2.Applications
             {
                 psi.WorkingDirectory = workingDir;
             }
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

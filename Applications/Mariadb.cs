@@ -171,7 +171,7 @@ namespace devkit2.Applications
             runPsi.RedirectStandardOutput = true;
             runPsi.RedirectStandardError = true;
             runPsi.WorkingDirectory = binDir;
-            LoadEnvironments(ref runPsi, environments);
+            LoadEnvironments(ref runPsi, environments, profile);
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;

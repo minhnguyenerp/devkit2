@@ -93,7 +93,7 @@ namespace devkit2.Applications
             var psi = new ProcessStartInfo();
             psi.FileName = "cmd.exe";
             psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

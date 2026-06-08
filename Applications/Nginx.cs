@@ -398,7 +398,7 @@ http {{
             runPsi.CreateNoWindow = true;
             runPsi.RedirectStandardOutput = true;
             runPsi.RedirectStandardError = true;
-            LoadEnvironments(ref runPsi, environments);
+            LoadEnvironments(ref runPsi, environments, profile);
             var proc = Process.Start(runPsi);
             if (proc == null)
                 return false;

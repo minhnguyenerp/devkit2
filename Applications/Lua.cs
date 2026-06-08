@@ -108,7 +108,7 @@ lua55.exe %*");
                 psi.WorkingDirectory = workingDir;
             }
             psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

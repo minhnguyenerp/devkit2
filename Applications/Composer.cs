@@ -101,7 +101,7 @@ php.exe ""%~dp0composer.phar"" %*");
             {
                 psi.WorkingDirectory = workingDir;
             }
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

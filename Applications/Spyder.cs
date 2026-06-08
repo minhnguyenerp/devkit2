@@ -107,7 +107,7 @@ namespace devkit2.Applications
                 psi.ArgumentList.Add("-p");
                 psi.ArgumentList.Add(startupFile);
             }
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {

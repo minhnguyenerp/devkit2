@@ -1,4 +1,4 @@
-﻿Update Go 1.26.4, Etcd 3.6.12, Composer 2.10.1, VSCode 1.123.0, Zed 1.5.4, Zig 0.17.0-dev.704+b8cb78023
+﻿Add environment custome PATH
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)

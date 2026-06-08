@@ -1,7 +1,6 @@
 ﻿using devkit2.Properties;
 using System.ComponentModel;
 using System.Text.Json.Nodes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace devkit2.Applications
 {
@@ -35,6 +34,7 @@ namespace devkit2.Applications
             if (Profile == null) { Profile = new JsonObject(); }
             Profile["WorkingDirectory"] = txtWorkingDirectory.Text;
             Profile["StartupFile"] = txtStartupFile.Text;
+            Profile["Paths"] = textBoxPaths.Text;
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -58,6 +58,7 @@ namespace devkit2.Applications
             {
                 txtWorkingDirectory.Text = Profile["WorkingDirectory"]?.ToString();
                 txtStartupFile.Text = Profile["StartupFile"]?.ToString();
+                textBoxPaths.Text = Profile["Paths"]?.ToString();
             }
         }
 

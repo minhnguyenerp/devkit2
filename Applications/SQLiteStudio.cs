@@ -103,7 +103,7 @@ namespace devkit2.Applications
             var psi = new ProcessStartInfo();
             psi.FileName = Path.Combine(appPath, version, "SQLiteStudio", "SQLiteStudio.exe");
             psi.UseShellExecute = false;
-            LoadEnvironments(ref psi, environments);
+            LoadEnvironments(ref psi, environments, profile);
 
             try
             {
