@@ -1,4 +1,4 @@
-﻿Update Kate Latest, Mariadb 12.3.2, Netbeans 30, Nginx 1.30.2, Node 24.16.0, Notepad++ 8.9.6.2, Php 8.5.6, Pixieditor 2.1.1.4, Pororoca 3.10.0, PostgreSQL 18.4-1, Putty 0.84, QtCreator 19.0.2, ShareX 20.2.0, TeaCLI 0.14.1, VSCode 1.122.1, VSCodium 1.121.03429, Winmerge 2.16.56.2, Zed 1.4.4, Zig 0.17.0-dev.633+9c5655093
+﻿Update Go 1.26.4, Etcd 3.6.12, Composer 2.10.1, VSCode 1.123.0, Zed 1.5.4, Zig 0.17.0-dev.704+b8cb78023
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)
@@ -10,18 +10,18 @@
 [CMake 4.3.3](https://cmake.org/download/)
 [codeblocks-25.03-nosetup](https://www.codeblocks.org/downloads/binaries/) <sub>[*Release Notes*](https://www.codeblocks.org/changelogs/)</sub>
 [CodeLite 18.3.0](https://downloads.codelite.org)
-[composer-2.10.0](https://getcomposer.org/download/)
+[composer-2.10.1](https://getcomposer.org/download/)
 [consul_2.0.0_windows_amd64](https://developer.hashicorp.com/consul/install)
 [curl-8.20.0_4-win64-mingw](https://curl.se/windows/)
 [dotnet-10.0.300](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-[etcd-v3.6.11-windows-amd64](https://github.com/etcd-io/etcd/releases)
+[etcd-v3.6.12-windows-amd64](https://github.com/etcd-io/etcd/releases)
 [fd-10.4.2](https://github.com/sharkdp/fd/releases)
 [FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
 [fzf-0.73.1](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
 [Github CLI 2.93.0](https://github.com/cli/cli/releases)
 [PortableGit-2.54.0](https://git-scm.com/install/windows)
-[go1.26.3.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
+[go1.26.4.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
 [godot-4.6.3](https://github.com/godotengine/godot/releases)
 [godotsharp-4.6.3](https://github.com/godotengine/godot/releases)
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
@@ -57,9 +57,9 @@
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
 [TeaCLI 0.14.1](https://gitea.com/gitea/tea/releases)
 [Thonny 5.0.0](https://thonny.org/)
-[VSCode-win32-x64-1.122.1.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
+[VSCode-win32-x64-1.123.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.121.03429](https://github.com/VSCodium/vscodium/releases)
 [winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2](https://winlibs.com/)
 [WinMerge-2.16.56.2](https://winmerge.org/downloads/?lang=en)
-[Zed 1.4.4](https://zed.dev/download)
-[zig-x86_64-windows-0.17.0-dev.633+9c5655093.zip](https://ziglang.org/download/)
+[Zed 1.5.4](https://zed.dev/download)
+[zig-x86_64-windows-0.17.0-dev.704+b8cb78023.zip](https://ziglang.org/download/)

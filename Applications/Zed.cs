@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.5.4", "1.5.4"),
                     new ValueName("1.4.4", "1.4.4"),
                     new ValueName("1.1.7", "1.1.7"),
                     new ValueName("1.0.1", "1.0.1"),
@@ -65,6 +66,7 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "1.5.4": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.5.4.zip"; break;
                 case "1.4.4": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.4.4.zip"; break;
                 case "1.1.7": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.1.7.zip"; break;
                 case "1.0.1": url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/Zed-1.0.1.zip"; break;

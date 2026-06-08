@@ -46,6 +46,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("1.26.4", "1.26.4"),
                     new ValueName("1.26.3", "1.26.3"),
                     new ValueName("1.26.2", "1.26.2"),
                     new ValueName("1.26.1", "1.26.1"),
@@ -59,19 +60,12 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
-                case "1.26.3":
-                    url = "https://go.dev/dl/go1.26.3.windows-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "go1.26.3.windows-amd64.zip");
-                    break;
-                case "1.26.2":
-                    url = "https://go.dev/dl/go1.26.2.windows-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "go1.26.2.windows-amd64.zip");
-                    break;
-                case "1.26.1":
-                    url = "https://go.dev/dl/go1.26.1.windows-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "go1.26.1.windows-amd64.zip");
-                    break;
+                case "1.26.4": url = "https://go.dev/dl/go1.26.4.windows-amd64.zip"; break;
+                case "1.26.3": url = "https://go.dev/dl/go1.26.3.windows-amd64.zip"; break;
+                case "1.26.2": url = "https://go.dev/dl/go1.26.2.windows-amd64.zip"; break;
+                case "1.26.1": url = "https://go.dev/dl/go1.26.1.windows-amd64.zip"; break;
             }
+            file = Path.Combine(Path.GetTempPath(), $"go{version}.windows-amd64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {
