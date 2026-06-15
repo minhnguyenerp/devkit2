@@ -47,6 +47,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
+                    new ValueName("16.1.0-14.0.0-r3", "16.1.0-14.0.0-r3"),
                     new ValueName("16.1.0-14.0.0-r2", "16.1.0-14.0.0-r2"),
                     new ValueName("16.1.0-14.0.0-r1", "16.1.0-14.0.0-r1"),
                     new ValueName("15.2.0-14.0.0-r7", "15.2.0-14.0.0-r7"),
@@ -61,6 +62,10 @@ namespace devkit2.Applications
             string file = string.Empty;
             switch (version)
             {
+                case "16.1.0-14.0.0-r3":
+                    url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/16.1.0posix-14.0.0-ucrt-r3/winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r3.zip";
+                    file = Path.Combine(Path.GetTempPath(), "winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r3.zip");
+                    break;
                 case "16.1.0-14.0.0-r2":
                     url = "https://github.com/brechtsanders/winlibs_mingw/releases/download/16.1.0posix-14.0.0-ucrt-r2/winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2.zip";
                     file = Path.Combine(Path.GetTempPath(), "winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2.zip");

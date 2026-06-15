@@ -1,8 +1,8 @@
-﻿Add environment custome PATH
+﻿Update Bitwarden 2026.5.0, Winlibs 16.1.0-14.0.0-r3.
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)
-[Bitwarden-2026.4.0](https://github.com/bitwarden/clients/releases)
+[Bitwarden-2026.5.0](https://github.com/bitwarden/clients/releases)
 [blender-5.1.2](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
 [bombardier 2.0.2](https://github.com/codesenberg/bombardier/releases) <code>bombardier -d 120s https://localhost:8080</code>
 [Bruno-3.4.2](https://github.com/usebruno/bruno/releases)
@@ -59,7 +59,7 @@
 [Thonny 5.0.0](https://thonny.org/)
 [VSCode-win32-x64-1.123.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
 [VSCodium-win32-x64-1.121.03429](https://github.com/VSCodium/vscodium/releases)
-[winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r2](https://winlibs.com/)
+[winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r3](https://winlibs.com/)
 [WinMerge-2.16.56.2](https://winmerge.org/downloads/?lang=en)
 [Zed 1.5.4](https://zed.dev/download)
 [zig-x86_64-windows-0.17.0-dev.704+b8cb78023.zip](https://ziglang.org/download/)
