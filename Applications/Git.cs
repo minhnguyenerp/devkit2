@@ -44,10 +44,11 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.54.0", "2.54.0"),
-                    new ValueName("2.53.0.3", "2.53.0.3"),
-                    new ValueName("2.53.0.2", "2.53.0.2"),
-                    new ValueName("2.53.0", "2.53.0"),
+                    new ValueName("2.55.0.3", "2.55.0.3") { Tag = "https://github.com/git-for-windows/git/releases/download/v2.55.0.windows.3/PortableGit-2.55.0.3-64-bit.7z.exe" },
+                    new ValueName("2.54.0", "2.54.0") { Tag = "https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/PortableGit-2.54.0-64-bit.7z.exe" },
+                    new ValueName("2.53.0.3", "2.53.0.3") { Tag = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.3/PortableGit-2.53.0.3-64-bit.7z.exe" },
+                    new ValueName("2.53.0.2", "2.53.0.2") { Tag = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.2/PortableGit-2.53.0.2-64-bit.7z.exe" },
+                    new ValueName("2.53.0", "2.53.0") { Tag = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe" },
                 };
             }
         }
@@ -56,25 +57,21 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+            
+            foreach(var one in AvailableVersions)
             {
-                case "2.54.0":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/PortableGit-2.54.0-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.54.0-64-bit.7z.exe");
+                if(one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
-                case "2.53.0.3":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.3/PortableGit-2.53.0.3-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0.3-64-bit.7z.exe");
-                    break;
-                case "2.53.0.2":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.2/PortableGit-2.53.0.2-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0.2-64-bit.7z.exe");
-                    break;
-                case "2.53.0":
-                    url = "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.1/PortableGit-2.53.0-64-bit.7z.exe";
-                    file = Path.Combine(Path.GetTempPath(), "PortableGit-2.53.0-64-bit.7z.exe");
-                    break;
+                }
             }
+
+            if(url != string.Empty)
+            {
+                Uri uri = new Uri(url);
+                file = Path.Combine(Path.GetTempPath(), Path.GetFileName(uri.LocalPath));
+            }    
 
             if (url != string.Empty && file != string.Empty)
             {

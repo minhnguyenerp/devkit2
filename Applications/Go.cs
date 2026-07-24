@@ -46,10 +46,11 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.26.4", "1.26.4"),
-                    new ValueName("1.26.3", "1.26.3"),
-                    new ValueName("1.26.2", "1.26.2"),
-                    new ValueName("1.26.1", "1.26.1"),
+                    new ValueName("1.26.5", "1.26.5") { Tag = "https://go.dev/dl/go1.26.5.windows-amd64.zip" },
+                    new ValueName("1.26.4", "1.26.4") { Tag = "https://go.dev/dl/go1.26.4.windows-amd64.zip" },
+                    new ValueName("1.26.3", "1.26.3") { Tag = "https://go.dev/dl/go1.26.3.windows-amd64.zip" },
+                    new ValueName("1.26.2", "1.26.2") { Tag = "https://go.dev/dl/go1.26.2.windows-amd64.zip" },
+                    new ValueName("1.26.1", "1.26.1") { Tag = "https://go.dev/dl/go1.26.1.windows-amd64.zip" },
                 };
             }
         }
@@ -58,13 +59,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.26.4": url = "https://go.dev/dl/go1.26.4.windows-amd64.zip"; break;
-                case "1.26.3": url = "https://go.dev/dl/go1.26.3.windows-amd64.zip"; break;
-                case "1.26.2": url = "https://go.dev/dl/go1.26.2.windows-amd64.zip"; break;
-                case "1.26.1": url = "https://go.dev/dl/go1.26.1.windows-amd64.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"go{version}.windows-amd64.zip");
 
             if (url != string.Empty && file != string.Empty)

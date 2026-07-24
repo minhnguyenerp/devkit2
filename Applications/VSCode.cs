@@ -47,16 +47,17 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.123.0", "1.123.0"),
-                    new ValueName("1.122.1", "1.122.1"),
-                    new ValueName("1.119.0", "1.119.0"),
-                    new ValueName("1.118.1", "1.118.1"),
-                    new ValueName("1.117.0", "1.117.0"),
-                    new ValueName("1.116.0", "1.116.0"),
-                    new ValueName("1.115.0", "1.115.0"),
-                    new ValueName("1.114.0", "1.114.0"),
-                    new ValueName("1.112.0", "1.112.0"),
-                    new ValueName("1.111.0", "1.111.0"),
+                    new ValueName("1.130.0", "1.130.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/1b6a188127eeaf9194f945eb6eb89a657e93c54c/VSCode-win32-x64-1.130.0.zip" },
+                    new ValueName("1.123.0", "1.123.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/6a44c352bd24569c417e530095901b649960f9f8/VSCode-win32-x64-1.123.0.zip" },
+                    new ValueName("1.122.1", "1.122.1") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/8761a5560cfd65fdd19ce7e2bd18dab5c0a4d84e/VSCode-win32-x64-1.122.1.zip" },
+                    new ValueName("1.119.0", "1.119.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/8b640eef5a6c6089c029249d48efa5c99adf7d51/VSCode-win32-x64-1.119.0.zip" },
+                    new ValueName("1.118.1", "1.118.1") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/034f571df509819cc10b0c8129f66ef77a542f0e/VSCode-win32-x64-1.118.1.zip" },
+                    new ValueName("1.117.0", "1.117.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/10c8e557c8b9f9ed0a87f61f1c9a44bde731c409/VSCode-win32-x64-1.117.0.zip" },
+                    new ValueName("1.116.0", "1.116.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/560a9dba96f961efea7b1612916f89e5d5d4d679/VSCode-win32-x64-1.116.0.zip" },
+                    new ValueName("1.115.0", "1.115.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/41dd792b5e652393e7787322889ed5fdc58bd75b/VSCode-win32-x64-1.115.0.zip" },
+                    new ValueName("1.114.0", "1.114.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/e7fb5e96c0730b9deb70b33781f98e2f35975036/VSCode-win32-x64-1.114.0.zip" },
+                    new ValueName("1.112.0", "1.112.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/07ff9d6178ede9a1bd12ad3399074d726ebe6e43/VSCode-win32-x64-1.112.0.zip" },
+                    new ValueName("1.111.0", "1.111.0") { Tag = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/ce099c1ed25d9eb3076c11e4a280f3eb52b4fbeb/VSCode-win32-x64-1.111.0.zip" },
                 };
             }
         }
@@ -65,19 +66,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.123.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/6a44c352bd24569c417e530095901b649960f9f8/VSCode-win32-x64-1.123.0.zip"; break;
-                case "1.122.1": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/8761a5560cfd65fdd19ce7e2bd18dab5c0a4d84e/VSCode-win32-x64-1.122.1.zip"; break;
-                case "1.119.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/8b640eef5a6c6089c029249d48efa5c99adf7d51/VSCode-win32-x64-1.119.0.zip"; break;
-                case "1.118.1": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/034f571df509819cc10b0c8129f66ef77a542f0e/VSCode-win32-x64-1.118.1.zip"; break;
-                case "1.117.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/10c8e557c8b9f9ed0a87f61f1c9a44bde731c409/VSCode-win32-x64-1.117.0.zip"; break;
-                case "1.116.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/560a9dba96f961efea7b1612916f89e5d5d4d679/VSCode-win32-x64-1.116.0.zip"; break;
-                case "1.115.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/41dd792b5e652393e7787322889ed5fdc58bd75b/VSCode-win32-x64-1.115.0.zip"; break;
-                case "1.114.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/e7fb5e96c0730b9deb70b33781f98e2f35975036/VSCode-win32-x64-1.114.0.zip"; break;
-                case "1.112.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/07ff9d6178ede9a1bd12ad3399074d726ebe6e43/VSCode-win32-x64-1.112.0.zip"; break;
-                case "1.111.0": url = "https://vscode.download.prss.microsoft.com/dbazure/download/stable/ce099c1ed25d9eb3076c11e4a280f3eb52b4fbeb/VSCode-win32-x64-1.111.0.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"VSCode-win32-x64-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)

@@ -45,8 +45,9 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.3.9", "2.3.9"),
-                    new ValueName("2.3.8", "2.3.8"),
+                    new ValueName("2.3.10", "2.3.10") { Tag = "https://github.com/arduino/arduino-ide/releases/download/2.3.10/arduino-ide_2.3.10_Windows_64bit.zip" },
+                    new ValueName("2.3.9", "2.3.9") { Tag = "https://github.com/arduino/arduino-ide/releases/download/2.3.9/arduino-ide_2.3.9_Windows_64bit.zip" },
+                    new ValueName("2.3.8", "2.3.8") { Tag = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip" },
                 };
             }
         }
@@ -55,17 +56,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "2.3.9":
-                    url = "https://github.com/arduino/arduino-ide/releases/download/2.3.9/arduino-ide_2.3.9_Windows_64bit.zip";
-                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.9_Windows_64bit.zip");
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
-                case "2.3.8":
-                    url = "https://downloads.arduino.cc/arduino-ide/arduino-ide_2.3.8_Windows_64bit.zip";
-                    file = Path.Combine(Path.GetTempPath(), "arduino-ide_2.3.8_Windows_64bit.zip");
-                    break;
+                }
             }
+            file = Path.Combine(Path.GetTempPath(), $"arduino-ide_{version}_Windows_64bit.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

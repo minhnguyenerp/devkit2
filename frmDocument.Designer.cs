@@ -53,6 +53,7 @@
             Controls.Add(webView21);
             Name = "frmDocument";
             Text = "Document";
+            Load += frmDocument_Load;
             ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             ResumeLayout(false);
         }

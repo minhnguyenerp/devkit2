@@ -1,27 +1,27 @@
-﻿Improve starup speed.
+﻿Udpate githubcli 2.96.0, portable git 2.55.0.3, golang 1.26.5, rust 1.97.1, vscode 1.130.0, vscodium 1.126.04524, zig 0.17.0-dev.1454+5faa79730, zed 1.12.0, dot net 10.0.302, cmake 4.4.0, arduino 2.3.10, blender 5.2.0.
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
-[arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)
+[arduino-2.3.10](https://github.com/arduino/arduino-ide/releases)
 [Bitwarden-2026.5.0](https://github.com/bitwarden/clients/releases)
-[blender-5.1.2](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
+[blender-5.2.0](https://www.blender.org/download/) <sub>[*Release*](https://download.blender.org/release/)</sub>
 [bombardier 2.0.2](https://github.com/codesenberg/bombardier/releases) <code>bombardier -d 120s https://localhost:8080</code>
 [Bruno-3.4.2](https://github.com/usebruno/bruno/releases)
 [caddy_2.11.3_windows_amd64](https://github.com/caddyserver/caddy/releases) <code>start-caddy dir port</code>
-[CMake 4.3.3](https://cmake.org/download/)
+[CMake 4.4.0](https://cmake.org/download/)
 [codeblocks-25.03-nosetup](https://www.codeblocks.org/downloads/binaries/) <sub>[*Release Notes*](https://www.codeblocks.org/changelogs/)</sub>
 [CodeLite 18.3.0](https://downloads.codelite.org)
 [composer-2.10.1](https://getcomposer.org/download/)
 [consul_2.0.0_windows_amd64](https://developer.hashicorp.com/consul/install)
 [curl-8.20.0_4-win64-mingw](https://curl.se/windows/)
-[dotnet-10.0.300](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+[dotnet-10.0.302](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 [etcd-v3.6.12-windows-amd64](https://github.com/etcd-io/etcd/releases)
 [fd-10.4.2](https://github.com/sharkdp/fd/releases)
 [FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
 [fzf-0.73.1](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
-[Github CLI 2.93.0](https://github.com/cli/cli/releases)
-[PortableGit-2.54.0](https://git-scm.com/install/windows)
-[go1.26.4.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
+[Github CLI 2.96.0](https://github.com/cli/cli/releases)
+[PortableGit-2.55.0.3](https://git-scm.com/install/windows)
+[go1.26.5.windows-amd64](https://go.dev/dl/) <sub>[*Release Notes*](https://go.dev/doc/devel/release)</sub>
 [godot-4.6.3](https://github.com/godotengine/godot/releases)
 [godotsharp-4.6.3](https://github.com/godotengine/godot/releases)
 [HeidiSQL_12.17_64_Portable](https://www.heidisql.com/download.php)
@@ -47,7 +47,7 @@
 [python-3.14.5-embed-amd64](https://www.python.org/downloads/windows/)
 [qtcreator-windows-x64-msvc-19.0.2.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
-[rust-1.96.0](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
+[rust-1.97.1](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
 [ShareX 20.2.0](https://getsharex.com/downloads)
 [Shotcut-26.4.30](https://github.com/mltframework/shotcut/releases)
 [SolveSpace-3.2](https://github.com/solvespace/solvespace/releases)
@@ -57,9 +57,9 @@
 [SuperPutty 1.4.0.9](https://superputty.org/#download)
 [TeaCLI 0.14.1](https://gitea.com/gitea/tea/releases)
 [Thonny 5.0.0](https://thonny.org/)
-[VSCode-win32-x64-1.123.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
-[VSCodium-win32-x64-1.121.03429](https://github.com/VSCodium/vscodium/releases)
+[VSCode-win32-x64-1.130.0.zip](https://code.visualstudio.com/Download) <sub>[*Release Notes*](https://code.visualstudio.com/updates)</sub>
+[VSCodium-win32-x64-1.126.04524](https://github.com/VSCodium/vscodium/releases)
 [winlibs-x86_64-posix-seh-gcc-16.1.0-mingw-w64ucrt-14.0.0-r3](https://winlibs.com/)
 [WinMerge-2.16.56.2](https://winmerge.org/downloads/?lang=en)
-[Zed 1.5.4](https://zed.dev/download)
-[zig-x86_64-windows-0.17.0-dev.704+b8cb78023.zip](https://ziglang.org/download/)
+[Zed 1.12.0](https://zed.dev/download)
+[zig-x86_64-windows-0.17.0-dev.1454+5faa79730.zip](https://ziglang.org/download/)

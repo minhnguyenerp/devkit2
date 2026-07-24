@@ -47,16 +47,17 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("0.17.0-dev.704+b8cb78023", "0.17.0-dev.704+b8cb78023"),
-                    new ValueName("0.17.0-dev.633+9c5655093", "0.17.0-dev.633+9c5655093"),
-                    new ValueName("0.17.0-dev.292+fc1c83a36", "0.17.0-dev.292+fc1c83a36"),
-                    new ValueName("0.17.0-dev.248+95507faf1", "0.17.0-dev.248+95507faf1"),
-                    new ValueName("0.17.0-dev.135+9df02121d", "0.17.0-dev.135+9df02121d"),
-                    new ValueName("0.16.0-dev.3153+d6f43caad", "0.16.0-dev.3153+d6f43caad"),
-                    new ValueName("0.16.0-dev.3133+5ec8e45f3", "0.16.0-dev.3133+5ec8e45f3"),
-                    new ValueName("0.16.0-dev.3070+b22eb176b", "0.16.0-dev.3070+b22eb176b"),
-                    new ValueName("0.16.0-dev.2973+06b85a4fd", "0.16.0-dev.2973+06b85a4fd"),
-                    new ValueName("0.16.0-dev.2736+3b515fbed", "0.16.0-dev.2736+3b515fbed"),
+                    new ValueName("0.17.0-dev.1454+5faa79730", "0.17.0-dev.1454+5faa79730") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.1454+5faa79730.zip" },
+                    new ValueName("0.17.0-dev.704+b8cb78023", "0.17.0-dev.704+b8cb78023") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.704+b8cb78023.zip" },
+                    new ValueName("0.17.0-dev.633+9c5655093", "0.17.0-dev.633+9c5655093") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.633+9c5655093.zip" },
+                    new ValueName("0.17.0-dev.292+fc1c83a36", "0.17.0-dev.292+fc1c83a36") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip" },
+                    new ValueName("0.17.0-dev.248+95507faf1", "0.17.0-dev.248+95507faf1") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip" },
+                    new ValueName("0.17.0-dev.135+9df02121d", "0.17.0-dev.135+9df02121d") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.135+9df02121d.zip" },
+                    new ValueName("0.16.0-dev.3153+d6f43caad", "0.16.0-dev.3153+d6f43caad") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip" },
+                    new ValueName("0.16.0-dev.3133+5ec8e45f3", "0.16.0-dev.3133+5ec8e45f3") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip" },
+                    new ValueName("0.16.0-dev.3070+b22eb176b", "0.16.0-dev.3070+b22eb176b") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3070+b22eb176b.zip" },
+                    new ValueName("0.16.0-dev.2973+06b85a4fd", "0.16.0-dev.2973+06b85a4fd") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2973+06b85a4fd.zip" },
+                    new ValueName("0.16.0-dev.2736+3b515fbed", "0.16.0-dev.2736+3b515fbed") { Tag = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2736+3b515fbed.zip" },
                 };
             }
         }
@@ -65,19 +66,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "0.17.0-dev.704+b8cb78023": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.704+b8cb78023.zip"; break;
-                case "0.17.0-dev.633+9c5655093": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.633+9c5655093.zip"; break;
-                case "0.17.0-dev.292+fc1c83a36": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.292+fc1c83a36.zip"; break;
-                case "0.17.0-dev.248+95507faf1": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.248+95507faf1.zip"; break;
-                case "0.17.0-dev.135+9df02121d": url = "https://ziglang.org/builds/zig-x86_64-windows-0.17.0-dev.135+9df02121d.zip"; break;
-                case "0.16.0-dev.3153+d6f43caad": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3153+d6f43caad.zip"; break;
-                case "0.16.0-dev.3133+5ec8e45f3": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3133+5ec8e45f3.zip"; break;
-                case "0.16.0-dev.3070+b22eb176b": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.3070+b22eb176b.zip"; break;
-                case "0.16.0-dev.2973+06b85a4fd": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2973+06b85a4fd.zip"; break;
-                case "0.16.0-dev.2736+3b515fbed": url = "https://ziglang.org/builds/zig-x86_64-windows-0.16.0-dev.2736+3b515fbed.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"zig-x86_64-windows-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)

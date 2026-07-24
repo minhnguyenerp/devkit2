@@ -45,10 +45,11 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("10.0.300", "10.0.300"),
-                    new ValueName("10.0.203", "10.0.203"),
-                    new ValueName("10.0.202", "10.0.202"),
-                    new ValueName("10.0.201", "10.0.201"),
+                    new ValueName("10.0.302", "10.0.302") { Tag = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.302/dotnet-sdk-10.0.302-win-x64.zip" },
+                    new ValueName("10.0.300", "10.0.300") { Tag = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.300/dotnet-sdk-10.0.300-win-x64.zip" },
+                    new ValueName("10.0.203", "10.0.203") { Tag = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.203/dotnet-sdk-10.0.203-win-x64.zip" },
+                    new ValueName("10.0.202", "10.0.202") { Tag = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.202/dotnet-sdk-10.0.202-win-x64.zip" },
+                    new ValueName("10.0.201", "10.0.201") { Tag = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip" },
                 };
             }
         }
@@ -57,13 +58,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "10.0.300": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.300/dotnet-sdk-10.0.300-win-x64.zip"; break;
-                case "10.0.203": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.203/dotnet-sdk-10.0.203-win-x64.zip"; break;
-                case "10.0.202": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.202/dotnet-sdk-10.0.202-win-x64.zip"; break;
-                case "10.0.201": url = "https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.201/dotnet-sdk-10.0.201-win-x64.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"dotnet-sdk-{version}-win-x64.zip");
 
             if (url != string.Empty && file != string.Empty)

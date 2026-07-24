@@ -15,13 +15,6 @@ namespace devkit2
         {
             InitializeComponent();
             Icon = Resources.dev_23828;
-            Directory.CreateDirectory(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DevKit2", "runtimes"));
-            webView21.CoreWebView2InitializationCompleted += WebView21_CoreWebView2InitializationCompleted;
-            webView21.CreationProperties = new Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties()
-            {
-                UserDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "DevKit2", "runtimes")
-            };
-            webView21.EnsureCoreWebView2Async();
         }
 
         private async void CoreWebView2_WebResourceRequested(object? sender, CoreWebView2WebResourceRequestedEventArgs e)
@@ -66,7 +59,7 @@ namespace devkit2
             }
             catch (Exception ex)
             {
-                
+
             }
             finally
             {
@@ -131,6 +124,22 @@ code {{
                 webView21.NavigateToString(MarkDownToHtmlPage(markdown.Replace(OldPrefix, NewPrefix, StringComparison.OrdinalIgnoreCase)));
             }
             catch { }
+        }
+
+        private void frmDocument_Load(object sender, EventArgs e)
+        {
+            string runtimePath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "DevKit2",
+                "runtimes"
+            );
+            Directory.CreateDirectory(runtimePath);
+            webView21.CoreWebView2InitializationCompleted += WebView21_CoreWebView2InitializationCompleted;
+            webView21.CreationProperties = new Microsoft.Web.WebView2.WinForms.CoreWebView2CreationProperties()
+            {
+                UserDataFolder = runtimePath
+            };
+            webView21.EnsureCoreWebView2Async();
         }
     }
 }

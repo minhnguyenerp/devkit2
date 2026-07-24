@@ -47,9 +47,10 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.121.03429", "1.121.03429"),
-                    new ValueName("1.116.02821", "1.116.02821"),
-                    new ValueName("1.112.01907", "1.112.01907"),
+                    new ValueName("1.126.04524", "1.126.04524") { Tag = "https://github.com/VSCodium/vscodium/releases/download/1.126.04524/VSCodium-win32-x64-1.126.04524.zip" },
+                    new ValueName("1.121.03429", "1.121.03429") { Tag = "https://github.com/VSCodium/vscodium/releases/download/1.121.03429/VSCodium-win32-x64-1.121.03429.zip" },
+                    new ValueName("1.116.02821", "1.116.02821") { Tag = "https://github.com/VSCodium/vscodium/releases/download/1.116.02821/VSCodium-win32-x64-1.116.02821.zip" },
+                    new ValueName("1.112.01907", "1.112.01907") { Tag = "https://github.com/VSCodium/vscodium/releases/download/1.112.01907/VSCodium-win32-x64-1.112.01907.zip" },
                 };
             }
         }
@@ -58,12 +59,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.121.03429": url = "https://github.com/VSCodium/vscodium/releases/download/1.121.03429/VSCodium-win32-x64-1.121.03429.zip"; break;
-                case "1.116.02821": url = "https://github.com/VSCodium/vscodium/releases/download/1.116.02821/VSCodium-win32-x64-1.116.02821.zip"; break;
-                case "1.112.01907": url = "https://github.com/VSCodium/vscodium/releases/download/1.112.01907/VSCodium-win32-x64-1.112.01907.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"VSCodium-win32-x64-{version}.zip");
 
             if (url != string.Empty && file != string.Empty)

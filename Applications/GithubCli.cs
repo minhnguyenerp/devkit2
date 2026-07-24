@@ -45,9 +45,10 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("2.93.0", "2.93.0"),
-                    new ValueName("2.92.0", "2.92.0"),
-                    new ValueName("2.89.0", "2.89.0"),
+                    new ValueName("2.96.0", "2.96.0") { Tag="https://github.com/cli/cli/releases/download/v2.96.0/gh_2.96.0_windows_amd64.zip" },
+                    new ValueName("2.93.0", "2.93.0") { Tag="https://github.com/cli/cli/releases/download/v2.93.0/gh_2.93.0_windows_amd64.zip" },
+                    new ValueName("2.92.0", "2.92.0") { Tag="https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_windows_amd64.zip" },
+                    new ValueName("2.89.0", "2.89.0") { Tag="https://github.com/cli/cli/releases/download/v2.89.0/gh_2.89.0_windows_amd64.zip" },
                 };
             }
         }
@@ -56,12 +57,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "2.93.0": url = "https://github.com/cli/cli/releases/download/v2.93.0/gh_2.93.0_windows_amd64.zip"; break;
-                case "2.92.0": url = "https://github.com/cli/cli/releases/download/v2.92.0/gh_2.92.0_windows_amd64.zip"; break;
-                case "2.89.0": url = "https://github.com/cli/cli/releases/download/v2.89.0/gh_2.89.0_windows_amd64.zip"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"gh_{version}_windows_amd64.zip");
 
             if (url != string.Empty && file != string.Empty)

@@ -45,10 +45,11 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("5.1.2", "5.1.2"),
-                    new ValueName("5.1.1", "5.1.1"),
-                    new ValueName("5.1.0", "5.1.0"),
-                    new ValueName("5.0.1", "5.0.1"),
+                    new ValueName("5.2.0", "5.2.0") { Tag = "https://download.blender.org/release/Blender5.2/blender-5.2.0-windows-x64.zip" },
+                    new ValueName("5.1.2", "5.1.2") { Tag = "https://download.blender.org/release/Blender5.1/blender-5.1.2-windows-x64.zip" },
+                    new ValueName("5.1.1", "5.1.1") { Tag = "https://download.blender.org/release/Blender5.1/blender-5.1.1-windows-x64.zip" },
+                    new ValueName("5.1.0", "5.1.0") { Tag = "https://download.blender.org/release/Blender5.1/blender-5.1.0-windows-x64.zip" },
+                    new ValueName("5.0.1", "5.0.1") { Tag = "https://download.blender.org/release/Blender5.0/blender-5.0.1-windows-x64.zip" },
                 };
             }
         }
@@ -57,25 +58,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "5.1.2":
-                    url = "https://ftp.halifax.rwth-aachen.de/blender/release/Blender5.1/blender-5.1.2-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.2-windows-x64.zip");
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
-                case "5.1.1":
-                    url = "https://download.blender.org/release/Blender5.1/blender-5.1.1-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.1-windows-x64.zip");
-                    break;
-                case "5.1.0":
-                    url = "https://download.blender.org/release/Blender5.1/blender-5.1.0-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.1.0-windows-x64.zip");
-                    break;
-                case "5.0.1":
-                    url = "https://ftp.halifax.rwth-aachen.de/blender/release/Blender5.0/blender-5.0.1-windows-x64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "blender-5.0.1-windows-x64.zip");
-                    break;
+                }
             }
+            file = Path.Combine(Path.GetTempPath(), $"blender-{version}-windows-x64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

@@ -47,10 +47,11 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.96.0", "1.96.0"),
-                    new ValueName("1.95.0", "1.95.0"),
-                    new ValueName("1.94.1", "1.94.1"),
-                    new ValueName("1.94.0", "1.94.0"),
+                    new ValueName("1.97.1", "1.97.1") { Tag = "https://static.rust-lang.org/dist/rust-1.97.1-x86_64-pc-windows-msvc.tar.xz" },
+                    new ValueName("1.96.0", "1.96.0") { Tag = "https://static.rust-lang.org/dist/rust-1.96.0-x86_64-pc-windows-msvc.tar.xz" },
+                    new ValueName("1.95.0", "1.95.0") { Tag = "https://static.rust-lang.org/dist/rust-1.95.0-x86_64-pc-windows-msvc.tar.xz" },
+                    new ValueName("1.94.1", "1.94.1") { Tag = "https://static.rust-lang.org/dist/rust-1.94.1-x86_64-pc-windows-msvc.tar.xz" },
+                    new ValueName("1.94.0", "1.94.0") { Tag = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-msvc.tar.xz" },
                 };
             }
         }
@@ -59,13 +60,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.96.0": url = "https://static.rust-lang.org/dist/rust-1.96.0-x86_64-pc-windows-msvc.tar.xz"; break;
-                case "1.95.0": url = "https://static.rust-lang.org/dist/rust-1.95.0-x86_64-pc-windows-msvc.tar.xz"; break;
-                case "1.94.1": url = "https://static.rust-lang.org/dist/rust-1.94.1-x86_64-pc-windows-msvc.tar.xz"; break;
-                case "1.94.0": url = "https://static.rust-lang.org/dist/rust-1.94.0-x86_64-pc-windows-msvc.tar.xz"; break;
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
+                    break;
+                }
             }
+
             file = Path.Combine(Path.GetTempPath(), $"rust-{version}-x86_64-pc-windows-msvc.tar.xz");
 
             if (url != string.Empty && file != string.Empty)
