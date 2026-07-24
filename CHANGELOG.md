@@ -1,4 +1,4 @@
-﻿Update Bitwarden 2026.5.0, Winlibs 16.1.0-14.0.0-r3.
+﻿Improve starup speed.
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.9](https://github.com/arduino/arduino-ide/releases)

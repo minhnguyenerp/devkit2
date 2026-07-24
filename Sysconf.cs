@@ -1,5 +1,6 @@
 ﻿using devkit2.Applications;
 using devkit2.Common;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -49,7 +50,7 @@ namespace devkit2
             }
         }
 
-        private List<IApplication> applications = new List<IApplication>();
+        private ConcurrentBag<IApplication> applications = new ConcurrentBag<IApplication>();
         public bool AddApplication(IApplication app)
         {
             lock (padlock)
@@ -63,7 +64,7 @@ namespace devkit2
             }
         }
 
-        public List<IApplication> Applications => applications;
+        public ConcurrentBag<IApplication> Applications => applications;
 
         private object runningAppLock = new object();
         private List<RunningApplication> runningApplications = new List<RunningApplication>();

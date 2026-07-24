@@ -38,7 +38,7 @@ namespace devkit2.Applications
                 }
             }
 
-            ReloadIcon();
+            Task.Run(async () => { ReloadIcon(); });
         }
 
         public override void ReloadIcon()

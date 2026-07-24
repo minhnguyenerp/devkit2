@@ -108,12 +108,83 @@ namespace devkit2
             Application.Exit();
         }
 
+        private void LoadAllApplication()
+        {
+            Sysconf.Instance.AddApplication(new Apache());
+            Sysconf.Instance.AddApplication(new Arduino());
+            Sysconf.Instance.AddApplication(new Bitwarden());
+            Sysconf.Instance.AddApplication(new Blender());
+            Sysconf.Instance.AddApplication(new Bombardier());
+            Sysconf.Instance.AddApplication(new Bruno());
+            Sysconf.Instance.AddApplication(new Caddy());
+            Sysconf.Instance.AddApplication(new CMake());
+            Sysconf.Instance.AddApplication(new Cmd());
+            Sysconf.Instance.AddApplication(new CodeBlocks());
+            Sysconf.Instance.AddApplication(new Codelite());
+            Sysconf.Instance.AddApplication(new Composer());
+            Sysconf.Instance.AddApplication(new Consul());
+            Sysconf.Instance.AddApplication(new Curl());
+            Sysconf.Instance.AddApplication(new DotnetSDK());
+            Sysconf.Instance.AddApplication(new Etcd());
+            Sysconf.Instance.AddApplication(new Fd());
+            Sysconf.Instance.AddApplication(new FreeCAD());
+            Sysconf.Instance.AddApplication(new Fzf());
+            Sysconf.Instance.AddApplication(new Geany());
+            Sysconf.Instance.AddApplication(new Git());
+            Sysconf.Instance.AddApplication(new GithubCli());
+            Sysconf.Instance.AddApplication(new Go());
+            Sysconf.Instance.AddApplication(new Godot());
+            Sysconf.Instance.AddApplication(new GodotSharp());
+            Sysconf.Instance.AddApplication(new HeidiSQL());
+            Sysconf.Instance.AddApplication(new ILSpy());
+            Sysconf.Instance.AddApplication(new Inkscape());
+            Sysconf.Instance.AddApplication(new Java());
+            Sysconf.Instance.AddApplication(new Kate());
+            Sysconf.Instance.AddApplication(new Krita());
+            Sysconf.Instance.AddApplication(new Lua());
+            Sysconf.Instance.AddApplication(new Mariadb());
+            Sysconf.Instance.AddApplication(new Msvc());
+            Sysconf.Instance.AddApplication(new NetBeans());
+            Sysconf.Instance.AddApplication(new Nginx());
+            Sysconf.Instance.AddApplication(new Nim());
+            Sysconf.Instance.AddApplication(new Node());
+            Sysconf.Instance.AddApplication(new Npp());
+            Sysconf.Instance.AddApplication(new Php());
+            Sysconf.Instance.AddApplication(new Pixieditor());
+            Sysconf.Instance.AddApplication(new Pororoca());
+            Sysconf.Instance.AddApplication(new PostgreSQL());
+            Sysconf.Instance.AddApplication(new Processing());
+            Sysconf.Instance.AddApplication(new Putty());
+            Sysconf.Instance.AddApplication(new Python());
+            Sysconf.Instance.AddApplication(new QtCreator());
+            Sysconf.Instance.AddApplication(new Ripgrep());
+            Sysconf.Instance.AddApplication(new RustGcc());
+            Sysconf.Instance.AddApplication(new RustMsvc());
+            Sysconf.Instance.AddApplication(new ShareX());
+            Sysconf.Instance.AddApplication(new Shotcut());
+            Sysconf.Instance.AddApplication(new SolveSpace());
+            Sysconf.Instance.AddApplication(new SphinxSearch());
+            Sysconf.Instance.AddApplication(new Spyder());
+            Sysconf.Instance.AddApplication(new SQLiteStudio());
+            Sysconf.Instance.AddApplication(new SumatraPDF());
+            Sysconf.Instance.AddApplication(new SuperPutty());
+            Sysconf.Instance.AddApplication(new TeaCli());
+            Sysconf.Instance.AddApplication(new Thonny());
+            Sysconf.Instance.AddApplication(new VisualStudio());
+            Sysconf.Instance.AddApplication(new VSCode());
+            Sysconf.Instance.AddApplication(new VSCodium());
+            Sysconf.Instance.AddApplication(new Winlibs());
+            Sysconf.Instance.AddApplication(new Winmerge());
+            Sysconf.Instance.AddApplication(new Zed());
+            Sysconf.Instance.AddApplication(new Zig());
+        }
+
         private void frmMain_Load(object sender, EventArgs e)
         {
-            var apps = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(t => typeof(IApplication).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
-                .Select(t => (IApplication)Activator.CreateInstance(t));
+            /*var apps = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(t => typeof(IApplication).IsAssignableFrom(t) && !t.IsInterface && !t.IsAbstract)
+            .Select(t => (IApplication)Activator.CreateInstance(t));
 
             foreach (var app in apps)
             {
@@ -121,7 +192,8 @@ namespace devkit2
                 {
                     Sysconf.Instance.AddApplication(app);
                 }
-            }
+            }*/
+            LoadAllApplication();
 
             var projects = new frmMyProjects();
             projects.TopLevel = false;

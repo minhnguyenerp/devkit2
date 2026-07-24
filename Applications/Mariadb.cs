@@ -20,7 +20,7 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
-            ReloadIcon();
+            Task.Run(async () => { ReloadIcon(); });
         }
 
         public override void ReloadIcon()

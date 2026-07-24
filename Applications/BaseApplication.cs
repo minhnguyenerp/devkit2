@@ -2,8 +2,10 @@
 using devkit2.Properties;
 using Microsoft.Win32;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -470,16 +472,57 @@ namespace devkit2.Applications
         {
             get
             {
+                /*if (_icon == null)
+                    _icon = Resources.dev_23828;*/
                 if (_icon == null)
-                    _icon = Resources.dev_23828;
+                {
+                    Assembly assembly = Assembly.GetExecutingAssembly();
+                    string resourcePath = $"devkit2.AppIcons.{this.GetType().Name}.png";
+                    try
+                    {
+                        using (Stream stream = assembly.GetManifestResourceStream(resourcePath))
+                        {
+                            if (stream != null)
+                            {
+                                using (Bitmap bmp = new Bitmap(stream))
+                                {
+                                    _icon = Icon.FromHandle(bmp.GetHicon());
+                                }
+                            }
+                            else
+                            {
+                                _icon = Resources.dev_23828;
+                            }
+                        }
+                    }
+                    catch { _icon = Resources.dev_23828; }
+                }
+                _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
                 return _icon;
             }
             set
             {
                 if (value != null)
                 {
-                    _icon = value;
-                    _runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
+                    //_icon = value;
+                    /*string strOutputDir = Path.Combine(Application.StartupPath, "AppIcons");
+                    Directory.CreateDirectory(strOutputDir);
+                    string strOutputFile = Path.Combine(strOutputDir, this.GetType().Name + ".ico");
+                    using (FileStream fs = new FileStream(strOutputFile, FileMode.Create))
+                    {
+                        _icon.Save(fs);
+                    }*/
+#if DEBUG
+                    using (Bitmap bmp = value.ToBitmap())
+                    {
+                        string strOutputDir = Path.Combine(Application.StartupPath, "AppIcons");
+                        Directory.CreateDirectory(strOutputDir);
+                        string strOutputFile = Path.Combine(strOutputDir, this.GetType().Name + ".ico");
+                        string pngOutputFile = Path.ChangeExtension(strOutputFile, ".png");
+                        bmp.Save(pngOutputFile, ImageFormat.Png);
+                    }
+#endif
+                    //_runningIcon = IconUtil.MakeOverlay(_icon, Resources.play);
                 }
             }
         }

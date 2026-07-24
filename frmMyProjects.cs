@@ -4,7 +4,6 @@ using devkit2.Properties;
 using System.Diagnostics;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace devkit2
 {
