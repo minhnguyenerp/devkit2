@@ -1,35 +1,22 @@
 ﻿using devkit2.Common;
-using SevenZipExtractor;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class FreeCAD : BaseApplication
+    internal sealed class FlutterSDK : BaseApplication
     {
-        public override string Name => "FreeCAD";
+        public override string Name => "FlutterSDK";
 
-        public FreeCAD()
+        public FlutterSDK()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "freecad");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "fluttersdk");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
-#if DEBUG
-            Task.Run(async () => { ReloadIcon(); });
-#endif
-        }
-
-        public override void ReloadIcon()
-        {
-            try
-            {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"FreeCAD_{InstalledVersions[0].Value}-Windows-x86_64-py311", "FreeCAD.exe"));
-            }
-            catch { }
         }
 
         public override bool Valid
@@ -48,7 +35,8 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.1.1", "1.1.1"),
+                    new ValueName("3.44.8", "3.44.8") { Tag = "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.8-stable.zip" },
+                    new ValueName("3.24.5", "3.24.5") { Tag = "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.24.5-stable.zip" },
                 };
             }
         }
@@ -57,13 +45,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.1.1":
-                    url = "https://github.com/FreeCAD/FreeCAD/releases/download/1.1.1/FreeCAD_1.1.1-Windows-x86_64-py311.7z";
-                    file = Path.Combine(Path.GetTempPath(), "FreeCAD_1.1.1-Windows-x86_64-py311.7z");
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
+                }
             }
+            file = Path.Combine(Path.GetTempPath(), $"flutter_windows_{version}-stable.zip");
 
             if (url != string.Empty && file != string.Empty)
             {
@@ -76,8 +67,7 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(extractPath);
                 try
                 {
-                    using var archive = new ArchiveFile(file);
-                    archive.Extract(extractPath, true);
+                    ZipFile.ExtractToDirectory(file, extractPath, true);
                 }
                 catch (Exception ex)
                 {
@@ -93,26 +83,23 @@ namespace devkit2.Applications
             return false;
         }
 
+        // FLUTTER_HOME=%~dp0runtimes\flutter-3.24.5
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"FreeCAD_{version}-Windows-x86_64-py311")),
+                new ValueName("FLUTTER_HOME", Path.Combine(appPath, version, "flutter")),
+                new ValueName("PATH", Path.Combine(appPath, version, "flutter", "bin")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, $"FreeCAD_{version}-Windows-x86_64-py311", "FreeCAD.exe");
+            psi.FileName = "cmd.exe";
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
                 psi.WorkingDirectory = workingDir;
-            }
-            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
-            if (!string.IsNullOrEmpty(startupFile) && (File.Exists(startupFile) || Directory.Exists(startupFile)))
-            {
-                psi.ArgumentList.Add(startupFile);
             }
             psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments, profile);

@@ -1,18 +1,19 @@
 ﻿using devkit2.Common;
-using SevenZipExtractor;
+using devkit2.Properties;
+using SharpCompress.Common;
+using SharpCompress.Readers;
 using System.Diagnostics;
-using System.IO.Compression;
 using System.Text.Json.Nodes;
 
 namespace devkit2.Applications
 {
-    internal sealed class FreeCAD : BaseApplication
+    internal sealed class Llvm : BaseApplication
     {
-        public override string Name => "FreeCAD";
+        public override string Name => "Llvm";
 
-        public FreeCAD()
+        public Llvm()
         {
-            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "freecad");
+            appPath = Path.Combine(BaseApplication.LocalApplicationData, "apps", "llvm");
             if (!Directory.Exists(appPath))
             {
                 Directory.CreateDirectory(appPath);
@@ -27,7 +28,7 @@ namespace devkit2.Applications
         {
             try
             {
-                base.Icon = Icon.ExtractAssociatedIcon(Path.Combine(appPath, InstalledVersions[0].Value, $"FreeCAD_{InstalledVersions[0].Value}-Windows-x86_64-py311", "FreeCAD.exe"));
+                base.Icon = Icon.ExtractAssociatedIcon(Environment.SystemDirectory + @"\cmd.exe");
             }
             catch { }
         }
@@ -48,7 +49,7 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("1.1.1", "1.1.1"),
+                    new ValueName("22.1.8", "22.1.8") { Tag = "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/clang+llvm-22.1.8-x86_64-pc-windows-msvc.tar.xz" },
                 };
             }
         }
@@ -57,13 +58,17 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "1.1.1":
-                    url = "https://github.com/FreeCAD/FreeCAD/releases/download/1.1.1/FreeCAD_1.1.1-Windows-x86_64-py311.7z";
-                    file = Path.Combine(Path.GetTempPath(), "FreeCAD_1.1.1-Windows-x86_64-py311.7z");
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
+                }
             }
+
+            file = Path.Combine(Path.GetTempPath(), $"clang+llvm-{version}-x86_64-pc-windows-msvc.tar.xz");
 
             if (url != string.Empty && file != string.Empty)
             {
@@ -76,8 +81,21 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(extractPath);
                 try
                 {
-                    using var archive = new ArchiveFile(file);
-                    archive.Extract(extractPath, true);
+                    using var stream = File.OpenRead(file);
+                    using var reader = ReaderFactory.OpenReader(stream);
+
+                    while (reader.MoveToNextEntry())
+                    {
+                        if (!reader.Entry.IsDirectory)
+                        {
+                            progress?.Report(new InstallProgress { Message = reader.Entry.Key ?? "" });
+                            reader.WriteEntryToDirectory(extractPath, new ExtractionOptions
+                            {
+                                ExtractFullPath = true,
+                                Overwrite = true
+                            });
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -96,25 +114,22 @@ namespace devkit2.Applications
         public override ValueName[] GetEnvironments(string version)
         {
             return new ValueName[] {
-                new ValueName("PATH", Path.Combine(appPath, version, $"FreeCAD_{version}-Windows-x86_64-py311")),
+                new ValueName("LLVM_HOME", Path.Combine(appPath, version, $"clang+llvm-{version}-x86_64-pc-windows-msvc")),
+                new ValueName("LIBCLANG_PATH", Path.Combine(appPath, version, $"clang+llvm-{version}-x86_64-pc-windows-msvc", "bin")),
+                new ValueName("PATH", Path.Combine(appPath, version, $"clang+llvm-{version}-x86_64-pc-windows-msvc", "bin")),
             };
         }
 
         public override bool Start(string version, ValueName[] environments, JsonObject? profile = null, string uniqueCode = "")
         {
             var psi = new ProcessStartInfo();
-            psi.FileName = Path.Combine(appPath, version, $"FreeCAD_{version}-Windows-x86_64-py311", "FreeCAD.exe");
+            psi.FileName = "cmd.exe";
+            psi.UseShellExecute = false;
             string workingDir = profile?["WorkingDirectory"]?.ToString() ?? string.Empty;
             if (!string.IsNullOrEmpty(workingDir) && Directory.Exists(workingDir))
             {
                 psi.WorkingDirectory = workingDir;
             }
-            string startupFile = profile?["StartupFile"]?.ToString() ?? string.Empty;
-            if (!string.IsNullOrEmpty(startupFile) && (File.Exists(startupFile) || Directory.Exists(startupFile)))
-            {
-                psi.ArgumentList.Add(startupFile);
-            }
-            psi.UseShellExecute = false;
             LoadEnvironments(ref psi, environments, profile);
 
             try

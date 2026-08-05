@@ -19,7 +19,9 @@ namespace devkit2.Applications
                 Directory.CreateDirectory(appPath);
             }
             base.LoadConfig(appPath);
+#if DEBUG
             Task.Run(async () => { ReloadIcon(); });
+#endif
         }
 
         public override void ReloadIcon()
@@ -118,6 +120,7 @@ namespace devkit2.Applications
             return new ValueName[] {
                 new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustc", "bin")),
                 new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo", "bin")),
+                new ValueName("PATH", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rustfmt-preview", "bin")),
                 new ValueName("RUSTFLAGS", "--sysroot=" + Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "rust-std-x86_64-pc-windows-gnu")),
                 new ValueName("CARGO_HOME", Path.Combine(appPath, version, $"rust-{version}-x86_64-pc-windows-gnu", "cargo")),
             };

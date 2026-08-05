@@ -127,6 +127,7 @@ namespace devkit2
             Sysconf.Instance.AddApplication(new DotnetSDK());
             Sysconf.Instance.AddApplication(new Etcd());
             Sysconf.Instance.AddApplication(new Fd());
+            Sysconf.Instance.AddApplication(new FlutterSDK());
             Sysconf.Instance.AddApplication(new FreeCAD());
             Sysconf.Instance.AddApplication(new Fzf());
             Sysconf.Instance.AddApplication(new Geany());
@@ -141,6 +142,7 @@ namespace devkit2
             Sysconf.Instance.AddApplication(new Java());
             Sysconf.Instance.AddApplication(new Kate());
             Sysconf.Instance.AddApplication(new Krita());
+            Sysconf.Instance.AddApplication(new Llvm());
             Sysconf.Instance.AddApplication(new Lua());
             Sysconf.Instance.AddApplication(new Mariadb());
             Sysconf.Instance.AddApplication(new Msvc());

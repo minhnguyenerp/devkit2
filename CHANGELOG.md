@@ -1,4 +1,4 @@
-﻿Udpate githubcli 2.96.0, portable git 2.55.0.3, golang 1.26.5, rust 1.97.1, vscode 1.130.0, vscodium 1.126.04524, zig 0.17.0-dev.1454+5faa79730, zed 1.12.0, dot net 10.0.302, cmake 4.4.0, arduino 2.3.10, blender 5.2.0.
+﻿Added FlutterSDK 3.44.8 and llvm
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.10](https://github.com/arduino/arduino-ide/releases)
@@ -16,6 +16,7 @@
 [dotnet-10.0.302](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 [etcd-v3.6.12-windows-amd64](https://github.com/etcd-io/etcd/releases)
 [fd-10.4.2](https://github.com/sharkdp/fd/releases)
+[FlutterSDK 3.44.8](https://docs.flutter.dev/install/manual)
 [FreeCAD-1.1.1](https://www.freecad.org/downloads.php)
 [fzf-0.73.1](https://github.com/junegunn/fzf/releases)
 [Geany-2.1](https://www.geany.org/download/releases/) <sub>[*Release Notes*](https://www.geany.org/documentation/releasenotes/)</sub>
@@ -30,6 +31,7 @@
 [jdk-26](https://jdk.java.net/archive/)
 [Kate-26.04](https://kate-editor.org/get-it/)
 [Krita-5.3.1](https://krita.org/en/download/)
+[LLVM 22.1.8](https://github.com/llvm/llvm-project/releases)
 [Lua-5.5.0](https://www.lua.org/download.html)
 [mariadb-12.3.2-winx64](https://mariadb.org/download)
 [MSVC 2026](https://devblogs.microsoft.com/cppblog)
