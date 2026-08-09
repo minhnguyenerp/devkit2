@@ -49,9 +49,10 @@ namespace devkit2.Applications
             {
                 return new ValueName[]
                 {
-                    new ValueName("3.14.5", "3.14.5"),
-                    new ValueName("3.14.4", "3.14.4"),
-                    new ValueName("3.14.3", "3.14.3"),
+                    new ValueName("3.14.7", "3.14.7") { Tag = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.7-embed-amd64.zip"},
+                    new ValueName("3.14.5", "3.14.5") { Tag = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.5-embed-amd64.zip"},
+                    new ValueName("3.14.4", "3.14.4") { Tag = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.4-embed-amd64.zip"},
+                    new ValueName("3.14.3", "3.14.3") { Tag = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.3-embed-amd64.zip"},
                 };
             }
         }
@@ -60,21 +61,16 @@ namespace devkit2.Applications
         {
             string url = string.Empty;
             string file = string.Empty;
-            switch (version)
+
+            foreach (var one in AvailableVersions)
             {
-                case "3.14.5":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.5-embed-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "python-3.14.5-embed-amd64.zip");
+                if (one.Value == version)
+                {
+                    url = one.Tag?.ToString() ?? string.Empty;
                     break;
-                case "3.14.4":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.4-embed-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "python-3.14.4-embed-amd64.zip");
-                    break;
-                case "3.14.3":
-                    url = "https://github.com/minhnguyenerp/devkit2/releases/download/bin1.0.1/python-3.14.3-embed-amd64.zip";
-                    file = Path.Combine(Path.GetTempPath(), "python-3.14.3-embed-amd64.zip");
-                    break;
+                }
             }
+            file = Path.Combine(Path.GetTempPath(), $"python-{version}-embed-amd64.zip");
 
             if (url != string.Empty && file != string.Empty)
             {

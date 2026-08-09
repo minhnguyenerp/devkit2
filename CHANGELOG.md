@@ -1,4 +1,4 @@
-﻿Added FlutterSDK 3.44.8 and llvm
+﻿Update python 3.14.7
 
 [httpd-2.4.67-260504](https://www.apachelounge.com/download/) <code>start-apache dir port</code>
 [arduino-2.3.10](https://github.com/arduino/arduino-ide/releases)
@@ -46,7 +46,7 @@
 [postgresql-18.4-1](https://www.enterprisedb.com/download-postgresql-binaries) <sub>[*Release Notes*](https://www.postgresql.org/docs/release/)</sub>
 [Processing 4.5.3](https://github.com/processing/processing4/releases)
 [Putty 0.84](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
-[python-3.14.5-embed-amd64](https://www.python.org/downloads/windows/)
+[python-3.14.7-embed-amd64](https://www.python.org/downloads/windows/)
 [qtcreator-windows-x64-msvc-19.0.2.7z ](https://github.com/qt-creator/qt-creator/releases)
 [ripgrep-15.1.0](https://github.com/BurntSushi/ripgrep/releases)
 [rust-1.97.1](https://forge.rust-lang.org/infra/other-installation-methods.html) <sub>[*Release Notes*](https://doc.rust-lang.org/stable/releases.html)</sub>
